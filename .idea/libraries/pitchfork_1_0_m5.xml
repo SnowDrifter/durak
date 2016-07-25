@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="pitchfork-1.0-m5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../frameworks/pitchfork-1.0-m5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
