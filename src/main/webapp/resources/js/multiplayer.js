@@ -293,7 +293,7 @@ $(document).ready(function () {
     });
     $('#finish_button').click(function () {
         if ($(".table").html() == "") return;
-        websocket.send("game/" + username + "/all");
+        websocket.send("game/" + username + "/finishMove");
     });
     $('.close_message').click(function () {
         $(this).parent().css("display", "none");

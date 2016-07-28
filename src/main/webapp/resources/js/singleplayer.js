@@ -210,7 +210,7 @@ $(document).ready(function () {
     $("body").delegate(".actionCard", "click", function () {
         $('.close_message').click();
         var card = $(this).attr("id");
-        websocket.send("userselectcard=" + card);
+        websocket.send("selectcard=" + card);
     });
     $("#take_button").click(function () {
         websocket.send("take");
@@ -218,7 +218,7 @@ $(document).ready(function () {
     });
     $("#finish_button").click(function () {
         if ($(".table").html() == "") return;
-        websocket.send("all");
+        websocket.send("finishMove");
     });
     $("#start_new_game").click(function () {
         $(".trump").empty().css("opacity", "1");

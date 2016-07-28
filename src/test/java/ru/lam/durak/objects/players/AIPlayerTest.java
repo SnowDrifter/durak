@@ -1,9 +1,6 @@
 package ru.lam.durak.objects.players;
 
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -16,6 +13,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 public class AIPlayerTest {
 
@@ -87,7 +87,7 @@ public class AIPlayerTest {
         Card card = player.attack();
 
         assertNull(card);
-        assertTrue(player.isAll());
+        assertTrue(player.isFinishMove());
     }
 
 

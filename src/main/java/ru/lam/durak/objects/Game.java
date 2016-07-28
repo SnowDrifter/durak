@@ -65,11 +65,11 @@ public class Game implements Runnable {
             Card currentCard = attackPlayer.attack();
             updateTableView();
 
-            if (currentCard == null || attackPlayer.isAll()) {
+            if (currentCard == null || attackPlayer.isFinishMove()) {
                 table.resetTable();
                 fillHand(attackPlayer);
                 fillHand(defendPlayer);
-                attackPlayer.setAll(false);
+                attackPlayer.setFinishMove(false);
                 return;
             }
 
@@ -111,8 +111,8 @@ public class Game implements Runnable {
             player.selectCard(cardName);
         } else if (request.startsWith("take")) {
             player.setTake(true);
-        } else if (request.startsWith("all")) {
-            player.setAll(true);
+        } else if (request.startsWith("finishMove")) {
+            player.setFinishMove(true);
         }
     }
 

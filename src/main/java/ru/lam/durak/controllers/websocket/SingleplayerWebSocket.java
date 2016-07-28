@@ -21,13 +21,13 @@ public class SingleplayerWebSocket extends TextWebSocketHandler {
 
         if (request.equals("initgame")) {
            startSingleplayerGame(session);
-        } else if (request.startsWith("userselectcard")) {
-            request = request.replace("userselectcard=", "");
+        } else if (request.startsWith("selectcard")) {
+            request = request.replace("selectcard=", "");
             game.getFirstPlayer().selectCard(request);
         } else if (request.startsWith("take")) {
             game.getFirstPlayer().setTake(true);
-        } else if (request.startsWith("all")) {
-            game.getFirstPlayer().setAll(true);
+        } else if (request.startsWith("finishMove")) {
+            game.getFirstPlayer().setFinishMove(true);
         }
 
     }

@@ -15,7 +15,7 @@ public class RealPlayer implements Player {
     private WebSocketSession session;
     private Game game;
     private boolean take;
-    private boolean all;
+    private boolean finishMove;
     private boolean win;
     private Set<Card> hand = new HashSet<>();
     private Card lastClickedCard;
@@ -23,7 +23,7 @@ public class RealPlayer implements Player {
     @Override
     public void resetStatus() {
         setTake(false);
-        setAll(false);
+        setFinishMove(false);
         lastClickedCard = null;
     }
 
@@ -43,7 +43,7 @@ public class RealPlayer implements Player {
 
         List<Card> oldCardsOnTable = game.getTable().getOldCards();
 
-        while (!all) {
+        while (!finishMove) {
 
             if (oldCardsOnTable.size() == 0 && lastClickedCard != null) {
                 // Select card for empty table.
@@ -172,11 +172,11 @@ public class RealPlayer implements Player {
         this.take = take;
     }
 
-    public boolean isAll() {
-        return all;
+    public boolean isFinishMove() {
+        return finishMove;
     }
-    public void setAll(boolean all) {
-        this.all = all;
+    public void setFinishMove(boolean finishMove) {
+        this.finishMove = finishMove;
     }
 
     public String getUsername() {

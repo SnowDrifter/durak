@@ -3,8 +3,8 @@ package ru.lam.durak.objects.players;
 
 import org.springframework.web.socket.WebSocketSession;
 import ru.lam.durak.objects.Card;
-import ru.lam.durak.objects.Table;
 import ru.lam.durak.objects.Game;
+import ru.lam.durak.objects.Table;
 
 import java.util.HashSet;
 import java.util.List;
@@ -39,7 +39,7 @@ public class AIPlayer implements Player {
         if (attackingCard != null) {
             return attackingCard;
         } else {
-            setAll(true);
+            setFinishMove(true);
             return null;
         }
     }
@@ -181,13 +181,11 @@ public class AIPlayer implements Player {
         this.take = take;
     }
 
-    @Override
-    public boolean isAll() {
+    public boolean isFinishMove() {
         return all;
     }
 
-    @Override
-    public void setAll(boolean all) {
+    public void setFinishMove(boolean all) {
         this.all = all;
     }
 
@@ -199,7 +197,7 @@ public class AIPlayer implements Player {
     @Override
     public void resetStatus() {
         setTake(false);
-        setAll(false);
+        setFinishMove(false);
     }
 
     @Override
