@@ -25,9 +25,9 @@
         <fileset id="web dispatcher servlet context" name="MVC dispatcher servlet context" removed="true">
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring/dispatcher-servlet.xml</file>
         </fileset>
-        <fileset id="fileset" name="Application Context" removed="false">
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring/database-config.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring/dispatcher-servlet.xml</file>
-          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring/mysql-database-config.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring/security.xml</file>
         </fileset>
       </configuration>
@@ -48,7 +48,6 @@
     <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:3.0.1" level="project" />
     <orderEntry type="library" name="Maven: jstl:jstl:1.2" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet.jsp:jsp-api:2.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-websocket-api:7.0.68" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.2" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.7.2" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
@@ -119,7 +118,5 @@
     <orderEntry type="library" name="Maven: joda-time:joda-time-jsptags:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.jadira.usertype:usertype.core:5.0.0.GA" level="project" />
     <orderEntry type="library" name="Maven: org.jadira.usertype:usertype.spi:5.0.0.GA" level="project" />
-    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
-    <orderEntry type="library" name="Maven: javax.ejb:ejb-api:3.0" level="project" />
   </component>
 </module>

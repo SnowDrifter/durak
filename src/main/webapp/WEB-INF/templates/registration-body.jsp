@@ -11,12 +11,10 @@
 <script type="text/javascript">
     $(function () {
 
-        var currentYear = new Date().getFullYear();
-
         $('#birthDate').datepicker({
             dateFormat: 'dd mm yy',
             changeYear: true,
-            yearRange: '1900:' + currentYear
+            yearRange: "-100:+0"
         });
 
     });

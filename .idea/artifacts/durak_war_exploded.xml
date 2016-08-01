@@ -10,7 +10,6 @@
           <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.0.1" />
           <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
           <element id="library" level="project" name="Maven: javax.servlet.jsp:jsp-api:2.2" />
-          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-websocket-api:7.0.68" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.2" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.7.2" />
           <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
@@ -79,8 +78,6 @@
           <element id="library" level="project" name="Maven: joda-time:joda-time-jsptags:1.1.1" />
           <element id="library" level="project" name="Maven: org.jadira.usertype:usertype.core:5.0.0.GA" />
           <element id="library" level="project" name="Maven: org.jadira.usertype:usertype.spi:5.0.0.GA" />
-          <element id="library" level="project" name="Maven: javax.inject:javax.inject:1" />
-          <element id="library" level="project" name="Maven: javax.ejb:ejb-api:3.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">

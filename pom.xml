@@ -89,12 +89,6 @@
             <artifactId>jsp-api</artifactId>
             <version>2.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-websocket-api</artifactId>
-            <version>7.0.68</version>
-        </dependency>
-
 
 
         <!-- LOGGING -->
@@ -336,18 +330,6 @@
             <version>5.0.0.GA</version>
         </dependency>
 
-
-        <!-- JEE -->
-        <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>1</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.ejb</groupId>
-            <artifactId>ejb-api</artifactId>
-            <version>3.0</version>
-        </dependency>
 
     </dependencies>
 </project>
