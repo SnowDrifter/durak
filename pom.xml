@@ -15,6 +15,7 @@
         <spring.version>4.2.5.RELEASE</spring.version>
         <spring.security.version>4.0.4.RELEASE</spring.security.version>
         <tiles.version>3.0.5</tiles.version>
+        <jackson.version>2.7.6</jackson.version>
     </properties>
 
     <build>
@@ -109,7 +110,6 @@
         </dependency>
 
 
-
         <!-- SPRING FRAMEWORK -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -186,6 +186,11 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>1.10.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>1.9.2.RELEASE</version>
         </dependency>
 
 
@@ -287,17 +292,17 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.7.3</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.7.3</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-lgpl</artifactId>
-            <version>1.9.13</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -329,7 +334,5 @@
             <artifactId>usertype.core</artifactId>
             <version>5.0.0.GA</version>
         </dependency>
-
-
     </dependencies>
 </project>

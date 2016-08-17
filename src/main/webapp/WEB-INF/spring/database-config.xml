@@ -36,9 +36,7 @@
         <property name="packagesToScan" value="ru.lam.durak"/>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">
-                    org.hibernate.dialect.MySQLDialect
-                </prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
                 <prop key="hibernate.max_fetch_depth">3</prop>
                 <prop key="hibernate.jdbc.fetch_size">50</prop>

@@ -1,10 +1,10 @@
 package ru.lam.durak.controllers;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
@@ -41,7 +41,7 @@ public class MainController {
     private UserService userService;
 
     @Autowired
-    MessageSource messageSource;
+    private MessageSource messageSource;
 
 
     @RequestMapping(value = {"/home", "/"}, method = RequestMethod.GET)
@@ -56,7 +56,7 @@ public class MainController {
         model.addAttribute("title", messageSource.getMessage("game.singleplayer.title", null, locale));
         return "singleplayer";
     }
-
+    
 
     @RequestMapping(value = "/multiplayer", method = RequestMethod.GET)
     public String multi(Model model, Locale locale) {
