@@ -21,7 +21,7 @@ import java.util.*;
 
 
 @Entity
-@Table(name="user")
+@Table(name="app_user")
 @JsonAutoDetect
 public class User implements UserDetails, Serializable, Persistable<Long> {
     private static final long serialVersionUID = 1L;

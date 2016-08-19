@@ -37,7 +37,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private EntityManager manager;
 
 
-
     @Override
     @Transactional
     public User update(User user) {
