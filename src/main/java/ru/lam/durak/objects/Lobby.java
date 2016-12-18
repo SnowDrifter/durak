@@ -9,12 +9,9 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 
 public class Lobby {
-    private static final Logger LOG = LogManager.getLogger(Lobby.class);
 
+    private static final Logger logger = LogManager.getLogger(Lobby.class); // TODO: add logs
     private static HashBiMap<String, WebSocketSession> lobby = HashBiMap.create();
-
-    public Lobby() {
-    }
 
     public synchronized void addPlayer(String username, WebSocketSession session) {
         lobby.put(username, session);

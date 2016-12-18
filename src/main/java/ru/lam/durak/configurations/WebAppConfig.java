@@ -3,6 +3,7 @@ package ru.lam.durak.configurations;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -33,7 +34,6 @@ import java.util.Locale;
 @ComponentScan("ru.lam.durak")
 public class WebAppConfig extends WebMvcConfigurerAdapter implements WebSocketConfigurer {
 
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
@@ -41,30 +41,29 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements WebSocketCo
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(getSingleplayerWebSocket(), "/ws_singleplayer");
-        registry.addHandler(getMultiplayerWebSocket(), "/ws_multiplayer");
+        registry.addHandler(singleplayerWebSocket(), "/ws_singleplayer");
+        registry.addHandler(multiplayerWebSocket(), "/ws_multiplayer");
     }
 
-
     @Bean
-    public SingleplayerWebSocket getSingleplayerWebSocket() {
+    public SingleplayerWebSocket singleplayerWebSocket() {
         return new SingleplayerWebSocket();
     }
 
     @Bean
-    public MultiplayerWebSocket getMultiplayerWebSocket() {
+    public MultiplayerWebSocket multiplayerWebSocket() {
         return new MultiplayerWebSocket();
     }
 
     @Bean
-    public ViewResolver getTilesViewResolver() {
+    public ViewResolver tilesViewResolver() {
         TilesViewResolver tilesViewResolver = new TilesViewResolver();
         tilesViewResolver.setViewClass(TilesView.class);
         return tilesViewResolver;
     }
 
     @Bean
-    public TilesConfigurer getTilesConfigurer() {
+    public TilesConfigurer tilesConfigurer() {
         TilesConfigurer tilesConfigurer = new TilesConfigurer();
         tilesConfigurer.setCheckRefresh(true);
         tilesConfigurer.setDefinitionsFactoryClass(TilesConfig.class);
@@ -74,26 +73,23 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements WebSocketCo
         return tilesConfigurer;
     }
 
-
-    @Bean(name = "multipartResolver")
-    public CommonsMultipartResolver getMultipartResolver() {
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver cmr = new CommonsMultipartResolver();
         cmr.setMaxUploadSize(1000000);
         return cmr;
     }
 
-
-    @Bean(name = "localeResolver")
-    public CookieLocaleResolver getLocaleResolver() {
+    @Bean
+    public CookieLocaleResolver localeResolver() {
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setDefaultLocale(new Locale("ru"));
         cookieLocaleResolver.setCookieMaxAge(100000);
         return cookieLocaleResolver;
     }
 
-
-    @Bean(name = "messageSource")
-    public ReloadableResourceBundleMessageSource getMessageSource() {
+    @Bean
+    public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource resource = new ReloadableResourceBundleMessageSource();
         resource.setBasenames("/WEB-INF/locales/messages", "/WEB-INF/locales/application");
         resource.setCacheSeconds(1);
@@ -101,26 +97,22 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements WebSocketCo
         return resource;
     }
 
-
-    @Bean(name = "lobby")
-    public Lobby getLobby() {
+    @Bean
+    public Lobby lobby() {
         return new Lobby();
     }
 
-
-    @Bean(name = "validator")
+    @Bean
     public LocalValidatorFactoryBean validator() {
         LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
-        validatorFactoryBean.setValidationMessageSource(getMessageSource());
+        validatorFactoryBean.setValidationMessageSource(messageSource());
         return validatorFactoryBean;
     }
-
 
     @Override
     public Validator getValidator() {
         return validator();
     }
-
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -128,5 +120,4 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements WebSocketCo
         localeChangeInterceptor.setParamName("lang");
         registry.addInterceptor(localeChangeInterceptor);
     }
-
 }

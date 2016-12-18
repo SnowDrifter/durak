@@ -4,9 +4,7 @@ trumpSuit = "";
 enemyCardsCount = "";
 
 function initSingleplayerGame() {
-    // websocket = new WebSocket("ws://21bbc1a6.ngrok.io/ws_singleplayer");
-       websocket = new WebSocket("ws://localhost:8080/ws_singleplayer");
-    //websocket = new WebSocket("wss://lamer-azazalalka.rhcloud.com:8443/ws_singleplayer");
+    websocket = new WebSocket("ws://localhost:8080/ws_singleplayer"); // TODO
 
     websocket.onopen = function () {
         websocket.send("initgame");
@@ -114,9 +112,8 @@ function cleanTableAndPlayerCards() {
     });
 }
 
-function addingTrumpAndDeck(trump, sizeOfDeck){
+function addingTrumpAndDeck(trump, sizeOfDeck) {
     var tempTrump = $(".trump");
-
 
     if (tempTrump.html() == "" && trump != undefined) {
         tempTrump.append("<div class='card'><img src='/resources/images/cards/" + trump + ".png'/></div>");
@@ -125,7 +122,6 @@ function addingTrumpAndDeck(trump, sizeOfDeck){
     if (trump == "" && sizeOfDeck == 0) {
         tempTrump.css("opacity", "0.4");
     }
-
 
     if (sizeOfDeck != 0) {
         sizeOfDeck++;
@@ -138,7 +134,7 @@ function addingTrumpAndDeck(trump, sizeOfDeck){
 
         if (sizeOfDeck > 9) {
             $(".cards_number").css("font-size", "2em").css("left", "12px");
-        }else{
+        } else {
             $(".cards_number").css("font-size", "3em").css("left", "16px");
         }
     } else {
@@ -146,8 +142,7 @@ function addingTrumpAndDeck(trump, sizeOfDeck){
     }
 }
 
-function addingPlayerCards(playerCardsInHand){
-
+function addingPlayerCards(playerCardsInHand) {
     var playerTrumpsInHand = [];
 
     for (var x = 0; x < playerCardsInHand.length; x++) {
@@ -181,7 +176,7 @@ function addingPlayerCards(playerCardsInHand){
 
 }
 
-function addingEnemyCards(currentEnemyCardsCount){
+function addingEnemyCards(currentEnemyCardsCount) {
     if (enemyCardsCount != currentEnemyCardsCount) {
         $(".enemy_side").empty();
 
@@ -192,7 +187,7 @@ function addingEnemyCards(currentEnemyCardsCount){
 
 }
 
-function addingCardsOnTable(tableCards){
+function addingCardsOnTable(tableCards) {
     tableCards.forEach(function (item) {
         $("#" + item).appendTo(".table");
     });
@@ -201,7 +196,7 @@ function addingCardsOnTable(tableCards){
 
 $(window).on('load', function () {
     var $preloader = $('#preloader'),
-        $spinner   = $preloader.find('.spinner');
+        $spinner = $preloader.find('.spinner');
     $spinner.fadeOut();
     $preloader.delay(350).fadeOut('slow');
 });

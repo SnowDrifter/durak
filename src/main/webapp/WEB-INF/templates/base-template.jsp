@@ -12,8 +12,6 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jQueryUI/jquery-ui.min.js"><jsp:text/></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/jQueryUI/jquery-ui.min.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/js/jQueryUI/jquery-ui.theme.min.css"/>
-
-
 </head>
 
 <body>

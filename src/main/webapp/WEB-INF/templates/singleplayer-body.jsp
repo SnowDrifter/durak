@@ -43,7 +43,6 @@
         <button class="close_message">OK</button>
     </div>
 
-
     <button class="action_button" id="finish_button"><spring:message code="game.button.finish"/></button>
     <button class="action_button" id="take_button"><spring:message code="game.button.take"/></button>
     <button class="new_game_button" id="start_new_game"><spring:message code="game.button.newgame"/></button>

@@ -10,9 +10,9 @@ import java.util.Set;
 
 public class CardTest {
 
-    Card c1;
-    Card anotherC1;
-    Card h3;
+    private Card c1;
+    private Card anotherC1;
+    private Card h3;
 
     @Before
     public void testInit() {

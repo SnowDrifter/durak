@@ -18,7 +18,6 @@
         <span class="contact"><a href="${pageContext.request.contextPath}/stat">
             <spring:message code="statistics.title"/></a></span>
 
-
         <security:authorize access="isAnonymous()">
             <span class="contact right"><a href="${pageContext.request.contextPath}/registration">
                 <spring:message code="registration"/></a></span>
@@ -39,8 +38,6 @@
                  <span id="username">${pageContext.request.userPrincipal.name}</span>
             </span>
             </c:if>
-
         </security:authorize>
-
     </div>
 </header>

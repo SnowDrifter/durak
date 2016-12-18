@@ -50,7 +50,6 @@
 @lobby_user_background: #ace452;
 @lobby_user_background_hover: #FF9E36;
 
-
 /* Fonts */
 @font-face {
   font-family: 'Beer money';
@@ -65,8 +64,7 @@
   font-style: normal;
 }
 
-
-/* General */
+/* region General */
 * {
   margin: 0;
   padding: 0;
@@ -170,7 +168,7 @@ footer img {
 .error{
   color: @error_font_color;
 }
-
+/* endregion General */
 
 /* Selection Block */
 ::selection {
@@ -181,7 +179,6 @@ footer img {
   color: @selection_font;
   background: @selection_background;
 }
-
 
 /* Input */
 .field {
@@ -194,8 +191,7 @@ footer img {
   border: 2px solid @menu_font_color;
 }
 
-
-/* Home menu */
+/* regionHome menu */
 .game_menu {
   position: relative;
   margin-left: 20%;
@@ -251,9 +247,9 @@ footer img {
           darken(saturate(@multiplayer_ref_body, 5%), 10%) 50%,
           lighten(@multiplayer_ref_body, 20%));
 }
+/* endregion Home menu */
 
-
-/* Game */
+/* region Game */
 #game_container {
   position: absolute;
   border-radius: 3px;
@@ -261,10 +257,6 @@ footer img {
   height: 768px;
   background-color: @game_field;
   border: solid 5px darken(@game_field, 5%);
-
-
-
-
 }
 .singleplayer_container{
   position: relative;
@@ -476,9 +468,9 @@ footer img {
   background: url(../images/preloader.gif) no-repeat 50% 50%;
   margin: -64px 0 0 -64px;
 }
+/* endregion Game */
 
-
-/* Lobby */
+/* region Lobby */
 #lobby{
   float: left;
   margin-left: 5%;
@@ -524,9 +516,9 @@ footer img {
   padding-top: 40px;
   line-height: 500px;
 }
+/* endregion Lobby */
 
-
-/* Chat */
+/* region Chat */
 #chat {
   position: relative;
   float: left;
@@ -576,8 +568,9 @@ footer img {
   width: 30px;
   float: right;
 }
+/* endregion Chat */
 
-/* Rules */
+/* region Rules */
 #rules{
   position: relative;
   margin-left: 20%;
@@ -600,9 +593,9 @@ footer img {
   margin-right: 20px;
   width: 20%;
 }
+/* endregion Rules */
 
-
-/* Registration */
+/* region Registration */
 #registration{
   margin-left: 20%;
   margin-right: 20%;
@@ -665,9 +658,9 @@ tr:nth-child(6){
   position: relative;
   z-index: 3;
 }
+/* endregion Registration */
 
-
-/* Edit Profile */
+/* region Profile */
 #edit{
   margin-left: 20%;
   margin-right: 20%;
@@ -746,9 +739,9 @@ tr:nth-child(6){
   float: right;
   max-width: 100px;
 }
+/* endregion Profile */
 
-
-/* Statistics */
+/* region Statistics */
 #statistics{
   margin-left: 10%;
   position: relative;
@@ -792,9 +785,9 @@ tr:nth-child(6){
   border-radius: 3px;
   box-shadow: 2px 2px 7px darken(desaturate(@borders, 30%), 5%);
 }
+/* endregion Statistics */
 
-
-/* Login page */
+/* region Login page */
 #login{
   margin-left: 30%;
   margin-right: 30%;
@@ -837,6 +830,7 @@ tr:nth-child(6){
   text-align: center;
   color: @error_font_color;
 }
+/* endregion Login page */
 
 /* Access denied */
 #access_denied{
@@ -868,7 +862,7 @@ tr:nth-child(6){
   line-height: 90px;
 }
 
-/* Checkbox */
+/* region Checkbox */
 label {
   user-select: none;
 }
@@ -898,7 +892,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 .lite-gray-check{
   background:url(../images/lite-gray-check.png) no-repeat;
 }
-
+/* endregion Checkbox */
 
 
 

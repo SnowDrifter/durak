@@ -35,12 +35,10 @@ public class DatabaseConfig {
     @Value("${db.password}")
     private String jdbcPassword;
 
-
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
-
 
     @Bean
     public DataSource dataSource() {
@@ -49,10 +47,8 @@ public class DatabaseConfig {
         dataSource.setUrl(jdbcUrl);
         dataSource.setUsername(jdbcUserName);
         dataSource.setPassword(jdbcPassword);
-
         return dataSource;
     }
-
 
     @Bean
     public EntityManagerFactory entityManagerFactory() {
@@ -71,11 +67,9 @@ public class DatabaseConfig {
         jpaProperties.put("hibernate.connection.charSet", "UTF-8");
 
         factory.setJpaProperties(jpaProperties);
-
         factory.afterPropertiesSet();
         return factory.getObject();
     }
-
 
     @Bean
     public PlatformTransactionManager transactionManager() {
@@ -83,6 +77,4 @@ public class DatabaseConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactory());
         return transactionManager;
     }
-
-
 }

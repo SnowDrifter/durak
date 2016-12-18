@@ -11,8 +11,8 @@ import ru.lam.durak.objects.players.RealPlayer;
 
 
 public class SingleplayerWebSocket extends TextWebSocketHandler {
-    private static final Logger LOG = LogManager.getLogger(SingleplayerWebSocket.class);
 
+    private static final Logger logger = LogManager.getLogger(SingleplayerWebSocket.class);
     private Game game;
 
     @Override
@@ -34,7 +34,7 @@ public class SingleplayerWebSocket extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        LOG.info("Open session " + session.getId());
+        logger.info("Open session " + session.getId());
     }
 
     private void startSingleplayerGame(WebSocketSession session){

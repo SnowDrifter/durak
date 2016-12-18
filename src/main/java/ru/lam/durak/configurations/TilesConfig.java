@@ -13,7 +13,6 @@ public class TilesConfig implements DefinitionsFactory {
 
     private static final Map<String, Definition> TILES_DEFINITIONS = new HashMap<>();
 
-
     @Override
     public Definition getDefinition(String name, Request request) {
         return TILES_DEFINITIONS.get(name);
@@ -32,12 +31,10 @@ public class TilesConfig implements DefinitionsFactory {
         addDefaultLayoutDefinition("edit-profile", "/WEB-INF/templates/edit-profile-body.jsp");
     }
 
-
     private static void addDefaultLayoutDefinition(String name, String body) {
-        Map<String, Attribute> attributes = new HashMap<>();
-
         Attribute baseTemplate = new Attribute("/WEB-INF/templates/base-template.jsp");
 
+        Map<String, Attribute> attributes = new HashMap<>();
         attributes.put("header", new Attribute("/WEB-INF/templates/header.jsp"));
         attributes.put("body", new Attribute(body));
         attributes.put("footer", new Attribute("/WEB-INF/templates/footer.jsp"));

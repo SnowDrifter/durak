@@ -2,6 +2,7 @@ package ru.lam.durak.objects;
 
 
 public class Card {
+
     private String name;
     private Suit suit;
     private int power;
@@ -38,7 +39,6 @@ public class Card {
     public void setTrump(boolean trump) {
         this.trump = trump;
     }
-
 
     @Override
     public String toString() {

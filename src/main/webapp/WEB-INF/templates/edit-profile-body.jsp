@@ -10,7 +10,6 @@
 
 <script type="text/javascript">
     $(function () {
-
         var currentYear = new Date().getFullYear();
 
         $('#birthDate').datepicker({
@@ -45,10 +44,7 @@
                 <img class="standart_photo" src='${pageContext.request.contextPath}/resources/images/standart_photo.png'/>
             </c:otherwise>
         </c:choose>
-
-
     </div>
-
 
     <table>
         <tr>
@@ -64,7 +60,6 @@
                 <form:errors path="lastName" cssClass="error"  element="div"/>
             </td>
         </tr>
-
 
         <tr>
             <td><label><spring:message code="user.email"/></label></td>

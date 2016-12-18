@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 public class RealPlayer implements Player {
+
     private String username;
     private WebSocketSession session;
     private Game game;
@@ -97,7 +98,6 @@ public class RealPlayer implements Player {
 
                 if (checkDefendCard(trying, tempEnemyCard)) {
 
-                    // TODO Грёбанная египетская пирамида
                      if (lastClickedCard.isTrump()) {
                         trying.setPower(lastClickedCard.getPower() - 10);  // Reset power after check.
                     }
@@ -200,6 +200,5 @@ public class RealPlayer implements Player {
     public void setSession(WebSocketSession session) {
         this.session = session;
     }
-
 
 }

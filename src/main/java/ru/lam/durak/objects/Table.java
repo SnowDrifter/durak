@@ -4,27 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
+
     private List<Card> oldCards = new ArrayList<>();
     private Card currentCard;
-
-    public Table() {
-    }
-
-    public Card getCurrentCard() {
-        return currentCard;
-    }
-
-    public void setCurrentCard(Card currentCard) {
-        this.currentCard = currentCard;
-    }
-
-    public List<Card> getOldCards() {
-        return oldCards;
-    }
-
-    public void setOldCards(List<Card> oldCards) {
-        this.oldCards = oldCards;
-    }
 
     public void resetTable() {
         oldCards = new ArrayList<>();
@@ -51,10 +33,6 @@ public class Table {
         return result.toString();
     }
 
-    public boolean isClean() {
-        return oldCards.isEmpty() && currentCard == null;
-    }
-
     public List<Card> getAllCardsOnTable() {
         List<Card> result = new ArrayList<>();
         result.addAll(oldCards);
@@ -62,4 +40,23 @@ public class Table {
         return result;
     }
 
+    public boolean isClean() {
+        return oldCards.isEmpty() && currentCard == null;
+    }
+
+    public Card getCurrentCard() {
+        return currentCard;
+    }
+
+    public void setCurrentCard(Card currentCard) {
+        this.currentCard = currentCard;
+    }
+
+    public List<Card> getOldCards() {
+        return oldCards;
+    }
+
+    public void setOldCards(List<Card> oldCards) {
+        this.oldCards = oldCards;
+    }
 }

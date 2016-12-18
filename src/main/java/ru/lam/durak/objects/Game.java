@@ -17,7 +17,8 @@ import java.util.List;
 
 @Component
 public class Game implements Runnable {
-    private static final Logger LOG = LogManager.getLogger(Game.class);
+
+    private static final Logger logger = LogManager.getLogger(Game.class);
 
     private UserService userService;
     private Player firstPlayer;
@@ -29,7 +30,7 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
-        LOG.info("Start game!");
+        logger.info("Start game!");
 
         while (true) {
             if (checkWin()) break;
@@ -41,7 +42,7 @@ public class Game implements Runnable {
             loggingCurrentState();
         }
 
-        LOG.info("Game over!");
+        logger.info("Game over!");
         sendGameOver();
         updateStatistics();
     }
@@ -188,18 +189,18 @@ public class Game implements Runnable {
         }
     }
 
-    // TODO AOP
+    // TODO AOP. Maybe remove it?
     private void loggingCurrentState() {
-        LOG.debug("========================");
-        LOG.debug("First player hand: " + firstPlayer.getHand());
-        LOG.debug("Second player hand: " + secondPlayer.getHand());
+        logger.debug("========================");
+        logger.debug("First player hand: " + firstPlayer.getHand());
+        logger.debug("Second player hand: " + secondPlayer.getHand());
         if (deck != null) {
-            LOG.debug("Current deck: " + deck);
+            logger.debug("Current deck: " + deck);
         }
         if (trump != null) {
-            LOG.debug("Trump: " + trump.getName());
+            logger.debug("Trump: " + trump.getName());
         }
-        LOG.debug("------------------------");
+        logger.debug("------------------------");
     }
 
     private void fillHand(Player player) {
@@ -233,8 +234,6 @@ public class Game implements Runnable {
         return false;
     }
 
-
-
     private void updateStatistics() {
 
         updateStatisticsForPlayer(firstPlayer);
@@ -243,7 +242,6 @@ public class Game implements Runnable {
             updateStatisticsForPlayer(secondPlayer);
         }
     }
-
 
     private void updateStatisticsForPlayer(Player player) {
         if(player.getUsername() == null){
@@ -328,7 +326,6 @@ public class Game implements Runnable {
         deck.remove(trump);
     }
 
-
     private Card selectTrump(){
         Card trump = null;
 
@@ -358,9 +355,7 @@ public class Game implements Runnable {
         return trump;
     }
 
-
-
-
+    // TODO ?!
     public Game() {
     }
 

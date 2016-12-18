@@ -12,11 +12,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -24,6 +26,7 @@ import java.util.*;
 @Table(name="app_user")
 @JsonAutoDetect
 public class User implements UserDetails, Serializable, Persistable<Long> {
+
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -38,12 +41,10 @@ public class User implements UserDetails, Serializable, Persistable<Long> {
     private Integer wins = 0;
     private Integer loses = 0;
     private Integer totalGames = 0;
-    private DateTime birthDate;
-    private DateTime creatingDate;
+    private Date birthDate;
+    private Date creationDate;
     private boolean enabled;
     private int version;
-
-    public User(){}
 
     @Version
     @Column(name = "version")
@@ -70,7 +71,6 @@ public class User implements UserDetails, Serializable, Persistable<Long> {
         this.id = id;
     }
 
-
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
@@ -82,7 +82,6 @@ public class User implements UserDetails, Serializable, Persistable<Long> {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
 
     @NotEmpty(message="{validation.username.notEmpty}")
     @Size(min=2, max=25, message="{validation.username.size}")
@@ -96,7 +95,6 @@ public class User implements UserDetails, Serializable, Persistable<Long> {
         this.username = username;
     }
 
-
     @JsonIgnore
     @NotEmpty(message="{validation.password.notEmpty}")
     @Size(min=2, max=64, message="{validation.password.size}")
@@ -108,7 +106,6 @@ public class User implements UserDetails, Serializable, Persistable<Long> {
     public void setPassword(String password) {
         this.password=password;
     }
-
 
     @JsonIgnore
     @Override
@@ -128,7 +125,6 @@ public class User implements UserDetails, Serializable, Persistable<Long> {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     @Column(name = "first_name", length = 64)
     @Size(max=64, message="{validation.firstname.size}")
@@ -150,31 +146,22 @@ public class User implements UserDetails, Serializable, Persistable<Long> {
         this.lastName = lastName;
     }
 
-    @JsonIgnore
-    @Column(name = "birth_date")
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @DateTimeFormat(pattern = "dd MM yyyy")
-    public DateTime getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
-    public void setBirthDate(DateTime birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
-
-    @JsonIgnore
-    @Column(name = "creating_date")
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @DateTimeFormat(pattern = "dd MM yyyy")
-    public DateTime getCreatingDate() {
-        return creatingDate;
+    public Date getCreationDate() {
+        return creationDate;
     }
-    public void setCreatingDate(DateTime creatingDate) {
-        this.creatingDate = creatingDate;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
-
-    @Column(name = "about")
     public String getAbout() {
         return about;
     }
@@ -216,7 +203,6 @@ public class User implements UserDetails, Serializable, Persistable<Long> {
         this.totalGames = totalGames;
     }
 
-
     @JsonIgnore
     @Transient
     @Override
@@ -250,13 +236,13 @@ public class User implements UserDetails, Serializable, Persistable<Long> {
         return true;
     }
 
-
     @Transient
     public String getBirthDateString() {
         String birthDateString = "";
+        SimpleDateFormat format = new SimpleDateFormat("dd MM yyyy");
 
         if (birthDate != null){
-            birthDateString = org.joda.time.format.DateTimeFormat.forPattern("dd MM yyyy").print(birthDate);
+            birthDateString = format.format(birthDate);
         }
 
         return birthDateString;
@@ -265,14 +251,14 @@ public class User implements UserDetails, Serializable, Persistable<Long> {
     @Transient
     public String getCreatingDateString() {
         String creatingDateString = "";
+        SimpleDateFormat format = new SimpleDateFormat("dd MM yyyy");
 
-        if (creatingDate != null){
-            creatingDateString = org.joda.time.format.DateTimeFormat.forPattern("dd MM yyyy").print(creatingDate);
+        if (creationDate != null){
+            creatingDateString = format.format(creationDate);
         }
 
         return creatingDateString;
     }
-
 
     @Override
     public String toString() {

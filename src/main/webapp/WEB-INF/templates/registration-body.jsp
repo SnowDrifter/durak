@@ -16,10 +16,8 @@
             changeYear: true,
             yearRange: "-100:+0"
         });
-
     });
 </script>
-
 
 <div id="locale" style="display:none">
     ${locale}
@@ -115,7 +113,6 @@
         </tr>
 
     </table>
-
 
     <button id="registration_submit" type="submit"><spring:message code="registration.submit"/>
 </form:form>

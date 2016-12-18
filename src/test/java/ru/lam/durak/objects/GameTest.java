@@ -8,7 +8,8 @@ import ru.lam.durak.objects.players.AIPlayer;
 import ru.lam.durak.objects.players.RealPlayer;
 
 public class GameTest {
-    Game game;
+
+    private Game game;
 
     @Before
     public void testInit() {

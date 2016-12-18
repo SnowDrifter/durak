@@ -119,7 +119,6 @@ function addChatMessage(chatMessage){
 }
 
 function updateLobbyView(usersInLobby) {
-
     var tempUsers = $('#users');
 
     if (usersInLobby.length != 0) {
@@ -215,7 +214,6 @@ function addingTrumpAndDeck(trump, sizeOfDeck) {
 }
 
 function addingPlayerCards(playerCardsInHand) {
-
     var playerTrumpsInHand = [];
 
     for (var x = 0; x < playerCardsInHand.length; x++) {
@@ -246,7 +244,6 @@ function addingPlayerCards(playerCardsInHand) {
     playerTrumpsInHand.forEach(function (trumpCardName) {
         $("#" + trumpCardName).appendTo(".player_side");
     });
-
 }
 
 function addingEnemyCards(currentEnemyCardsCount) {
@@ -327,7 +324,6 @@ $(document).ready(function () {
             $("#chat_switch").css({transition:'all .5s',transform:'rotate(180deg)'});
         }
     });
-
 
     $('#chat').resizable({
         ghost:true,

@@ -57,7 +57,6 @@
     <button class="action_button" id="take_button"><spring:message code="game.button.take"/></button>
 </div>
 
-
 <div id="chat">
     <div id="chat_header"><spring:message code="lobby.chat.header"/>  <img src="${pageContext.request.contextPath}/resources/images/arrow_up.png" id="chat_switch"/></div>
     <div id="chat_content">

@@ -7,22 +7,24 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.lam.durak.users.models.User;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 
 public class UserTest {
-    User admin;
-    User user1;
-    User user2;
+
+    private User admin;
+    private User user1;
+    private User user2;
 
     @Before
     public void testInit() {
         admin = new User();
         admin.setUsername("admin");
         admin.setPassword("1234");
-        admin.setCreatingDate(new DateTime(2016, 3, 31, 0, 0, 0));
-        admin.setBirthDate(new DateTime(2014, 2, 12, 0, 0, 0));
+        admin.setCreationDate(new Date(1459382400000L));
+        admin.setBirthDate(new Date(1392163200000L));
 
         user1 = new User();
         user1.setUsername("user");
@@ -32,7 +34,6 @@ public class UserTest {
         user2.setUsername("user");
         user2.setPassword("qwerty");
     }
-
 
     @Test
     public void testEquals() {
@@ -56,7 +57,6 @@ public class UserTest {
         set.add(admin);
         assertEquals(2, set.size());
     }
-
 
     @Test
     public void testCreatingDateString() {

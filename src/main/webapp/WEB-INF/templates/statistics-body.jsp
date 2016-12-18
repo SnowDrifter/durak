@@ -27,7 +27,6 @@
     <jsp:text/>
 </script>
 
-
 <spring:message code="statistics.title" var="userList"/>
 <spring:message code="user.username" var="userUsername"/>
 <spring:message code="user.firstName" var="userFirstname"/>
@@ -39,7 +38,6 @@
 <spring:message code="user.creatingDate" var="userCreatingDate"/>
 <spring:message code="user.photo" var="userPhoto"/>
 <spring:message code="user.about" var="userAbout"/>
-
 
 <script type="text/javascript">
     $(function () {
@@ -129,21 +127,16 @@
     });
 </script>
 
-
 <div id="statistics">
-
     <table id="list">
         <tr>
             <td></td>
         </tr>
     </table>
-
     <div id="pager"></div>
-
 </div>
 
 <div id="profile">
-
     <div id="profile_header">
         <spring:message code="statistics.profile"/>
         <span id="usernameValue"></span>

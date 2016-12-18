@@ -3,7 +3,6 @@ package ru.lam.durak.users.service;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+
 import org.springframework.transaction.annotation.Transactional;
 import ru.lam.durak.users.UserRepository;
 import ru.lam.durak.users.models.Role;
@@ -20,27 +19,24 @@ import ru.lam.durak.users.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Repository
-@Transactional
-@Service("userService")
+@Service
 public class UserServiceImpl implements UserService {
-    private static final Logger LOG = LogManager.getLogger(UserServiceImpl.class);
 
+    private static final Logger logger = LogManager.getLogger(UserServiceImpl.class); // TODO Add logs
     @Autowired
     private UserRepository userRepository;
-
     @PersistenceContext
-    private EntityManager manager;
-
+    private EntityManager entityManager;
 
     @Override
     @Transactional
     public User update(User user) {
         User updatedUser = updateFields(user);
-        return manager.merge(updatedUser);
+        return entityManager.merge(updatedUser);
     }
 
     @Override
@@ -48,7 +44,6 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
     }
-
 
     @Override
     @Transactional(readOnly = true)
@@ -61,7 +56,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findOne(id);
     }
 
-
+    @Transactional(readOnly = true)
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -70,7 +65,6 @@ public class UserServiceImpl implements UserService {
     public User save(User user) {
         return userRepository.save(user);
     }
-
 
     @Override
     public void createAndSaveNewUser(User user) {
@@ -83,13 +77,11 @@ public class UserServiceImpl implements UserService {
         PasswordEncoder encoder = new BCryptPasswordEncoder(11);
         user.setPassword(encoder.encode(rawPassword));
 
-        DateTime currentTime = new DateTime();
-        user.setCreatingDate(currentTime);
+        user.setCreationDate(new Date());
         user.setEnabled(true);
 
         userRepository.save(user);
     }
-
 
     private User updateFields(User user){
         User oldUser = userRepository.findByUsername(user.getUsername());

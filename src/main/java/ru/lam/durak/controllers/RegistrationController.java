@@ -18,29 +18,25 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
-    private static final Logger LOG = LogManager.getLogger(RegistrationController.class);
+
+    private static final Logger logger = LogManager.getLogger(RegistrationController.class); // TODO: add logs
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private MessageSource messageSource;
 
     @RequestMapping(method = RequestMethod.GET)
     public String showRegistration(Model model, Locale locale) {
-        User user = new User();
-        model.addAttribute("user", user);
+        model.addAttribute("user", new User());
         model.addAttribute("title", messageSource.getMessage("registration.title", null, locale));
         model.addAttribute("locale", locale.toLanguageTag());
         return "registration";
     }
 
-
-
     @RequestMapping(method = RequestMethod.POST)
     public String processRegistration(@ModelAttribute("user") @Valid User user,
                                       BindingResult result, Model model, Locale locale) {
-
         if (result.hasErrors()) {
             model.addAttribute("error", messageSource.getMessage("registration.fail", null, locale));
             model.addAttribute("title", messageSource.getMessage("registration.title", null, locale));
@@ -48,8 +44,7 @@ public class RegistrationController {
             return "registration";
         }
 
-        String username = user.getUsername();
-        User registeredUser = userService.findByUsername(username);
+        User registeredUser = userService.findByUsername(user.getUsername());
 
         if(registeredUser != null){
             model.addAttribute("error", messageSource.getMessage("registration.userExist", null, locale));
@@ -65,13 +60,6 @@ public class RegistrationController {
         model.addAttribute("title", messageSource.getMessage("registration.done", null, locale));
         model.addAttribute("message", messageSource.getMessage("registration.done", null, locale));
         return "accept";
-    }
-
-    public UserService getUserService() {
-        return userService;
-    }
-    public void setUserService(UserService userService) {
-        this.userService = userService;
     }
 
 }

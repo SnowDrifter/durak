@@ -16,13 +16,12 @@ import java.util.HashMap;
 
 
 public class MultiplayerWebSocket extends TextWebSocketHandler {
-    private static final Logger LOG = LogManager.getLogger(MultiplayerWebSocket.class);
+
+    private static final Logger logger = LogManager.getLogger(MultiplayerWebSocket.class);
 
     @Autowired
     private UserService userService;
-
     private static HashMap<String, Game>  games = new HashMap<>();
-
     private Lobby lobby = new Lobby();
 
     @Override
@@ -30,7 +29,7 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         String username = session.getPrincipal().getName();
         lobby.addPlayer(username, session);
         lobby.updateLobbyView();
-        LOG.info("Open session for multiplayer");
+        logger.info("Open session for multiplayer");
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 public class AIPlayer implements Player {
+
     private Set<Card> hand = new HashSet<>();
     private Game game;
     private boolean take;
@@ -98,7 +99,6 @@ public class AIPlayer implements Player {
 
         return null;
     }
-
 
     @Override
     public Card defend(Card attackingCard) {
