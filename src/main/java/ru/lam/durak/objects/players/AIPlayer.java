@@ -1,6 +1,7 @@
 package ru.lam.durak.objects.players;
 
 
+import lombok.Data;
 import org.springframework.web.socket.WebSocketSession;
 import ru.lam.durak.objects.Card;
 import ru.lam.durak.objects.Game;
@@ -10,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Data
 public class AIPlayer implements Player {
 
     private Set<Card> hand = new HashSet<>();
@@ -154,37 +156,12 @@ public class AIPlayer implements Player {
         return null;
     }
 
-
-    public boolean isWin() {
-        return win;
-    }
-
-    public void setWin(boolean win) {
-        this.win = win;
-    }
-
-    public Set<Card> getHand() {
-        return hand;
-    }
-
-    public void setHand(Set<Card> hand) {
-        this.hand = hand;
-    }
-
     @Override
-    public boolean isTake() {
-        return take;
-    }
-
-    @Override
-    public void setTake(boolean take) {
-        this.take = take;
-    }
-
     public boolean isFinishMove() {
         return all;
     }
 
+    @Override
     public void setFinishMove(boolean all) {
         this.all = all;
     }

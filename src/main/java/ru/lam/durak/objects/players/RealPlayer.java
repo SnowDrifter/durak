@@ -1,5 +1,6 @@
 package ru.lam.durak.objects.players;
 
+import lombok.Data;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import ru.lam.durak.objects.Card;
@@ -10,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Data
 public class RealPlayer implements Player {
 
     private String username;
@@ -149,56 +151,6 @@ public class RealPlayer implements Player {
     }
 
     public RealPlayer() {
-    }
-
-    public boolean isWin() {
-        return win;
-    }
-    public void setWin(boolean win) {
-        this.win = win;
-    }
-
-    public Set<Card> getHand() {
-        return hand;
-    }
-    public void setHand(Set<Card> hand) {
-        this.hand = hand;
-    }
-
-    public boolean isTake() {
-        return take;
-    }
-    public void setTake(boolean take) {
-        this.take = take;
-    }
-
-    public boolean isFinishMove() {
-        return finishMove;
-    }
-    public void setFinishMove(boolean finishMove) {
-        this.finishMove = finishMove;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Game getGame() {
-        return game;
-    }
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    @Override
-    public WebSocketSession getSession() {
-        return session;
-    }
-    public void setSession(WebSocketSession session) {
-        this.session = session;
     }
 
 }

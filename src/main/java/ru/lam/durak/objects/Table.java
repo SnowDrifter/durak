@@ -1,8 +1,11 @@
 package ru.lam.durak.objects;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class Table {
 
     private List<Card> oldCards = new ArrayList<>();
@@ -44,19 +47,4 @@ public class Table {
         return oldCards.isEmpty() && currentCard == null;
     }
 
-    public Card getCurrentCard() {
-        return currentCard;
-    }
-
-    public void setCurrentCard(Card currentCard) {
-        this.currentCard = currentCard;
-    }
-
-    public List<Card> getOldCards() {
-        return oldCards;
-    }
-
-    public void setOldCards(List<Card> oldCards) {
-        this.oldCards = oldCards;
-    }
 }
