@@ -11,7 +11,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
         <spring.version>4.3.4.RELEASE</spring.version>
         <spring.security.version>4.2.0.RELEASE</spring.security.version>
         <tiles.version>3.0.7</tiles.version>
@@ -92,7 +91,6 @@
             <version>2.2</version>
         </dependency>
 
-
         <!-- LOGGING -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -109,7 +107,6 @@
             <artifactId>juli</artifactId>
             <version>6.0.45</version>
         </dependency>
-
 
         <!-- SPRING FRAMEWORK -->
         <dependency>
@@ -153,7 +150,6 @@
             <version>${spring.version}</version>
         </dependency>
 
-
         <!-- SPRING SECURITY -->
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -176,7 +172,6 @@
             <version>${spring.security.version}</version>
         </dependency>
 
-
         <!-- SPRING DATA -->
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -193,7 +188,6 @@
             <artifactId>spring-data-mongodb</artifactId>
             <version>1.9.2.RELEASE</version>
         </dependency>
-
 
         <!-- TILES -->
         <dependency>
@@ -222,14 +216,12 @@
             <version>${tiles.version}</version>
         </dependency>
 
-
         <!-- DATABASE -->
         <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
+            <version>42.2.5</version>
         </dependency>
-
 
         <!-- HIBERNATE -->
         <dependency>
@@ -243,7 +235,6 @@
             <version>${hibernate.version}</version>
         </dependency>
 
-
         <!-- VALIDATION -->
         <dependency>
             <groupId>javax.validation</groupId>
@@ -255,7 +246,6 @@
             <artifactId>hibernate-validator</artifactId>
             <version>5.2.4.Final</version>
         </dependency>
-
 
         <!-- TESTING -->
         <dependency>
@@ -275,7 +265,6 @@
             <version>${spring.version}</version>
         </dependency>
 
-
         <!-- AOP -->
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -287,7 +276,6 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.8.9</version>
         </dependency>
-
 
         <!-- OTHER -->
         <dependency>
