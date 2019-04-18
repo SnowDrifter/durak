@@ -185,6 +185,11 @@
             <artifactId>tiles-core</artifactId>
             <version>${tiles.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-jsp</artifactId>
+            <version>${tiles.version}</version>
+        </dependency>
 
         <!-- DATABASE -->
         <dependency>
@@ -204,7 +209,7 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-       <dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate.version}</version>
