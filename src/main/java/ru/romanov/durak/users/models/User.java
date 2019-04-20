@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -26,9 +25,7 @@ import java.util.stream.Collectors;
 @Data
 @Entity
 @Table(name = "\"user\"")
-public class User implements UserDetails, Serializable, Persistable<Long> {
-
-    private static final long serialVersionUID = 1L;
+public class User implements UserDetails, Persistable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
