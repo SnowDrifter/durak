@@ -7,29 +7,20 @@ import ru.romanov.durak.objects.Card;
 import ru.romanov.durak.objects.Game;
 import ru.romanov.durak.objects.Table;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
-public class AIPlayer implements Player {
-
-    private Set<Card> hand = new HashSet<>();
-    private Game game;
-    private boolean take;
-    private boolean all;
-    private boolean win;
+public class AIPlayer extends Player {
 
     public AIPlayer(Game game) {
         this.game = game;
-        take = false;
-        all = false;
-        win = false;
     }
 
     @Override
     public Card attack() {
-        if (game.checkWin()) return null;
+        if (game.checkWin()) {
+            return null;
+        }
 
         Card attackingCard;
 
@@ -54,20 +45,15 @@ public class AIPlayer implements Player {
     }
 
     private Card firstAttack() {
-        Card cardForAttacking;
-
-        cardForAttacking = tryingFirstAttackWithoutTrumps();
-
+        Card cardForAttacking = tryingFirstAttackWithoutTrumps();
         if (cardForAttacking == null) {
             cardForAttacking = tryingFirstFullAttack();
-            return cardForAttacking;
-        } else {
-            return cardForAttacking;
         }
+
+        return cardForAttacking;
     }
 
     private Card tryingFirstAttackWithoutTrumps() {
-
         for (Card tryingCard : hand) {
             if (tryingCard.isTrump()) {
                 continue;
@@ -132,9 +118,7 @@ public class AIPlayer implements Player {
 
     private Card defendVersusTrump(Card attackingCard) {
         for (Card tryingCard : hand) {
-
             if (tryingCard.isTrump() && tryingCard.getPower() > attackingCard.getPower()) {
-
                 hand.remove(tryingCard);
                 return tryingCard;
             }
@@ -144,7 +128,6 @@ public class AIPlayer implements Player {
 
     private Card defendVersusSimpleCard(Card attackingCard) {
         for (Card trying : hand) {
-
             if (trying.getSuit() == attackingCard.getSuit() && trying.getPower() > attackingCard.getPower()) {
                 hand.remove(trying);
                 return trying;
@@ -154,16 +137,6 @@ public class AIPlayer implements Player {
             }
         }
         return null;
-    }
-
-    @Override
-    public boolean isFinishMove() {
-        return all;
-    }
-
-    @Override
-    public void setFinishMove(boolean all) {
-        this.all = all;
     }
 
     @Override

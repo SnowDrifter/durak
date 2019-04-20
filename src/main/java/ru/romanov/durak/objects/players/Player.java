@@ -1,43 +1,39 @@
 package ru.romanov.durak.objects.players;
 
 
+import lombok.Data;
 import org.springframework.web.socket.WebSocketSession;
 import ru.romanov.durak.objects.Card;
+import ru.romanov.durak.objects.Game;
 
+import java.util.HashSet;
 import java.util.Set;
 
-public interface Player {
+@Data
+public abstract class Player {
 
-    Card attack();
+    protected Set<Card> hand = new HashSet<>();
+    protected Game game;
+    protected boolean take;
+    protected boolean finishMove;
+    protected boolean win;
 
-    Card defend(Card card);
+    abstract public Card attack();
 
-    boolean isWin();
+    abstract public Card defend(Card card);
 
-    Set<Card> getHand();
+    abstract public void resetStatus();
 
-    void setWin(boolean win);
+    abstract public void selectCard(String cardName);
 
-    boolean isTake();
+    abstract public void yourMove();
 
-    boolean isFinishMove();
+    abstract public void enemyMove();
 
-    void setTake(boolean status);
+    abstract public String getUsername();
 
-    void setFinishMove(boolean status);
+    abstract public void sendMessage(String message);
 
-    void sendMessage(String message);
-
-    void resetStatus();
-
-    String getUsername();
-
-    void selectCard(String cardName);
-
-    void yourMove();
-
-    void enemyMove();
-
-    WebSocketSession getSession();
+    abstract public WebSocketSession getSession();
 
 }

@@ -4,23 +4,15 @@ import lombok.Data;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import ru.romanov.durak.objects.Card;
-import ru.romanov.durak.objects.Game;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
-public class RealPlayer implements Player {
+public class RealPlayer extends Player {
 
     private String username;
     private WebSocketSession session;
-    private Game game;
-    private boolean take;
-    private boolean finishMove;
-    private boolean win;
-    private Set<Card> hand = new HashSet<>();
     private Card lastClickedCard;
 
     @Override
@@ -47,7 +39,6 @@ public class RealPlayer implements Player {
         List<Card> oldCardsOnTable = game.getTable().getOldCards();
 
         while (!finishMove) {
-
             if (oldCardsOnTable.size() == 0 && lastClickedCard != null) {
                 // Select card for empty table.
                 Card resultCard = lastClickedCard;
@@ -100,7 +91,7 @@ public class RealPlayer implements Player {
 
                 if (checkDefendCard(trying, tempEnemyCard)) {
 
-                     if (lastClickedCard.isTrump()) {
+                    if (lastClickedCard.isTrump()) {
                         trying.setPower(lastClickedCard.getPower() - 10);  // Reset power after check.
                     }
 
@@ -123,11 +114,10 @@ public class RealPlayer implements Player {
         return null;
     }
 
-    private boolean checkDefendCard(Card trying, Card tempEnemyCard){
+    private boolean checkDefendCard(Card trying, Card tempEnemyCard) {
         return (tempEnemyCard.getPower() < trying.getPower() && trying.isTrump()) ||
-               (tempEnemyCard.getSuit() == trying.getSuit() && tempEnemyCard.getPower() < trying.getPower());
+                (tempEnemyCard.getSuit() == trying.getSuit() && tempEnemyCard.getPower() < trying.getPower());
     }
-
 
     @Override
     public void sendMessage(String message) {
@@ -148,9 +138,6 @@ public class RealPlayer implements Player {
     @Override
     public void enemyMove() {
         sendMessage("enemy_move");
-    }
-
-    public RealPlayer() {
     }
 
 }
