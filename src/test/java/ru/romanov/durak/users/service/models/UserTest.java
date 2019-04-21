@@ -2,7 +2,7 @@ package ru.romanov.durak.users.service.models;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.romanov.durak.users.models.User;
+import ru.romanov.durak.user.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
