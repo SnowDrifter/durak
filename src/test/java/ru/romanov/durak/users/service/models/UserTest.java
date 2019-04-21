@@ -1,15 +1,15 @@
 package ru.romanov.durak.users.service.models;
 
-import static org.junit.Assert.*;
-
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import ru.romanov.durak.users.models.User;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.junit.Assert.*;
 
 
 public class UserTest {
@@ -17,6 +17,8 @@ public class UserTest {
     private User admin;
     private User user1;
     private User user2;
+
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MM yyyy");
 
     @Before
     public void testInit() {
@@ -37,13 +39,13 @@ public class UserTest {
 
     @Test
     public void testEquals() {
-        assertFalse(admin.equals(user1));
-        assertFalse(user1.equals(admin));
+        assertNotEquals(admin, user1);
+        assertNotEquals(user1, admin);
 
-        assertTrue(user1.equals(user2));
-        assertTrue(user2.equals(user1));
+        assertEquals(user1, user2);
+        assertEquals(user2, user1);
 
-        assertFalse(admin.equals(null));
+        assertNotEquals(admin, null);
     }
 
     @Test
@@ -60,12 +62,12 @@ public class UserTest {
 
     @Test
     public void testCreatingDateString() {
-        assertEquals("31 03 2016", admin.getCreatingDateString());
+        assertEquals("31 03 2016", DATE_FORMAT.format(admin.getCreationDate()));
     }
 
     @Test
     public void testBirthDateString() {
-        assertEquals("12 02 2014", admin.getBirthDateString());
+        assertEquals("12 02 2014", DATE_FORMAT.format(admin.getBirthDate()));
     }
 
 }

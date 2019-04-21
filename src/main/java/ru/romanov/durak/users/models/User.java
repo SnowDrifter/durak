@@ -2,7 +2,7 @@ package ru.romanov.durak.users.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.domain.Persistable;
@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -25,6 +24,8 @@ import java.util.stream.Collectors;
 @Data
 @Entity
 @Table(name = "\"user\"")
+@ToString(of = "username")
+@EqualsAndHashCode(of = "username")
 public class User implements UserDetails, Persistable<Long> {
 
     @Id
@@ -74,8 +75,8 @@ public class User implements UserDetails, Persistable<Long> {
     private Date creationDate;
     private boolean enabled;
 
-    @Transient
     @Override
+    @Transient
     public boolean isNew() {
         return id == null;
     }
@@ -111,48 +112,5 @@ public class User implements UserDetails, Persistable<Long> {
         return true;
     }
 
-    @Transient
-    public String getBirthDateString() {
-        String birthDateString = "";
-        SimpleDateFormat format = new SimpleDateFormat("dd MM yyyy");
-
-        if (birthDate != null) {
-            birthDateString = format.format(birthDate);
-        }
-
-        return birthDateString;
-    }
-
-    @Transient
-    public String getCreatingDateString() {
-        String creatingDateString = "";
-        SimpleDateFormat format = new SimpleDateFormat("dd MM yyyy");
-
-        if (creationDate != null) {
-            creatingDateString = format.format(creationDate);
-        }
-
-        return creatingDateString;
-    }
-
-    @Override
-    public String toString() {
-        return username;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        return username.equals(user.username);
-    }
-
-    @Override
-    public int hashCode() {
-        return username.hashCode();
-    }
 }
 
