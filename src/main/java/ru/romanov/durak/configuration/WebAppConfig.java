@@ -65,18 +65,15 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements WebSocketCo
     public TilesConfigurer tilesConfigurer() {
         TilesConfigurer tilesConfigurer = new TilesConfigurer();
         tilesConfigurer.setCheckRefresh(true);
-        tilesConfigurer.setDefinitionsFactoryClass(TilesConfig.class);
-
-        TilesConfig.addDefinitions();
-
+        tilesConfigurer.setDefinitionsFactoryClass(TilesDefinitionsFactory.class);
         return tilesConfigurer;
     }
 
     @Bean
     public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver cmr = new CommonsMultipartResolver();
-        cmr.setMaxUploadSize(1000000);
-        return cmr;
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(1000000);
+        return multipartResolver;
     }
 
     @Bean
@@ -91,7 +88,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements WebSocketCo
     public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource resource = new ReloadableResourceBundleMessageSource();
         resource.setBasenames("/WEB-INF/locales/messages", "/WEB-INF/locales/application");
-        resource.setCacheSeconds(1);
+        resource.setCacheSeconds(5 * 60);
         resource.setDefaultEncoding("UTF-8");
         return resource;
     }
