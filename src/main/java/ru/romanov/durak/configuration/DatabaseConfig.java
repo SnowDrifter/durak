@@ -1,6 +1,7 @@
 package ru.romanov.durak.configuration;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,10 +21,10 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@PropertySource(value = "classpath:database.properties")
-@ComponentScan("ru.romanov.durak")
-@EnableJpaRepositories(basePackages = {"ru.romanov.durak"})
 @EnableTransactionManagement
+@ComponentScan("ru.romanov.durak")
+@PropertySource(value = "classpath:database.properties")
+@EnableJpaRepositories(basePackages = {"ru.romanov.durak"})
 public class DatabaseConfig {
 
     @Value("${db.driver}")
@@ -51,13 +52,10 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public EntityManagerFactory entityManagerFactory() {
+    @Autowired
+    public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
-        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-        factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("ru.romanov.durak");
-        factory.setDataSource(dataSource());
 
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
@@ -66,15 +64,18 @@ public class DatabaseConfig {
         jpaProperties.put("hibernate.hbm2ddl.auto", "update");
         jpaProperties.put("hibernate.connection.charSet", "UTF-8");
 
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("ru.romanov.durak");
+        factory.setDataSource(dataSource);
         factory.setJpaProperties(jpaProperties);
         factory.afterPropertiesSet();
         return factory.getObject();
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager() {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory());
-        return transactionManager;
+    @Autowired
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
     }
 }
