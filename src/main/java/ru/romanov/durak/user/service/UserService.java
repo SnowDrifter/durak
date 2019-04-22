@@ -20,4 +20,6 @@ public interface UserService extends UserDetailsService{
 
     void createAndSaveNewUser(User user);
 
+    boolean existsByUsername(String username);
+
 }

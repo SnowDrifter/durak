@@ -1,14 +1,13 @@
 package ru.romanov.durak.controller;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ru.romanov.durak.user.model.User;
 import ru.romanov.durak.user.service.UserService;
 
@@ -18,8 +17,6 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
-
-    private static final Logger logger = LogManager.getLogger(RegistrationController.class); // TODO: add logs
 
     @Autowired
     private UserService userService;
@@ -35,7 +32,7 @@ public class RegistrationController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String processRegistration(@ModelAttribute("user") @Valid User user,
+    public String processRegistration(@ModelAttribute @Valid User user,
                                       BindingResult result, Model model, Locale locale) {
         if (result.hasErrors()) {
             model.addAttribute("error", messageSource.getMessage("registration.fail", null, locale));
@@ -44,19 +41,16 @@ public class RegistrationController {
             return "registration";
         }
 
-        User registeredUser = userService.findByUsername(user.getUsername());
-
-        if(registeredUser != null){
+        if (userService.existsByUsername(user.getUsername())) {
             model.addAttribute("error", messageSource.getMessage("registration.userExist", null, locale));
             model.addAttribute("title", messageSource.getMessage("registration.title", null, locale));
             model.addAttribute("user", user);
             return "registration";
         }
 
-        model.asMap().clear();
-
         userService.createAndSaveNewUser(user);
 
+        model.asMap().clear();
         model.addAttribute("title", messageSource.getMessage("registration.done", null, locale));
         model.addAttribute("message", messageSource.getMessage("registration.done", null, locale));
         return "accept";

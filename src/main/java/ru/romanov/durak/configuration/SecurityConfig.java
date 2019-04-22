@@ -29,8 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
 
     @Autowired
-    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+    public void configureGlobalSecurity(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
 
     @Override
@@ -42,7 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout().permitAll().logoutSuccessUrl("/home");
 
-        http.authorizeRequests().antMatchers("/lobby").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+        http.authorizeRequests()
+                .antMatchers("/lobby").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/edit").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/multiplayer").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/resources/**").permitAll();
@@ -52,13 +53,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(1209600);
     }
 
-    @Bean(name = "bcrypt")
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(11);
     }
 
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
+    private PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
         tokenRepositoryImpl.setDataSource(dataSource);
         return tokenRepositoryImpl;
