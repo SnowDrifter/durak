@@ -5,9 +5,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import ru.romanov.durak.user.model.User;
 import ru.romanov.durak.user.service.UserService;
 
@@ -23,7 +21,7 @@ public class RegistrationController {
     @Autowired
     private MessageSource messageSource;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String showRegistration(Model model, Locale locale) {
         model.addAttribute("user", new User());
         model.addAttribute("title", messageSource.getMessage("registration.title", null, locale));
@@ -31,7 +29,7 @@ public class RegistrationController {
         return "registration";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public String processRegistration(@ModelAttribute @Valid User user,
                                       BindingResult result, Model model, Locale locale) {
         if (result.hasErrors()) {

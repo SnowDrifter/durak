@@ -43,38 +43,38 @@ public class MainController {
     @Autowired
     private MessageSource messageSource;
 
-    @RequestMapping(value = {"/home", "/"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/home", "/"})
     public String home(Model model, Locale locale) {
         model.addAttribute("title", messageSource.getMessage("home.title", null, locale));
         return "home";
     }
 
-    @RequestMapping(value = "/singleplayer", method = RequestMethod.GET)
-    public String single(Model model, Locale locale) {
+    @GetMapping(value = "/singleplayer")
+    public String singleplayer(Model model, Locale locale) {
         model.addAttribute("title", messageSource.getMessage("game.singleplayer.title", null, locale));
         return "singleplayer";
     }
 
-    @RequestMapping(value = "/multiplayer", method = RequestMethod.GET)
+    @GetMapping(value = "/multiplayer")
     public String multi(Model model, Locale locale) {
         model.addAttribute("title", messageSource.getMessage("game.multiplayer.title", null, locale));
         return "multiplayer";
     }
 
-    @RequestMapping(value = "/rules", method = RequestMethod.GET)
+    @GetMapping(value = "/rules")
     public String rules(Model model, Locale locale) {
         model.addAttribute("title", messageSource.getMessage("rules.title", null, locale));
         return "rules";
     }
 
-    @RequestMapping(value = "/stat", method = RequestMethod.GET)
+    @GetMapping(value = "/stat")
     public String statistics(Model model, Locale locale) {
         model.addAttribute("title", messageSource.getMessage("statistics.title", null, locale));
         model.addAttribute("locale", locale);
         return "statistics";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping(value = "/login")
     public ModelAndView login(@RequestParam(value = "error", required = false) String error, Locale locale) {
 
         ModelAndView model = new ModelAndView();
@@ -86,7 +86,7 @@ public class MainController {
         return model;
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @GetMapping(value = "/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
@@ -103,7 +103,7 @@ public class MainController {
         return "redirect:/home";
     }
 
-    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+    @GetMapping(value = "/accessDenied")
     public ModelAndView accessDenied(Principal user, Locale locale) {
         ModelAndView model = new ModelAndView();
 
@@ -118,8 +118,8 @@ public class MainController {
         return model;
     }
 
-    @RequestMapping(value = "/stat/listgrid", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
+    @GetMapping(value = "/stat/listgrid")
     public UserGrid listGrid(@RequestParam(value = "page", required = false) Integer page,
                              @RequestParam(value = "rows", required = false) Integer rows,
                              @RequestParam(value = "sidx", required = false) String sortBy,
@@ -158,7 +158,7 @@ public class MainController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/profile/{username}", method = RequestMethod.GET)
+    @GetMapping(value = "/profile/{username}")
     public String profile(@PathVariable("username") String username) {
         User user = userService.findByUsername(username);
 
@@ -174,7 +174,7 @@ public class MainController {
         return writer.toString();
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @PostMapping(value = "/edit")
     public String edit(@Valid User user, BindingResult bindingResult, Model model, Locale locale,
                        @RequestParam("file") MultipartFile file) throws IOException {
         logger.info("Updating contact for " + user.getUsername());
@@ -210,7 +210,7 @@ public class MainController {
         return "accept";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    @GetMapping(value = "/edit")
     public String showEdit(Model model, Locale locale, Principal principal) {
 
         model.addAttribute("user", userService.findByUsername(principal.getName()));
@@ -220,8 +220,8 @@ public class MainController {
         return "edit-profile";
     }
 
-    @RequestMapping(value = "/photo/{id}", method = RequestMethod.GET)
     @ResponseBody
+    @GetMapping(value = "/photo/{id}")
     public byte[] downloadPhoto(@PathVariable("id") Long id) {
         User user = userService.findById(id);
 
