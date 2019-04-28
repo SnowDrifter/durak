@@ -1,0 +1,62 @@
+#registration{
+  margin-left: 20%;
+  margin-right: 20%;
+  padding-bottom: 10px;
+  position: relative;
+  border: 2px solid @borders;
+  background: @main_background;
+  border-radius: 5px;
+}
+#registration_header{
+  height: 60px;
+  line-height: 60px;
+  background: darken(desaturate(@main_background, 18%), 12%);
+  text-align: center;
+  font-size: 1.5em;
+}
+#registration td{
+  padding: 15px 15px 0 5px;
+}
+#registration table{
+  margin-top: 10px;
+  border-collapse: collapse;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 80%;
+}
+#registration td:first-child{
+  padding-left: 10%;
+  width: 40%;
+}
+#registration_submit{
+  margin: 20px 40% 10px 40%;
+  background: #eee;
+  border-radius: 5px;
+  border: 1px solid @borders;
+  height: 35px;
+  width: 90px;
+}
+#registration .field{
+  width: 200px;
+}
+#registration .message{
+  margin-top: 10px;
+  text-align: center;
+  font-size: 1.5em;
+  height: 30px;
+  line-height: 30px;
+}
+.errors{
+  margin-left: 100px;
+  height: 3em;
+  text-align: left;
+  line-height: 0.9em;
+  font-size: 0.8em;
+}
+tr:nth-child(6){
+  border-bottom: 1px solid @borders;
+}
+.birth_date{
+  position: relative;
+  z-index: 3;
+}

@@ -1,0 +1,47 @@
+
+
+#lobby{
+  float: left;
+  margin-left: 5%;
+  background: @main_background;
+  border: 2px solid @borders;
+  border-radius: 5px;
+  width: 60%;
+  height: 768px;
+}
+#lobby_header{
+  background: darken(desaturate(@main_background, 18%), 12%);
+  height: 60px;
+  text-align: center;
+  font-size: 1.5em;
+  line-height: 60px;
+}
+#users{
+  max-height: 690px;
+  overflow: auto;
+}
+.user{
+  border: 1px solid @borders;
+  cursor: pointer;
+  background-color: @lobby_user_background;
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-left: 20px;
+  padding-left: 10px;
+  border-radius: 4px;
+  height: 40px;
+  width: auto;
+  font-size: 1.2em;
+  line-height: 40px;
+  transition: all .3s ease;
+}
+.user:hover{
+  background-color: @lobby_user_background_hover;
+  transition: all .3s ease;
+}
+#empty_lobby{
+  font-size: 1.25em;
+  text-align: center;
+  padding-top: 40px;
+  line-height: 500px;
+}

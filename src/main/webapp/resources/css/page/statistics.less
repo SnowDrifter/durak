@@ -1,0 +1,43 @@
+#statistics{
+  margin-left: 10%;
+  position: relative;
+  float: left;
+}
+#profile{
+  margin-left: 2%;
+  float: left;
+  width: 40%;
+  height: 40%;
+  position: relative;
+  background: @main_background;
+  border-radius: 5px;
+  border: 1px solid @borders;
+  font-size: 1.1em;
+}
+#profile_header{
+  height: 40px;
+  line-height: 40px;
+  background: darken(desaturate(@main_background, 18%), 12%);;
+  text-align: center;
+  font-size: 1.2em;
+}
+#profile_data{
+  align-items: center;
+  margin: 10px 20% 10px 20%;
+}
+#profile_data td{
+  padding: 5px 50px 0 0;
+}
+#profile #photo{
+  margin: 10px;
+  float: right;
+  max-width: 100px;
+}
+#photo img{
+  vertical-align: bottom;
+}
+.photo_borders{
+  border: 3px solid @borders;
+  border-radius: 3px;
+  box-shadow: 2px 2px 7px darken(desaturate(@borders, 30%), 5%);
+}
