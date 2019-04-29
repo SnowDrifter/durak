@@ -33,6 +33,10 @@
                  {name: 'loses', index: 'loses', width: "20%"},
                  {name: 'totalGames', index: 'totalGames', width: "20%"}
             ],
+            prmNames: {
+                sort: "sortBy",
+                order: "order"
+            },
             jsonReader: {
                 root: "usersData",
                 page: "currentPage",
@@ -62,9 +66,9 @@
                         $("#totalGamesValue").text(data.totalGames);
                         $("#firstNameValue").text(data.firstName ? data.firstName : "-");
                         $("#lastNameValue").text(data.lastName ? data.lastName : "-");
-                        $("#birthDateValue").text(data.birthDateString ? data.birthDateString : "-");
+                        $("#birthDateValue").text(data.birthDate ? new Date(data.birthDate).toLocaleDateString() : "-");
                         $("#about").text(data.about ? data.about : "-");
-                        $("#creatingDateValue").text(data.creatingDateString);
+                        $("#creatingDateValue").text(new Date(data.creationDate).toLocaleDateString());
 
                         if(data.photo){
                             var img = document.createElement("IMG");
@@ -91,7 +95,7 @@
     <div id="pager"></div>
 </div>
 
-<div id="profile">
+<div id="profile" style="display: none">
     <div id="profile_header">
         <spring:message code="statistics.profile"/>
         <span id="usernameValue"></span>

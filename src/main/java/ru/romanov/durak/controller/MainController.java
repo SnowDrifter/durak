@@ -2,7 +2,6 @@ package ru.romanov.durak.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Lists;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,41 +119,14 @@ public class MainController {
 
     @ResponseBody
     @GetMapping(value = "/statistic/data")
-    public UserGrid listGrid(@RequestParam(value = "page", required = false) Integer page,
-                             @RequestParam(value = "rows", required = false) Integer rows,
-                             @RequestParam(value = "sidx", required = false) String sortBy,
-                             @RequestParam(value = "sord", required = false) String order) {
-        Sort sort = null;
-        String orderBy = sortBy;
-        PageRequest pageRequest;
-
-        if (orderBy != null && orderBy.equals("wins")) {
-            orderBy = "wins";
-        }
-
-        if (orderBy != null && order != null) {
-            if (order.equals("desc")) {
-                sort = new Sort(Sort.Direction.DESC, orderBy);
-            } else {
-                sort = new Sort(Sort.Direction.ASC, orderBy);
-            }
-        }
-
-        if (sort != null) {
-            pageRequest = new PageRequest(page - 1, rows, sort);
-        } else {
-            pageRequest = new PageRequest(page - 1, rows);
-        }
-
+    public UserGrid listGrid(@RequestParam(defaultValue = "1") Integer page,
+                             @RequestParam(defaultValue = "20") Integer rows,
+                             @RequestParam(defaultValue = "wins") String sortBy,
+                             @RequestParam(defaultValue = "desc") String order) {
+        Sort sort = new Sort(Sort.Direction.valueOf(order.toUpperCase()), sortBy);
+        PageRequest pageRequest = new PageRequest(page - 1, rows, sort);
         Page<User> userPage = userService.findAllByPage(pageRequest);
-
-        UserGrid usersGrid = new UserGrid();
-        usersGrid.setCurrentPage(userPage.getNumber() + 1);
-        usersGrid.setTotalPages(userPage.getTotalPages());
-        usersGrid.setTotalRecords(userPage.getTotalElements());
-        usersGrid.setUsersData(Lists.newArrayList(userPage.iterator()));
-
-        return usersGrid;
+        return new UserGrid(userPage);
     }
 
     @ResponseBody
