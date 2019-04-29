@@ -74,7 +74,7 @@ function initStatstics(){
                         img.src = 'data:image/jpeg;base64,' + data.photo;
                         $('#photo').html(img).addClass("photo_borders");
                     }else{
-                        $("#photo").removeClass("photo_borders").empty().append($(".standart_photo").clone());
+                        $("#photo").removeClass("photo_borders").empty().append($(".standard_photo").clone());
                     }
                 }
             });

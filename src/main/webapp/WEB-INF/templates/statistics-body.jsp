@@ -116,7 +116,7 @@
                             img.src = 'data:image/jpeg;base64,' + data.photo;
                             $('#photo').html(img).addClass("photo_borders");
                         }else{
-                            $("#photo").removeClass("photo_borders").empty().append($(".standart_photo").clone());
+                            $("#photo").removeClass("photo_borders").empty().append($(".standard_photo").clone());
                         }
 
                     }
@@ -189,7 +189,7 @@
 </div>
 
 <div id="stump" style="display:none">
-    <img class="standart_photo" src='${pageContext.request.contextPath}/resources/images/standart_photo.png'/>
+    <img class="standart_photo" src='${pageContext.request.contextPath}/resources/images/standard_photo.png'/>
 </div>
 
 
