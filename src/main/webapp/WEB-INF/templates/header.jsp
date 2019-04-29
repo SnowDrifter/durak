@@ -15,7 +15,7 @@
             <spring:message code="home"/></a></span>
         <span class="contact"><a href="${pageContext.request.contextPath}/rules">
             <spring:message code="rules.title"/></a></span>
-        <span class="contact"><a href="${pageContext.request.contextPath}/stat">
+        <span class="contact"><a href="${pageContext.request.contextPath}/statistic">
             <spring:message code="statistics.title"/></a></span>
 
         <security:authorize access="isAnonymous()">

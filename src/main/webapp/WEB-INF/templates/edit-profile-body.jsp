@@ -41,7 +41,7 @@
                 <img class="photo_borders" src='${pageContext.request.contextPath}/photo/${user.id}'>
             </c:when>
             <c:otherwise>
-                <img class="standart_photo" src='${pageContext.request.contextPath}/resources/images/standard_photo.png'/>
+                <img class="standard_photo" src='${pageContext.request.contextPath}/resources/images/standard_photo.png'/>
             </c:otherwise>
         </c:choose>
     </div>

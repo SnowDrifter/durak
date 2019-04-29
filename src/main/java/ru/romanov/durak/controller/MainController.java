@@ -67,8 +67,8 @@ public class MainController {
         return "rules";
     }
 
-    @GetMapping(value = "/stat")
-    public String statistics(Model model, Locale locale) {
+    @GetMapping(value = "/statistic")
+    public String statistic(Model model, Locale locale) {
         model.addAttribute("title", messageSource.getMessage("statistics.title", null, locale));
         model.addAttribute("locale", locale);
         return "statistics";
@@ -119,7 +119,7 @@ public class MainController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/stat/listgrid")
+    @GetMapping(value = "/statistic/data")
     public UserGrid listGrid(@RequestParam(value = "page", required = false) Integer page,
                              @RequestParam(value = "rows", required = false) Integer rows,
                              @RequestParam(value = "sidx", required = false) String sortBy,
