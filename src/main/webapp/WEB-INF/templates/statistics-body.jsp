@@ -3,9 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 
-<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/jqgrid/css/ui.jqgrid.css"/>
+<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/jqgrid/css/ui.jqgrid.min.css"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/jqgrid/js/jquery.jqGrid.min.js"><jsp:text/></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jqgrid/js/i18n/grid.locale-${locale}.js"><jsp:text/></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jqgrid/js/i18n/grid.locale-${locale}.min.js"><jsp:text/></script>
 
 <spring:message code="statistics.title" var="userList"/>
 <spring:message code="user.username" var="username"/>

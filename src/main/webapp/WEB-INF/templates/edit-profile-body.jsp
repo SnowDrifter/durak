@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/jQueryUI/ui/i18n/datepicker-${locale}.js">
+        src="${pageContext.request.contextPath}/resources/js/jQueryUI/ui/i18n/datepicker-${locale}.min.js">
     <jsp:text/>
 </script>
 
@@ -38,7 +38,7 @@
     <div id="photo">
         <c:choose>
             <c:when test="${not empty user.photo}">
-                <img class="photo_borders" src='${pageContext.request.contextPath}/photo/${user.id}'>
+                <img class="photo_borders" src='${pageContext.request.contextPath}/profile/${user.id}/photo'>
             </c:when>
             <c:otherwise>
                 <img class="standard_photo" src='${pageContext.request.contextPath}/resources/images/standard_photo.png'/>

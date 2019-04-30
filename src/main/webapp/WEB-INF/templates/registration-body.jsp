@@ -3,14 +3,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/jQueryUI/ui/i18n/datepicker-${locale}.js">
-    <jsp:text/>
-</script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jQueryUI/ui/i18n/datepicker-${locale}.min.js"><jsp:text/></script>
 
 <script type="text/javascript">
     $(function () {
-
         $('#birthDate').datepicker({
             dateFormat: 'dd mm yy',
             changeYear: true,
