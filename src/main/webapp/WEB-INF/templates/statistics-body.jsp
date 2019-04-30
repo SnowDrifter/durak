@@ -43,7 +43,7 @@
                 total: "totalPages",
                 records: "totalRecords",
                 repeatitems: false,
-                id: "username"
+                id: "id"
             },
             pager: '#pager',
             rowNum: 20,
@@ -54,9 +54,9 @@
             width: 650,
             height: 550,
             caption: '${userList}',
-            onSelectRow: function (username) {
+            onSelectRow: function (id) {
                 $.ajax({
-                    url: "/profile/" + username,
+                    url: "/profile/" + id,
                     type: "GET",
                     dataType: "json",
                     success: function (data) {

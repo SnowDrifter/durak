@@ -130,20 +130,9 @@ public class MainController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/profile/{username}")
-    public String profile(@PathVariable("username") String username) {
-        User user = userService.findByUsername(username);
-
-        StringWriter writer = new StringWriter();
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            mapper.writeValue(writer, user);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return writer.toString();
+    @GetMapping(value = "/profile/{id}")
+    public User profile(@PathVariable long id) {
+        return userService.findById(id);
     }
 
     @PostMapping(value = "/edit")
@@ -159,11 +148,7 @@ public class MainController {
         }
 
         if (bindingResult.hasErrors()) {
-            logger.info("Result has errors:");
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                logger.info(error.toString());
-            }
-
+            logger.info("Result has errors: " + bindingResult.getFieldErrorCount());
             model.addAttribute("title", messageSource.getMessage("edit.title", null, locale));
             model.addAttribute("user", user);
             return "edit-profile";
