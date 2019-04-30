@@ -61,8 +61,9 @@ public class User implements UserDetails, Persistable<Long> {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
-    @Basic(fetch = FetchType.LAZY)
     @Lob
+    @JsonIgnore
+    @Basic(fetch = FetchType.LAZY)
     private byte[] photo;
 
     private String about;
