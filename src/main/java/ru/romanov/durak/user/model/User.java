@@ -2,7 +2,10 @@ package ru.romanov.durak.user.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.domain.Persistable;
@@ -111,6 +114,11 @@ public class User implements UserDetails, Persistable<Long> {
     @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    @JsonProperty
+    public boolean hasPhoto() {
+        return photo != null;
     }
 
 }
