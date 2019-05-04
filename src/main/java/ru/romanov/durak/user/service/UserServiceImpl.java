@@ -59,6 +59,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public byte[] findPhotoById(long id) {
+        return userRepository.findPhotoById(id);
+    }
+
+    @Override
     public User save(User user) {
         return userRepository.save(user);
     }

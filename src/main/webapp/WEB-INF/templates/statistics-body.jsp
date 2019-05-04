@@ -70,11 +70,9 @@
                         $("#about").text(data.about ? data.about : "-");
                         $("#creatingDateValue").text(new Date(data.creationDate).toLocaleDateString());
 
-                        if(data.photo){
-                            var img = document.createElement("IMG");
-                            img.src = 'data:image/jpeg;base64,' + data.photo;
-                            $('#photo').html(img).addClass("photo_borders");
-                        }else{
+                        if (data.hasPhoto) {
+                            loadPhoto(data.id)
+                        } else {
                             $("#photo").removeClass("photo_borders").empty().append($(".standard_photo").clone());
                         }
 
@@ -83,6 +81,17 @@
                 });
             }
         });
+
+        function loadPhoto(userId) {
+            $.ajax({
+                url: '/profile/' + userId + '/photo',
+                success: function(data){
+                    var img = document.createElement("IMG");
+                    img.src = 'data:image/jpeg;base64,' + data.photo;
+                    $('#photo').html(img).addClass("photo_borders");
+                }
+            });
+        }
     });
 </script>
 

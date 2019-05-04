@@ -178,11 +178,16 @@ public class MainController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/photo/{id}")
-    public byte[] downloadPhoto(@PathVariable("id") Long id) {
-        User user = userService.findById(id);
+    @GetMapping("/profile/{id}/photo")
+    public ResponseEntity findPhotoById(@PathVariable long id) {
+        byte[] photo = userService.findPhotoById(id);
 
-        return user.getPhoto();
+        if (photo != null) {
+            String photoBase64 = Base64.getEncoder().encodeToString(photo);
+            return ResponseEntity.ok(ImmutableMap.of("photo", photoBase64));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

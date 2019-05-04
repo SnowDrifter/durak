@@ -3,10 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/jQueryUI/ui/i18n/datepicker-${locale}.min.js">
-    <jsp:text/>
-</script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jQueryUI/ui/i18n/datepicker-${locale}.min.js"><jsp:text/></script>
 
 <script type="text/javascript">
     $(function () {
@@ -17,8 +14,18 @@
             changeYear: true,
             yearRange: '1900:' + currentYear
         });
-
     });
+
+    function loadPhoto(userId) {
+        $.ajax({
+            url: '/profile/' + userId + '/photo',
+            success: function(data){
+                var img = document.createElement("IMG");
+                img.src = 'data:image/jpeg;base64,' + data.photo;
+                $('#photo').html(img).addClass("photo_borders");
+            }
+        });
+    }
 </script>
 
 <div id="locale" style="display:none">
@@ -34,14 +41,13 @@
         </c:if>
     </div>
 
-
     <div id="photo">
         <c:choose>
             <c:when test="${not empty user.photo}">
-                <img class="photo_borders" src='${pageContext.request.contextPath}/profile/${user.id}/photo'>
+                <script>loadPhoto(${user.id})</script>
             </c:when>
             <c:otherwise>
-                <img class="standard_photo" src='${pageContext.request.contextPath}/resources/images/standard_photo.png'/>
+                <img class="standard_photo" src="${pageContext.request.contextPath}/resources/images/standard_photo.png"/>
             </c:otherwise>
         </c:choose>
     </div>
