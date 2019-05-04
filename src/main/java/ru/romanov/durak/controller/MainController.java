@@ -1,7 +1,7 @@
 package ru.romanov.durak.controller;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableMap;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +9,13 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.security.Principal;
+import java.util.Base64;
 import java.util.Locale;
 
 @Controller
@@ -42,39 +42,39 @@ public class MainController {
     @Autowired
     private MessageSource messageSource;
 
-    @GetMapping(value = {"/home", "/"})
+    @GetMapping({"/home", "/"})
     public String home(Model model, Locale locale) {
         model.addAttribute("title", messageSource.getMessage("home.title", null, locale));
         return "home";
     }
 
-    @GetMapping(value = "/singleplayer")
+    @GetMapping("/singleplayer")
     public String singleplayer(Model model, Locale locale) {
         model.addAttribute("title", messageSource.getMessage("game.singleplayer.title", null, locale));
         return "singleplayer";
     }
 
-    @GetMapping(value = "/multiplayer")
+    @GetMapping("/multiplayer")
     public String multi(Model model, Locale locale) {
         model.addAttribute("title", messageSource.getMessage("game.multiplayer.title", null, locale));
         return "multiplayer";
     }
 
-    @GetMapping(value = "/rules")
+    @GetMapping("/rules")
     public String rules(Model model, Locale locale) {
         model.addAttribute("title", messageSource.getMessage("rules.title", null, locale));
         return "rules";
     }
 
-    @GetMapping(value = "/statistic")
+    @GetMapping("/statistic")
     public String statistic(Model model, Locale locale) {
         model.addAttribute("title", messageSource.getMessage("statistics.title", null, locale));
         model.addAttribute("locale", locale);
         return "statistics";
     }
 
-    @GetMapping(value = "/login")
-    public ModelAndView login(@RequestParam(value = "error", required = false) String error, Locale locale) {
+    @GetMapping("/login")
+    public ModelAndView login(@RequestParam(required = false) String error, Locale locale) {
 
         ModelAndView model = new ModelAndView();
         if (error != null) {
@@ -85,7 +85,7 @@ public class MainController {
         return model;
     }
 
-    @GetMapping(value = "/logout")
+    @GetMapping("/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
@@ -102,7 +102,7 @@ public class MainController {
         return "redirect:/home";
     }
 
-    @GetMapping(value = "/accessDenied")
+    @GetMapping("/accessDenied")
     public ModelAndView accessDenied(Principal user, Locale locale) {
         ModelAndView model = new ModelAndView();
 
@@ -118,7 +118,7 @@ public class MainController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/statistic/data")
+    @GetMapping("/statistic/data")
     public UserGrid listGrid(@RequestParam(defaultValue = "1") Integer page,
                              @RequestParam(defaultValue = "20") Integer rows,
                              @RequestParam(defaultValue = "wins") String sortBy,
@@ -130,14 +130,14 @@ public class MainController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/profile/{id}")
+    @GetMapping("/profile/{id}")
     public User profile(@PathVariable long id) {
         return userService.findById(id);
     }
 
-    @PostMapping(value = "/edit")
+    @PostMapping("/edit")
     public String edit(@Valid User user, BindingResult bindingResult, Model model, Locale locale,
-                       @RequestParam("file") MultipartFile file) throws IOException {
+                       @RequestParam MultipartFile file) throws IOException {
         logger.info("Updating contact for " + user.getUsername());
 
         if (file.getSize() > 500000) {
@@ -167,7 +167,7 @@ public class MainController {
         return "accept";
     }
 
-    @GetMapping(value = "/edit")
+    @GetMapping("/edit")
     public String showEdit(Model model, Locale locale, Principal principal) {
 
         model.addAttribute("user", userService.findByUsername(principal.getName()));
