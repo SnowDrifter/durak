@@ -37,10 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.userDetailsService(userService);
 
-        http.authorizeRequests().and().formLogin().loginPage("/login").permitAll().usernameParameter("username")
-                .passwordParameter("password").failureUrl("/login?error=true");
+        http.formLogin().loginPage("/login").failureUrl("/login?error=true").permitAll();
 
-        http.logout().permitAll().logoutSuccessUrl("/home");
+        http.logout().logoutSuccessUrl("/home");
 
         http.authorizeRequests()
                 .antMatchers("/lobby").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")

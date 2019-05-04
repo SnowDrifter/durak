@@ -10,9 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,9 +20,6 @@ import ru.romanov.durak.user.UserGrid;
 import ru.romanov.durak.user.model.User;
 import ru.romanov.durak.user.service.UserService;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
@@ -75,7 +69,6 @@ public class MainController {
 
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false) String error, Locale locale) {
-
         ModelAndView model = new ModelAndView();
         if (error != null) {
             model.addObject("error", messageSource.getMessage("login.fail", null, locale));
@@ -83,23 +76,6 @@ public class MainController {
         model.addObject("title", messageSource.getMessage("login.title", null, locale));
         model.setViewName("login");
         return model;
-    }
-
-    @GetMapping("/logout")
-    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("remember-me")) {
-                cookie.setMaxAge(0);
-                response.addCookie(cookie);
-            }
-        }
-
-        return "redirect:/home";
     }
 
     @GetMapping("/accessDenied")
@@ -169,11 +145,9 @@ public class MainController {
 
     @GetMapping("/edit")
     public String showEdit(Model model, Locale locale, Principal principal) {
-
         model.addAttribute("user", userService.findByUsername(principal.getName()));
         model.addAttribute("title", messageSource.getMessage("edit.title", null, locale));
         model.addAttribute("locale", locale.toLanguageTag());
-
         return "edit-profile";
     }
 
