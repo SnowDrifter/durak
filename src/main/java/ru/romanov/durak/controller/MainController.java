@@ -69,18 +69,17 @@ public class MainController {
 
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false) String error, Locale locale) {
-        ModelAndView model = new ModelAndView();
+        ModelAndView model = new ModelAndView("login");
         if (error != null) {
             model.addObject("error", messageSource.getMessage("login.fail", null, locale));
         }
         model.addObject("title", messageSource.getMessage("login.title", null, locale));
-        model.setViewName("login");
         return model;
     }
 
     @GetMapping("/accessDenied")
     public ModelAndView accessDenied(Principal user, Locale locale) {
-        ModelAndView model = new ModelAndView();
+        ModelAndView model = new ModelAndView("access-denied");
 
         if (user != null) {
             model.addObject("error", user.getName() + messageSource.getMessage("accessDenied.withUser", null, locale));
@@ -89,7 +88,6 @@ public class MainController {
         }
 
         model.addObject("title", messageSource.getMessage("accessDenied.title", null, locale));
-        model.setViewName("access-denied");
         return model;
     }
 
@@ -130,14 +128,13 @@ public class MainController {
             return "edit-profile";
         }
 
-        model.asMap().clear();
-
         if (!file.isEmpty()) {
             user.setPhoto(file.getBytes());
         }
 
         userService.update(user);
 
+        model.asMap().clear();
         model.addAttribute("title", messageSource.getMessage("edit.done", null, locale));
         model.addAttribute("message", messageSource.getMessage("edit.done", null, locale));
         return "accept";
