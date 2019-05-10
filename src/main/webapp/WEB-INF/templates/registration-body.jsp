@@ -76,17 +76,6 @@
         </tr>
 
         <tr>
-            <td><label><spring:message code="user.photo"/></label></td>
-            <td><input name="file" type="file"/></td>
-        </tr>
-        <tr class="errors">
-            <td colspan="2">
-                <form:errors path="photo"  cssClass="error" element="div"/>
-                <jsp:text/>
-            </td>
-        </tr>
-
-        <tr>
             <td><label><spring:message code="user.firstName"/></label></td>
             <td><form:input class="field" path="firstName" value=""/>
                 <form:errors path="firstName" element="div"/>
