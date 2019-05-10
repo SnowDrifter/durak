@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class Lobby {
 
-    private static final Logger logger = LogManager.getLogger(Lobby.class); // TODO: add logs
+    private static final Logger logger = LogManager.getLogger(Lobby.class);
     private static HashBiMap<String, WebSocketSession> lobby = HashBiMap.create();
 
     public synchronized void addPlayer(String username, WebSocketSession session) {
@@ -25,12 +25,8 @@ public class Lobby {
         lobby.remove(username);
     }
 
-    public synchronized WebSocketSession getSessionByUsername(String username) {
-        if (lobby.containsKey(username)) {
-            return lobby.get(username);
-        } else {
-            return null;
-        }
+    public WebSocketSession getSessionByUsername(String username) {
+        return lobby.getOrDefault(username, null);
     }
 
     public synchronized String getStringWithUsernames() {
@@ -52,7 +48,7 @@ public class Lobby {
                 try {
                     session.sendMessage(new TextMessage(message));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error("Cannot send message, reason: " + e.getMessage());
                 }
             }
         }

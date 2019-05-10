@@ -1,6 +1,7 @@
 package ru.romanov.durak.object;
 
 
+import lombok.Data;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+@Data
 @Component
 public class Game implements Runnable {
 
@@ -117,7 +118,7 @@ public class Game implements Runnable {
         }
     }
 
-    private Player findPlayer(String username){
+    private Player findPlayer(String username) {
         if (firstPlayer.getUsername().equals(username)) {
             return firstPlayer;
         } else {
@@ -244,7 +245,7 @@ public class Game implements Runnable {
     }
 
     private void updateStatisticsForPlayer(Player player) {
-        if(player.getUsername() == null){
+        if (player.getUsername() == null) {
             return;
         }
 
@@ -253,10 +254,7 @@ public class Game implements Runnable {
         int totalGames = user.getTotalGames();
         user.setTotalGames(++totalGames);
 
-        if (isDraw()) {
-            int oldLoses = user.getLoses();
-            user.setLoses(++oldLoses);
-        } else if (player.isWin()) {
+        if (player.isWin()) {
             int oldWins = user.getWins();
             user.setWins(++oldWins);
         } else {
@@ -267,7 +265,7 @@ public class Game implements Runnable {
         userService.save(user);
     }
 
-    public void initDeck() {
+    private void initDeck() {
         boolean clubsIsTrumps = false;
         boolean diamondsIsTrumps = false;
         boolean heartsIsTrumps = false;
@@ -326,7 +324,7 @@ public class Game implements Runnable {
         deck.remove(trump);
     }
 
-    private Card selectTrump(){
+    private Card selectTrump() {
         Card trump = null;
 
         int trumpValue = (int) (Math.random() * 9) + 1;
@@ -355,68 +353,9 @@ public class Game implements Runnable {
         return trump;
     }
 
-    // TODO ?!
-    public Game() {
-    }
-
     public void sendChatMessage(String message) {
         firstPlayer.sendMessage(message);
         secondPlayer.sendMessage(message);
     }
 
-    public Player getFirstPlayer() {
-        return firstPlayer;
-    }
-
-    public void setFirstPlayer(Player firstPlayer) {
-        this.firstPlayer = firstPlayer;
-    }
-
-    public Player getSecondPlayer() {
-        return secondPlayer;
-    }
-
-    public void setSecondPlayer(Player secondPlayer) {
-        this.secondPlayer = secondPlayer;
-    }
-
-    public List<Card> getDeck() {
-        return deck;
-    }
-
-    public void setDeck(List<Card> deck) {
-        this.deck = deck;
-    }
-
-    public Card getTrump() {
-        return trump;
-    }
-
-    public void setTrump(Card trump) {
-        this.trump = trump;
-    }
-
-    public Table getTable() {
-        return table;
-    }
-
-    public void setTable(Table table) {
-        this.table = table;
-    }
-
-    public boolean isDraw() {
-        return draw;
-    }
-
-    public void setDraw(boolean draw) {
-        this.draw = draw;
-    }
-
-    public UserService getUserService() {
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 }

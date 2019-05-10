@@ -12,33 +12,32 @@ public class Table {
     private Card currentCard;
 
     public void resetTable() {
-        oldCards = new ArrayList<>();
+        oldCards.clear();
         currentCard = null;
     }
 
     public String getCardNames() {
         StringBuilder result = new StringBuilder();
-        if(!oldCards.isEmpty()){
-            for (Card card : oldCards){
+        if (!oldCards.isEmpty()) {
+            for (Card card : oldCards) {
                 result.append(card.getName());
                 result.append(" ");
             }
         }
-        if(currentCard!=null){
+        if (currentCard != null) {
             result.append(currentCard.getName());
             result.append(" ");
         }
 
-        if(result.length()>0){
-            result.delete(result.length()-1, result.length());
+        if (result.length() > 0) {
+            result.delete(result.length() - 1, result.length());
         }
 
         return result.toString();
     }
 
     public List<Card> getAllCardsOnTable() {
-        List<Card> result = new ArrayList<>();
-        result.addAll(oldCards);
+        List<Card> result = new ArrayList<>(oldCards);
         result.add(currentCard);
         return result;
     }

@@ -89,8 +89,7 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         games.put(firstUsername, game);
         games.put(secondUsername, game);
 
-        Thread gameThread = new Thread(game);
-        gameThread.start();
+        new Thread(game).start();
     }
 
     @Override
