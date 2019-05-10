@@ -4,7 +4,7 @@ trumpSuit = "";
 enemyCardsCount = "";
 
 function initSingleplayerGame() {
-    websocket = new WebSocket("ws://localhost:8080/ws_singleplayer"); // TODO
+    websocket = new WebSocket("ws://" + window.location.host + "/ws/singleplayer");
 
     websocket.onopen = function () {
         websocket.send("initgame");

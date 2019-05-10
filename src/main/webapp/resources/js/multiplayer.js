@@ -8,9 +8,7 @@ currentChatHeight = 720;
 function initMultiplayerGame() {
     username = $('#username').text();
 
-    //  websocket = new WebSocket("ws://21bbc1a6.ngrok.io/ws_multiplayer?username=" + username);
-   websocket = new WebSocket("ws://localhost:8080/ws_multiplayer?username=" + username);
-    //   websocket = new WebSocket("wss://lamer-azazalalka.rhcloud.com:8443/ws_multiplayer?username=" + username);
+    websocket = new WebSocket("ws://" + window.location.host + "/ws/multiplayer?username=" + username);
 
     websocket.onopen = function () {
         console.log('Open session for ' + username);

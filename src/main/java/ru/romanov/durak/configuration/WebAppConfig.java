@@ -40,8 +40,8 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements WebSocketCo
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(singleplayerWebSocket(), "/ws_singleplayer");
-        registry.addHandler(multiplayerWebSocket(), "/ws_multiplayer");
+        registry.addHandler(singleplayerWebSocket(), "/ws/singleplayer");
+        registry.addHandler(multiplayerWebSocket(), "/ws/multiplayer");
     }
 
     @Bean
