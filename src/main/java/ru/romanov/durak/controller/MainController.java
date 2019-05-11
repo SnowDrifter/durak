@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,12 +19,12 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.romanov.durak.user.UserGrid;
 import ru.romanov.durak.user.model.User;
 import ru.romanov.durak.user.service.UserService;
+import ru.romanov.durak.util.MessageHelper;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Base64;
-import java.util.Locale;
 
 @Controller
 public class MainController {
@@ -34,60 +34,60 @@ public class MainController {
     @Autowired
     private UserService userService;
     @Autowired
-    private MessageSource messageSource;
+    private MessageHelper messageHelper;
 
     @GetMapping({"/home", "/"})
-    public String home(Model model, Locale locale) {
-        model.addAttribute("title", messageSource.getMessage("home.title", null, locale));
+    public String home(Model model) {
+        model.addAttribute("title", messageHelper.getMessage("home.title"));
         return "home";
     }
 
     @GetMapping("/singleplayer")
-    public String singleplayer(Model model, Locale locale) {
-        model.addAttribute("title", messageSource.getMessage("game.singleplayer.title", null, locale));
+    public String singleplayer(Model model) {
+        model.addAttribute("title", messageHelper.getMessage("game.singleplayer.title"));
         return "singleplayer";
     }
 
     @GetMapping("/multiplayer")
-    public String multi(Model model, Locale locale) {
-        model.addAttribute("title", messageSource.getMessage("game.multiplayer.title", null, locale));
+    public String multi(Model model) {
+        model.addAttribute("title", messageHelper.getMessage("game.multiplayer.title"));
         return "multiplayer";
     }
 
     @GetMapping("/rules")
-    public String rules(Model model, Locale locale) {
-        model.addAttribute("title", messageSource.getMessage("rules.title", null, locale));
+    public String rules(Model model) {
+        model.addAttribute("title", messageHelper.getMessage("rules.title"));
         return "rules";
     }
 
     @GetMapping("/statistic")
-    public String statistic(Model model, Locale locale) {
-        model.addAttribute("title", messageSource.getMessage("statistics.title", null, locale));
-        model.addAttribute("locale", locale);
+    public String statistic(Model model) {
+        model.addAttribute("title", messageHelper.getMessage("statistics.title"));
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "statistics";
     }
 
     @GetMapping("/login")
-    public ModelAndView login(@RequestParam(required = false) String error, Locale locale) {
+    public ModelAndView login(@RequestParam(required = false) String error) {
         ModelAndView model = new ModelAndView("login");
         if (error != null) {
-            model.addObject("error", messageSource.getMessage("login.fail", null, locale));
+            model.addObject("error", messageHelper.getMessage("login.fail"));
         }
-        model.addObject("title", messageSource.getMessage("login.title", null, locale));
+        model.addObject("title", messageHelper.getMessage("login.title"));
         return model;
     }
 
     @GetMapping("/accessDenied")
-    public ModelAndView accessDenied(Principal user, Locale locale) {
+    public ModelAndView accessDenied(Principal user) {
         ModelAndView model = new ModelAndView("access-denied");
 
         if (user != null) {
-            model.addObject("error", user.getName() + messageSource.getMessage("accessDenied.withUser", null, locale));
+            model.addObject("error", user.getName() + messageHelper.getMessage("accessDenied.withUser"));
         } else {
-            model.addObject("error", messageSource.getMessage("accessDenied.anonymous", null, locale));
+            model.addObject("error", messageHelper.getMessage("accessDenied.anonymous"));
         }
 
-        model.addObject("title", messageSource.getMessage("accessDenied.title", null, locale));
+        model.addObject("title", messageHelper.getMessage("accessDenied.title"));
         return model;
     }
 
@@ -110,20 +110,20 @@ public class MainController {
     }
 
     @PostMapping("/edit")
-    public String edit(@Valid User user, BindingResult bindingResult, Model model, Locale locale,
+    public String edit(@Valid User user, BindingResult bindingResult, Model model,
                        @RequestParam MultipartFile file) throws IOException {
         logger.info("Updating contact for " + user.getUsername());
 
         if (file.getSize() > 500000) {
-            model.addAttribute("error", messageSource.getMessage("validation.file.size", null, locale));
-            model.addAttribute("title", messageSource.getMessage("edit.title", null, locale));
+            model.addAttribute("error", messageHelper.getMessage("validation.file.size"));
+            model.addAttribute("title", messageHelper.getMessage("edit.title"));
             model.addAttribute("user", user);
             return "edit-profile";
         }
 
         if (bindingResult.hasErrors()) {
             logger.info("Result has errors: " + bindingResult.getFieldErrorCount());
-            model.addAttribute("title", messageSource.getMessage("edit.title", null, locale));
+            model.addAttribute("title", messageHelper.getMessage("edit.title"));
             model.addAttribute("user", user);
             return "edit-profile";
         }
@@ -135,16 +135,16 @@ public class MainController {
         userService.update(user);
 
         model.asMap().clear();
-        model.addAttribute("title", messageSource.getMessage("edit.done", null, locale));
-        model.addAttribute("message", messageSource.getMessage("edit.done", null, locale));
+        model.addAttribute("title", messageHelper.getMessage("edit.done"));
+        model.addAttribute("message", messageHelper.getMessage("edit.done"));
         return "accept";
     }
 
     @GetMapping("/edit")
-    public String showEdit(Model model, Locale locale, Principal principal) {
+    public String showEdit(Model model, Principal principal) {
         model.addAttribute("user", userService.findByUsername(principal.getName()));
-        model.addAttribute("title", messageSource.getMessage("edit.title", null, locale));
-        model.addAttribute("locale", locale.toLanguageTag());
+        model.addAttribute("title", messageHelper.getMessage("edit.title"));
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "edit-profile";
     }
 
