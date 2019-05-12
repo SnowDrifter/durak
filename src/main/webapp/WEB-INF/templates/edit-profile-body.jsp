@@ -3,6 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
+<c:set var="locale" value="${pageContext.response.locale}" />
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jQueryUI/ui/i18n/datepicker-${locale}.min.js"><jsp:text/></script>
 
 <script type="text/javascript">
@@ -27,10 +29,6 @@
         });
     }
 </script>
-
-<div id="locale" style="display:none">
-    ${locale}
-</div>
 
 <form:form id="edit" modelAttribute="user" method="POST" enctype="multipart/form-data">
       <div id="edit_header"><spring:message code="edit.title"/></div>
