@@ -6,8 +6,11 @@ import org.apache.log4j.Logger;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import ru.romanov.durak.controller.websocket.message.CardMessage;
+import ru.romanov.durak.controller.websocket.message.Message;
 import ru.romanov.durak.object.Game;
 import ru.romanov.durak.object.player.RealPlayer;
+import ru.romanov.durak.util.JsonHelper;
 
 
 public class SingleplayerWebSocket extends TextWebSocketHandler {
@@ -16,36 +19,43 @@ public class SingleplayerWebSocket extends TextWebSocketHandler {
     private Game game;
 
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String request = message.getPayload();
+    protected void handleTextMessage(WebSocketSession session, TextMessage textMessage) {
+        Message message = JsonHelper.parseJson(textMessage.getPayload(), Message.class);
 
-        if (request.equals("initgame")) {
-           startSingleplayerGame(session);
-        } else if (request.startsWith("selectcard")) {
-            request = request.replace("selectcard=", "");
-            game.getFirstPlayer().selectCard(request);
-        } else if (request.startsWith("take")) {
-            game.getFirstPlayer().setTake(true);
-        } else if (request.startsWith("finishMove")) {
-            game.getFirstPlayer().setFinishMove(true);
+        switch (message.getType()) {
+            case INIT_GAME: {
+                startSingleplayerGame(session);
+                break;
+            }
+            case SELECT_CARD: {
+                CardMessage cardMessage = (CardMessage) message;
+                game.getFirstPlayer().selectCard(cardMessage.getCard());
+                break;
+            }
+            case TAKE_CARD: {
+                game.getFirstPlayer().setTake(true);
+                break;
+            }
+            case FINISH_MOVE: {
+                game.getFirstPlayer().setFinishMove(true);
+                break;
+            }
         }
-
     }
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+    public void afterConnectionEstablished(WebSocketSession session) {
         logger.info("Open session " + session.getId());
     }
 
-    private void startSingleplayerGame(WebSocketSession session){
+    private void startSingleplayerGame(WebSocketSession session) {
         game = new Game();
         RealPlayer player = new RealPlayer();
         player.setGame(game);
         player.setSession(session);
         game.setFirstPlayer(player);
         game.initGame();
-        Thread gameThread = new Thread(game);
-        gameThread.start();
+        new Thread(game).start();
     }
 
 }

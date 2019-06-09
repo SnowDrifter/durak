@@ -7,7 +7,7 @@ function initSingleplayerGame() {
     websocket = new WebSocket("ws://" + window.location.host + "/ws/singleplayer");
 
     websocket.onopen = function () {
-        websocket.send("initgame");
+        websocket.send(JSON.stringify({type: "INIT_GAME"}));
     };
     websocket.onclose = function () {
         //$("#game-container").empty();
@@ -205,19 +205,18 @@ $(document).ready(function () {
     $("body").delegate(".actionCard", "click", function () {
         $('.close_message').click();
         var card = $(this).attr("id");
-        websocket.send("selectcard=" + card);
+        websocket.send(JSON.stringify({type: "SELECT_CARD", card: card}));
     });
     $("#take_button").click(function () {
-        websocket.send("take");
-        websocket.send("updateTable");
+        websocket.send(JSON.stringify({type: "TAKE_CARD"}));
     });
     $("#finish_button").click(function () {
         if ($(".table").html() == "") return;
-        websocket.send("finishMove");
+        websocket.send(JSON.stringify({type: "FINISH_MOVE"}));
     });
     $("#start_new_game").click(function () {
         $(".trump").empty().css("opacity", "1");
-        websocket.send("initgame");
+        websocket.send(JSON.stringify({type: "INIT_GAME"}));
     });
     $(".close_message").click(function () {
         $(this).parent().css("display", "none");
