@@ -3,6 +3,7 @@ package ru.romanov.durak.object.player;
 
 import lombok.Data;
 import org.springframework.web.socket.WebSocketSession;
+import ru.romanov.durak.controller.websocket.message.Message;
 import ru.romanov.durak.object.Card;
 import ru.romanov.durak.object.Game;
 
@@ -33,6 +34,8 @@ public abstract class Player {
     abstract public String getUsername();
 
     abstract public void sendMessage(String message);
+
+    abstract public void sendMessage(Message message);
 
     abstract public WebSocketSession getSession();
 

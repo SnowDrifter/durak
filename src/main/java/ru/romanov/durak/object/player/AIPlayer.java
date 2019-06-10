@@ -3,6 +3,7 @@ package ru.romanov.durak.object.player;
 
 import lombok.Data;
 import org.springframework.web.socket.WebSocketSession;
+import ru.romanov.durak.controller.websocket.message.Message;
 import ru.romanov.durak.object.Card;
 import ru.romanov.durak.object.Game;
 import ru.romanov.durak.object.Table;
@@ -141,6 +142,11 @@ public class AIPlayer extends Player {
 
     @Override
     public void sendMessage(String message) {
+        // AIPlayer does not send messages
+    }
+
+    @Override
+    public void sendMessage(Message message) {
         // AIPlayer does not send messages
     }
 

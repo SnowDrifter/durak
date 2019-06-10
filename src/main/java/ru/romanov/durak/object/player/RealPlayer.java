@@ -3,7 +3,11 @@ package ru.romanov.durak.object.player;
 import lombok.Data;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+import ru.romanov.durak.controller.websocket.message.DefaultMessage;
+import ru.romanov.durak.controller.websocket.message.Message;
+import ru.romanov.durak.controller.websocket.message.MessageType;
 import ru.romanov.durak.object.Card;
+import ru.romanov.durak.util.JsonHelper;
 
 import java.io.IOException;
 import java.util.List;
@@ -57,7 +61,7 @@ public class RealPlayer extends Player {
                     }
                 }
                 lastClickedCard = null;
-                sendMessage("wrongcard");
+                sendMessage(new DefaultMessage(MessageType.WRONG_CARD));
             }
             try {
                 Thread.sleep(500);
@@ -101,7 +105,7 @@ public class RealPlayer extends Player {
                 }
 
                 lastClickedCard = null;
-                sendMessage("wrongcard");
+                sendMessage(new DefaultMessage(MessageType.WRONG_CARD));
             }
 
             try {
@@ -131,13 +135,25 @@ public class RealPlayer extends Player {
     }
 
     @Override
+    public void sendMessage(Message message) {
+        if (session.isOpen()) {
+            try {
+                String json = JsonHelper.convertObject(message);
+                session.sendMessage(new TextMessage(json));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public void yourMove() {
-        sendMessage("your_move");
+        sendMessage(new DefaultMessage(MessageType.YOUR_MOVE));
     }
 
     @Override
     public void enemyMove() {
-        sendMessage("enemy_move");
+        sendMessage(new DefaultMessage(MessageType.ENEMY_MOVE));
     }
 
 }

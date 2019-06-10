@@ -22,4 +22,12 @@ public class JsonHelper {
         }
     }
 
+    public static String convertObject(Object data) {
+        try {
+            return MAPPER.writeValueAsString(data);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
