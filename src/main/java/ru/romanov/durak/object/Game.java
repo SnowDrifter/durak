@@ -5,6 +5,9 @@ import lombok.Data;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
+import ru.romanov.durak.controller.websocket.message.DefaultMessage;
+import ru.romanov.durak.controller.websocket.message.MessageType;
+import ru.romanov.durak.controller.websocket.message.TableMessage;
 import ru.romanov.durak.object.player.AIPlayer;
 import ru.romanov.durak.object.player.Player;
 import ru.romanov.durak.object.player.RealPlayer;
@@ -141,52 +144,52 @@ public class Game implements Runnable {
         }
     }
 
-    public void updateTableView() {
-
+    private void updateTableView() {
         updateTableViewForPlayer(firstPlayer, secondPlayer);
 
         if (secondPlayer instanceof RealPlayer) {
             updateTableViewForPlayer(secondPlayer, firstPlayer);
         }
-
     }
 
     private void updateTableViewForPlayer(Player player, Player enemy) {
-        String result = "update:";
-        StringBuilder cardsForPlayer = new StringBuilder();
+        TableMessage message = new TableMessage();
 
+        StringBuilder cardsForPlayer = new StringBuilder();
         if (!player.getHand().isEmpty()) {
-            for (Card c : player.getHand()) {
-                cardsForPlayer.append(c.getName());
+            for (Card card : player.getHand()) {
+                cardsForPlayer.append(card.getName());
                 cardsForPlayer.append(" ");
             }
             cardsForPlayer.delete(cardsForPlayer.length() - 1, cardsForPlayer.length());
         }
 
-        result += "playerCards=" + cardsForPlayer.toString() + ",";
-        result += "enemyCardsCount=" + String.valueOf(enemy.getHand().size()) + ",";
+        message.setPlayerCards(cardsForPlayer.toString());
+        message.setEnemyCardsCount(enemy.getHand().size());
+
         if (trump != null) {
-            result += "trump=" + trump.getName() + ",";
+            message.setTrump(trump.getName());
         }
         if (deck != null) {
-            result += "sizeOfDeck=" + String.valueOf(deck.size()) + ",";
+            message.setDeckSize(deck.size());
         }
         if (!table.isClean()) {
-            result += "table=" + table.getCardNames();
+            message.setTableCards(table.getCardNames());
         }
-        player.sendMessage(result);
+
+        player.sendMessage(message);
     }
 
     private void sendGameOver() {
         if (isDraw()) {
-            firstPlayer.sendMessage("draw");
-            secondPlayer.sendMessage("draw");
+            firstPlayer.sendMessage(new DefaultMessage(MessageType.DRAW));
+            secondPlayer.sendMessage(new DefaultMessage(MessageType.DRAW));
         } else if (firstPlayer.isWin()) {
-            firstPlayer.sendMessage("win");
-            secondPlayer.sendMessage("lose");
+            firstPlayer.sendMessage(new DefaultMessage(MessageType.WIN));
+            secondPlayer.sendMessage(new DefaultMessage(MessageType.LOSE));
         } else if (secondPlayer.isWin()) {
-            firstPlayer.sendMessage("lose");
-            secondPlayer.sendMessage("win");
+            firstPlayer.sendMessage(new DefaultMessage(MessageType.LOSE));
+            secondPlayer.sendMessage(new DefaultMessage(MessageType.WIN));
         }
     }
 
@@ -274,11 +277,19 @@ public class Game implements Runnable {
         deck = new ArrayList<>();
         trump = selectTrump();
 
-        switch(trump.getSuit()){
-            case CLUBS: clubsIsTrumps = true; break;
-            case DIAMONDS: diamondsIsTrumps = true; break;
-            case HEARTS: heartsIsTrumps = true; break;
-            case SPADES: spadesIsTrumps = true; break;
+        switch (trump.getSuit()) {
+            case CLUBS:
+                clubsIsTrumps = true;
+                break;
+            case DIAMONDS:
+                diamondsIsTrumps = true;
+                break;
+            case HEARTS:
+                heartsIsTrumps = true;
+                break;
+            case SPADES:
+                spadesIsTrumps = true;
+                break;
         }
 
         deck.add(new Card("c1", Suit.CLUBS, 1, clubsIsTrumps));
