@@ -6,10 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.EXISTING_PROPERTY;
+import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", defaultImpl = DefaultMessage.class, visible = true)
+@JsonTypeInfo(use = NAME, property = "type", defaultImpl = DefaultMessage.class, visible = true, include = EXISTING_PROPERTY)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = CardMessage.class, name = "SELECT_CARD")
 })
