@@ -1,7 +1,6 @@
 var websocket;
-
-trumpSuit = "";
-enemyCardsCount = "";
+var trumpSuit;
+var enemyCardsCount;
 
 function initSingleplayerGame() {
     websocket = new WebSocket("ws://" + window.location.host + "/ws/singleplayer");
@@ -14,88 +13,75 @@ function initSingleplayerGame() {
         cleanTableAndPlayerCards();
         $("#session_close").show();
     };
+
     websocket.onmessage = function (evt) {
-        var messageFromServer = evt.data;
+        var message = JSON.parse(evt.data);
 
-        if (messageFromServer.match("update:")) {
-            var array = messageFromServer.toString().replace("update:", "").split(",");
-            updateTableView(array);
-        }
-        else if (messageFromServer.match("wrongcard")) {
-            $("#wrong_card").show();
-        }
-        else if (messageFromServer.match("your_move")) {
-            $("#move_player").show();
-            $("#take_button").hide();
-            $("#finish_button").show();
-        }
-        else if (messageFromServer.match("enemy_move")) {
-            $("#move_enemy").show();
-            $("#take_button").show();
-            $("#finish_button").hide();
-        }
-        else if (messageFromServer.match("win")) {
-            $(".player_side").empty();
-            $('#move_player').hide();
-            $('#move_enemy').hide();
-            $('#take_button').hide();
-            $('#finish_button').hide();
-
-            $('#result_win').show();
-        }
-        else if (messageFromServer.match("lose")) {
-            $(".enemy_side").empty();
-            $('#move_player').hide();
-            $('#move_enemy').hide();
-            $('#take_button').hide();
-            $('#finish_button').hide();
-
-            $('#result_lose').show();
-        }
-        else if (messageFromServer.match("draw")) {
-            $(".enemy_side").empty();
-            $(".player_side").empty();
-            $("#move_player").hide();
-            $("#move_enemy").hide();
-            $('#take_button').hide();
-            $('#finish_button').hide();
-
-            $("#result_draw").show();
+        switch (message.type) {
+            case "UPDATE_TABLE": {
+                updateTableView(message);
+                break;
+            }
+            case "WRONG_CARD": {
+                $("#wrong_card").show();
+                break;
+            }
+            case "YOUR_MOVE": {
+                $("#move_player").show();
+                $("#take_button").hide();
+                $("#finish_button").show();
+                break;
+            }
+            case "ENEMY_MOVE": {
+                $("#move_enemy").show();
+                $("#take_button").show();
+                $("#finish_button").hide();
+                break;
+            }
+            case "WIN": {
+                $(".player_side").empty();
+                $('#move_player').hide();
+                $('#move_enemy').hide();
+                $('#take_button').hide();
+                $('#finish_button').hide();
+                $('#result_win').show();
+                break;
+            }
+            case "LOSE": {
+                $(".enemy_side").empty();
+                $('#move_player').hide();
+                $('#move_enemy').hide();
+                $('#take_button').hide();
+                $('#finish_button').hide();
+                $('#result_lose').show();
+                break;
+            }
+            case "DRAW": {
+                $(".enemy_side").empty();
+                $(".player_side").empty();
+                $("#move_player").hide();
+                $("#move_enemy").hide();
+                $('#take_button').hide();
+                $('#finish_button').hide();
+                $("#result_draw").show();
+                break;
+            }
         }
     };
 }
 
-function updateTableView(array) {
-    var trump = "";
-    var playerCardsInHand = [];
-    var currentEnemyCardsCount = 0;
-    var sizeOfDeck = "";
-    var tableCards = [];
-
-    // Parsing
-    for (var i = 0; i < array.length; i++) {
-        var string = array[i];
-
-        if (string.match("trump=")) {
-            trump = string.replace("trump=", "");
-            trumpSuit = trump.charAt(0);
-        } else if (string.match("playerCards=")) {
-            playerCardsInHand = string.replace("playerCards=", "").split(" ");
-        } else if (string.match("enemyCardsCount=")) {
-            currentEnemyCardsCount = string.replace("enemyCardsCount=", "");
-        } else if (string.match("sizeOfDeck=")) {
-            sizeOfDeck = string.replace("sizeOfDeck=", "");
-        } else if (string.match("table=")) {
-            tableCards = string.replace("table=", "").split(" ");
-        }
-    }
+function updateTableView(message) {
+    var trump = message.trump || null;
+    var playerCardsInHand = message.playerCards ? message.playerCards.split(" ") : [];
+    var currentEnemyCardsCount = message.enemyCardsCount;
+    var deckSize = message.deckSize;
+    var tableCards = message.tableCards ? message.tableCards.split(" ") : [];
 
     cleanTableAndPlayerCards();
-    addingTrumpAndDeck(trump, sizeOfDeck);
+    addingTrumpAndDeck(trump, deckSize);
     addingPlayerCards(playerCardsInHand);
     addingEnemyCards(currentEnemyCardsCount);
     addingCardsOnTable(tableCards);
-
 }
 
 function cleanTableAndPlayerCards() {
@@ -113,20 +99,20 @@ function cleanTableAndPlayerCards() {
 }
 
 function addingTrumpAndDeck(trump, sizeOfDeck) {
-    var tempTrump = $(".trump");
+    var trumpElement = $(".trump");
 
-    if (tempTrump.html() == "" && trump != undefined) {
-        tempTrump.append("<div class='card'><img src='/resources/images/cards/" + trump + ".png'/></div>");
+    if (!trumpElement.html() && trump) {
+        trumpElement.html("<div class='card'><img src='/resources/images/cards/" + trump + ".png'/></div>");
     }
 
-    if (trump == "" && sizeOfDeck == 0) {
-        tempTrump.css("opacity", "0.4");
+    if (!trump && sizeOfDeck === 0) {
+        trumpElement.css("opacity", "0.4");
     }
 
-    if (sizeOfDeck != 0) {
+    if (sizeOfDeck > 0) {
         sizeOfDeck++;
 
-        if ($(".deck").html() == "") {
+        if ($(".deck").html() === "") {
             $(".deck").append("<div class='cards_in_deck'><p class='cards_number'>" + sizeOfDeck + "</p><img src='/resources/images/cards/back.png'/></div>");
         } else {
             $(".cards_number").text(sizeOfDeck);
@@ -165,7 +151,7 @@ function addingPlayerCards(playerCardsInHand) {
     playerTrumpsInHand.sort();
 
     playerCardsInHand.forEach(function (cardName) {
-        if (cardName != undefined) {
+        if (cardName) {
             $("#" + cardName).appendTo(".player_side");
         }
     });
@@ -177,7 +163,7 @@ function addingPlayerCards(playerCardsInHand) {
 }
 
 function addingEnemyCards(currentEnemyCardsCount) {
-    if (enemyCardsCount != currentEnemyCardsCount) {
+    if (enemyCardsCount !== currentEnemyCardsCount) {
         $(".enemy_side").empty();
 
         for (var k = 0; k < currentEnemyCardsCount; k++) {
@@ -211,7 +197,7 @@ $(document).ready(function () {
         websocket.send(JSON.stringify({type: "TAKE_CARD"}));
     });
     $("#finish_button").click(function () {
-        if ($(".table").html() == "") return;
+        if ($(".table").html() === "") return;
         websocket.send(JSON.stringify({type: "FINISH_MOVE"}));
     });
     $("#start_new_game").click(function () {
@@ -224,7 +210,7 @@ $(document).ready(function () {
 
     $(document).keypress(function (event) {
         var code = (event.keyCode ? event.keyCode : event.which);
-        if (code == 13) { // "Enter"
+        if (code === 13) { // "Enter"
             $(".close_message").click();
         }
     });

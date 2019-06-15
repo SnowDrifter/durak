@@ -8,6 +8,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class TableMessage extends Message {
 
+    public TableMessage() {
+        super(MessageType.UPDATE_TABLE);
+    }
+
     private String playerCards;
     private int enemyCardsCount;
     private String trump;
