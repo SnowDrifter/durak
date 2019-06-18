@@ -23,7 +23,7 @@ public class SingleplayerWebSocket extends TextWebSocketHandler {
         Message message = JsonHelper.parseJson(textMessage.getPayload(), Message.class);
 
         switch (message.getType()) {
-            case INIT_GAME: {
+            case START_GAME: {
                 startSingleplayerGame(session);
                 break;
             }

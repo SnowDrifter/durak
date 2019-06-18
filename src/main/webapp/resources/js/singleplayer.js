@@ -6,10 +6,9 @@ function initSingleplayerGame() {
     websocket = new WebSocket("ws://" + window.location.host + "/ws/singleplayer");
 
     websocket.onopen = function () {
-        websocket.send(JSON.stringify({type: "INIT_GAME"}));
+        websocket.send(JSON.stringify({type: "START_GAME"}));
     };
     websocket.onclose = function () {
-        //$("#game-container").empty();
         cleanTableAndPlayerCards();
         $("#session_close").show();
     };
