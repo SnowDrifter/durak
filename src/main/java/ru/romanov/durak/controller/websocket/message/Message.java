@@ -14,7 +14,9 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 @AllArgsConstructor
 @JsonTypeInfo(use = NAME, property = "type", defaultImpl = DefaultMessage.class, visible = true, include = EXISTING_PROPERTY)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = CardMessage.class, name = "SELECT_CARD")
+        @JsonSubTypes.Type(value = CardMessage.class, name = "SELECT_CARD"),
+        @JsonSubTypes.Type(value = OfferMessage.class, name = "OFFER"),
+        @JsonSubTypes.Type(value = ChatMessage.class, name = "CHAT_MESSAGE")
 })
 public abstract class Message {
 

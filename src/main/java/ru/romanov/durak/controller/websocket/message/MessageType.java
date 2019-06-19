@@ -14,5 +14,6 @@ public enum MessageType {
     WIN,
     LOSE,
     DRAW,
+    OFFER,
     ENEMY_DISCONNECTED
 }
