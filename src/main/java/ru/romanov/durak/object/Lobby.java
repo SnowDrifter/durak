@@ -5,6 +5,9 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+import ru.romanov.durak.controller.websocket.message.LobbyMessage;
+import ru.romanov.durak.controller.websocket.message.Message;
+import ru.romanov.durak.util.JsonHelper;
 
 import java.io.IOException;
 
@@ -30,7 +33,9 @@ public class Lobby {
     }
 
     public synchronized String getStringWithUsernames() {
-        if (lobby.isEmpty()) return null;
+        if (lobby.isEmpty()) {
+            return "";
+        }
 
         StringBuilder result = new StringBuilder();
 
@@ -42,11 +47,14 @@ public class Lobby {
         return result.toString();
     }
 
-    public void sendMessageToAll(String message) {
+    public void sendMessageToAll(Message message) {
+        String json = JsonHelper.convertObject(message);
+        TextMessage textMessage = new TextMessage(json);
+
         for (WebSocketSession session : lobby.values()) {
             if (session.isOpen()) {
                 try {
-                    session.sendMessage(new TextMessage(message));
+                    session.sendMessage(textMessage);
                 } catch (IOException e) {
                     logger.error("Cannot send message, reason: " + e.getMessage());
                 }
@@ -56,7 +64,9 @@ public class Lobby {
     }
 
     public void updateLobbyView() {
-        sendMessageToAll("lobby:" + getStringWithUsernames());
+        LobbyMessage message = new LobbyMessage();
+        message.setUsernames(getStringWithUsernames());
+        sendMessageToAll(message);
     }
 
 }

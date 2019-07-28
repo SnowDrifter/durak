@@ -5,9 +5,7 @@ import lombok.Data;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
-import ru.romanov.durak.controller.websocket.message.DefaultMessage;
-import ru.romanov.durak.controller.websocket.message.MessageType;
-import ru.romanov.durak.controller.websocket.message.TableMessage;
+import ru.romanov.durak.controller.websocket.message.*;
 import ru.romanov.durak.object.player.AIPlayer;
 import ru.romanov.durak.object.player.Player;
 import ru.romanov.durak.object.player.RealPlayer;
@@ -107,17 +105,23 @@ public class Game implements Runnable {
         }
     }
 
-    public void requestFromPlayer(String username, String request) {
-
+    public void requestFromPlayer(String username, Message message) {
         Player player = findPlayer(username);
 
-        if (request.startsWith("selectcard")) {
-            String cardName = request.replace("selectcard=", "");
-            player.selectCard(cardName);
-        } else if (request.startsWith("take")) {
-            player.setTake(true);
-        } else if (request.startsWith("finishMove")) {
-            player.setFinishMove(true);
+        switch (message.getType()) {
+            case SELECT_CARD: {
+                CardMessage cardMessage = (CardMessage) message;
+                player.selectCard(cardMessage.getCard());
+                break;
+            }
+            case TAKE_CARD: {
+                player.setTake(true);
+                break;
+            }
+            case FINISH_MOVE: {
+                player.setFinishMove(true);
+                break;
+            }
         }
     }
 
@@ -364,7 +368,7 @@ public class Game implements Runnable {
         return trump;
     }
 
-    public void sendChatMessage(String message) {
+    public void sendChatMessage(ChatMessage message) {
         firstPlayer.sendMessage(message);
         secondPlayer.sendMessage(message);
     }
