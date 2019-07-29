@@ -114,14 +114,11 @@ function closeNotifications() {
 }
 
 function addChatMessage(chatMessage) {
-    var currentTime = new Date();
+    var date = $.format.date(new Date(chatMessage.creationDate), "HH:mm:ss");
+    var username = chatMessage.username;
+    var message = chatMessage.message;
 
-    var currentMinutes = currentTime.getMinutes();
-    if (currentMinutes < 10) {
-        currentMinutes = "0" + currentMinutes;
-    }
-
-    $('#chat_history').append("<div>" + "[" + currentTime.getHours() + ":" + currentMinutes + "] " + chatMessage.username + ": " + chatMessage.message).scrollTop(99999999);
+    $('#chat_history').append("<div>" + "[" + date + "] " + username + ": " + message + "</div>").scrollTop(99999999);
 }
 
 function updateLobbyView(lobbyMessage) {
