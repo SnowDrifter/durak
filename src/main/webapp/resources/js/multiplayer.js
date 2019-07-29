@@ -118,7 +118,7 @@ function addChatMessage(chatMessage) {
     var username = chatMessage.username;
     var message = chatMessage.message;
 
-    $('#chat_history').append("<div>" + "[" + date + "] " + username + ": " + message + "</div>").scrollTop(99999999);
+    $('#chat_history').prepend("<div>" + "[" + date + "] " + username + ": " + message + "</div>");
 }
 
 function updateLobbyView(lobbyMessage) {
@@ -324,7 +324,6 @@ $(document).ready(function () {
 
             var chatHistoryDiv = $('#chat_history');
             chatHistoryDiv.css("height", chatHistoryHeight).css("min-height", chatHistoryHeight);
-            chatHistoryDiv.animate({scrollTop: chatHistoryDiv.prop("scrollHeight")}, 1000); // Auto scroll
         }
     }).draggable({
         containment: 'parent',
