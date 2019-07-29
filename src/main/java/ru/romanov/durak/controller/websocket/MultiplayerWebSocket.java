@@ -44,8 +44,8 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
                 break;
             }
             case LOBBY_CHAT_MESSAGE: {
-                LobbyChatMessage lobbyChatMessage = (LobbyChatMessage) message;
-                lobby.sendMessageToAll(lobbyChatMessage);
+                ChatMessage chatMessage = (ChatMessage) message;
+                lobby.sendMessageToAll(chatMessage);
                 break;
             }
             case CHAT_MESSAGE: {
