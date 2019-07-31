@@ -1,13 +1,11 @@
 var websocket;
-
-trumpSuit = "";
-enemyCardsCount = "";
-username = "";
-currentChatHeight = 720;
+var trumpSuit = "";
+var enemyCardsCount = "";
+var username = "";
+var currentChatHeight = 720;
 
 function initMultiplayerGame() {
     username = $('#username').text();
-
     websocket = new WebSocket("ws://" + window.location.host + "/ws/multiplayer?username=" + username);
 
     websocket.onclose = function () {
@@ -123,21 +121,20 @@ function addChatMessage(chatMessage) {
 
 function updateLobbyView(lobbyMessage) {
     var usersInLobby = lobbyMessage.usernames.split(",");
-
     var tempUsers = $('#users');
 
-    if (usersInLobby.length != 0) {
+    if (usersInLobby.length !== 0) {
         tempUsers.empty();
         $("#empty_lobby").hide();
 
         usersInLobby.forEach(function (user) {
-            if (user != username) {
+            if (user !== username) {
                 tempUsers.append("<div class='user'>" + user + "</div><br/>");
             }
         });
     }
 
-    if (tempUsers.html() == '') {
+    if (tempUsers.html() === '') {
         $("#empty_lobby").show();
     }
 }
@@ -200,7 +197,6 @@ function addingTrumpAndDeck(trump, sizeOfDeck) {
     }
 }
 
-
 function addingPlayerCards(playerCardsInHand) {
     var playerTrumpsInHand = [];
 
@@ -243,7 +239,6 @@ function addingEnemyCards(currentEnemyCardsCount) {
             $("#back").clone().removeAttr("id").appendTo(".enemy_side");
         }
     }
-
 }
 
 function addingCardsOnTable(tableCards) {
@@ -298,8 +293,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#chat_switch').click(function (event) {
-
+    $('#chat_switch').click(function () {
         $('#chat_content').toggle();
 
         if ($("#chat").hasClass("isClosed")) {
@@ -331,7 +325,6 @@ $(document).ready(function () {
     });
 });
 
-
 function sendChatMessage(event) {
     var chatTextField = $('#chat_text_field');
     var text = chatTextField.val();
@@ -346,10 +339,3 @@ function sendChatMessage(event) {
     var message = {type: type, username: username, message: text};
     websocket.send(JSON.stringify(message));
 }
-
-
-
-
-
-
-
