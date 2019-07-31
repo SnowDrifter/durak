@@ -106,9 +106,8 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         for (Game game : games.values()) {
             if (session.equals(game.getFirstPlayer().getSession())) {
                 game.getSecondPlayer().sendMessage(new DefaultMessage(MessageType.ENEMY_DISCONNECTED));
-
             } else if (session.equals(game.getSecondPlayer().getSession())) {
-                game.getFirstPlayer().sendMessage(new DefaultMessage(MessageType.START_GAME));
+                game.getFirstPlayer().sendMessage(new DefaultMessage(MessageType.ENEMY_DISCONNECTED));
             }
         }
     }
