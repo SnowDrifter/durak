@@ -8,9 +8,9 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.romanov.durak.controller.websocket.message.*;
-import ru.romanov.durak.object.Game;
-import ru.romanov.durak.object.Lobby;
-import ru.romanov.durak.object.player.RealPlayer;
+import ru.romanov.durak.model.Game;
+import ru.romanov.durak.model.Lobby;
+import ru.romanov.durak.model.player.RealPlayer;
 import ru.romanov.durak.user.service.UserService;
 import ru.romanov.durak.util.JsonHelper;
 

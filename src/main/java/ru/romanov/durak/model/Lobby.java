@@ -1,4 +1,4 @@
-package ru.romanov.durak.object;
+package ru.romanov.durak.model;
 
 import com.google.common.collect.HashBiMap;
 import org.apache.log4j.LogManager;

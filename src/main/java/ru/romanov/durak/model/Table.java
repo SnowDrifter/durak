@@ -1,4 +1,4 @@
-package ru.romanov.durak.object;
+package ru.romanov.durak.model;
 
 import lombok.Data;
 

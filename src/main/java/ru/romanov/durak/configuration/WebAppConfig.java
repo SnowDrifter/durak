@@ -22,7 +22,7 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import ru.romanov.durak.controller.websocket.MultiplayerWebSocket;
 import ru.romanov.durak.controller.websocket.SingleplayerWebSocket;
-import ru.romanov.durak.object.Lobby;
+import ru.romanov.durak.model.Lobby;
 
 import java.util.Locale;
 

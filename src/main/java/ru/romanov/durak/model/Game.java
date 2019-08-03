@@ -1,4 +1,4 @@
-package ru.romanov.durak.object;
+package ru.romanov.durak.model;
 
 
 import lombok.Data;
@@ -6,9 +6,9 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import ru.romanov.durak.controller.websocket.message.*;
-import ru.romanov.durak.object.player.AIPlayer;
-import ru.romanov.durak.object.player.Player;
-import ru.romanov.durak.object.player.RealPlayer;
+import ru.romanov.durak.model.player.AIPlayer;
+import ru.romanov.durak.model.player.Player;
+import ru.romanov.durak.model.player.RealPlayer;
 import ru.romanov.durak.user.model.User;
 import ru.romanov.durak.user.service.UserService;
 

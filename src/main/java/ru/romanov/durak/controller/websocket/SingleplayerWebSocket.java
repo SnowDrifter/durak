@@ -8,8 +8,8 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.romanov.durak.controller.websocket.message.CardMessage;
 import ru.romanov.durak.controller.websocket.message.Message;
-import ru.romanov.durak.object.Game;
-import ru.romanov.durak.object.player.RealPlayer;
+import ru.romanov.durak.model.Game;
+import ru.romanov.durak.model.player.RealPlayer;
 import ru.romanov.durak.util.JsonHelper;
 
 
