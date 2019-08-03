@@ -1,4 +1,4 @@
-package ru.romanov.durak.users.service.models;
+package ru.romanov.durak.user;
 
 import org.junit.Before;
 import org.junit.Test;

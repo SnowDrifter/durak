@@ -1,13 +1,13 @@
-package ru.romanov.durak.object.player;
+package ru.romanov.durak.model.player;
 
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import ru.romanov.durak.object.Card;
-import ru.romanov.durak.object.Game;
-import ru.romanov.durak.object.Suit;
-import ru.romanov.durak.object.Table;
+import ru.romanov.durak.model.Card;
+import ru.romanov.durak.model.Game;
+import ru.romanov.durak.model.Suit;
+import ru.romanov.durak.model.Table;
 
 import java.util.ArrayList;
 import java.util.HashSet;

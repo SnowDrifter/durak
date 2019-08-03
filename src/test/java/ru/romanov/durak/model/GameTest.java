@@ -1,11 +1,11 @@
-package ru.romanov.durak.object;
+package ru.romanov.durak.model;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.romanov.durak.object.player.AIPlayer;
-import ru.romanov.durak.object.player.RealPlayer;
+import ru.romanov.durak.model.player.AIPlayer;
+import ru.romanov.durak.model.player.RealPlayer;
 
 public class GameTest {
 

@@ -1,4 +1,4 @@
-package ru.romanov.durak.controllers;
+package ru.romanov.durak.controller;
 
 
 import org.junit.Before;
