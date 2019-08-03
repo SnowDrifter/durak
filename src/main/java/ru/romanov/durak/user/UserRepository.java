@@ -4,7 +4,7 @@ package ru.romanov.durak.user;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
-import ru.romanov.durak.user.model.User;
+import ru.romanov.durak.model.user.User;
 
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 

@@ -4,7 +4,7 @@ package ru.romanov.durak.user;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.springframework.data.domain.Page;
-import ru.romanov.durak.user.model.User;
+import ru.romanov.durak.model.user.User;
 
 import java.util.List;
 

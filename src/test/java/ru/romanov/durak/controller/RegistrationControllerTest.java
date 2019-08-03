@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import ru.romanov.durak.user.model.User;
+import ru.romanov.durak.model.user.User;
 import ru.romanov.durak.user.service.UserService;
 
 import java.util.ArrayList;

@@ -4,7 +4,7 @@ package ru.romanov.durak.user.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import ru.romanov.durak.user.model.User;
+import ru.romanov.durak.model.user.User;
 
 public interface UserService extends UserDetailsService {
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ru.romanov.durak.user.UserGrid;
-import ru.romanov.durak.user.model.User;
+import ru.romanov.durak.model.user.User;
 import ru.romanov.durak.user.service.UserService;
 import ru.romanov.durak.util.MessageHelper;
 

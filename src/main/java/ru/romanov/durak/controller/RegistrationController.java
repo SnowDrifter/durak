@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.romanov.durak.user.model.User;
+import ru.romanov.durak.model.user.User;
 import ru.romanov.durak.user.service.UserService;
 import ru.romanov.durak.util.MessageHelper;
 

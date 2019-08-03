@@ -8,7 +8,7 @@ import ru.romanov.durak.controller.websocket.message.*;
 import ru.romanov.durak.model.player.AIPlayer;
 import ru.romanov.durak.model.player.Player;
 import ru.romanov.durak.model.player.RealPlayer;
-import ru.romanov.durak.user.model.User;
+import ru.romanov.durak.model.user.User;
 import ru.romanov.durak.user.service.UserService;
 
 import java.util.ArrayList;

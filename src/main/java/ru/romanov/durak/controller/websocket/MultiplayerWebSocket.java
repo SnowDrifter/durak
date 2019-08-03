@@ -1,8 +1,6 @@
 package ru.romanov.durak.controller.websocket;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;

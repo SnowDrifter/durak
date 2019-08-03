@@ -10,8 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.romanov.durak.user.UserRepository;
-import ru.romanov.durak.user.model.Role;
-import ru.romanov.durak.user.model.User;
+import ru.romanov.durak.model.user.Role;
+import ru.romanov.durak.model.user.User;
 
 import java.util.Collections;
 import java.util.Date;
