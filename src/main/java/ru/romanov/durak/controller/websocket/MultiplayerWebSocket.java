@@ -1,5 +1,6 @@
 package ru.romanov.durak.controller.websocket;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,8 @@ import ru.romanov.durak.util.JsonHelper;
 
 import java.util.HashMap;
 
-
+@Slf4j
 public class MultiplayerWebSocket extends TextWebSocketHandler {
-
-    private static final Logger logger = LogManager.getLogger(MultiplayerWebSocket.class);
 
     @Autowired
     private UserService userService;
@@ -31,7 +30,7 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         String username = session.getPrincipal().getName();
         lobby.addPlayer(username, session);
         lobby.updateLobbyView();
-        logger.info("Open session for multiplayer");
+        log.info("Open session for multiplayer");
     }
 
     @Override

@@ -2,8 +2,7 @@ package ru.romanov.durak.controller;
 
 
 import com.google.common.collect.ImmutableMap;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
@@ -26,10 +25,9 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.Base64;
 
+@Slf4j
 @Controller
 public class MainController {
-
-    private static final Logger logger = LogManager.getLogger(MainController.class);
 
     @Autowired
     private UserService userService;
@@ -112,7 +110,7 @@ public class MainController {
     @PostMapping("/edit")
     public String edit(@Valid User user, BindingResult bindingResult, Model model,
                        @RequestParam MultipartFile file) throws IOException {
-        logger.info("Updating contact for " + user.getUsername());
+        log.info("Updating contact for " + user.getUsername());
 
         if (file.getSize() > 500000) {
             model.addAttribute("error", messageHelper.getMessage("validation.file.size"));
@@ -122,7 +120,7 @@ public class MainController {
         }
 
         if (bindingResult.hasErrors()) {
-            logger.info("Result has errors: " + bindingResult.getFieldErrorCount());
+            log.info("Result has errors: " + bindingResult.getFieldErrorCount());
             model.addAttribute("title", messageHelper.getMessage("edit.title"));
             model.addAttribute("user", user);
             return "edit-profile";

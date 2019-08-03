@@ -1,8 +1,7 @@
 package ru.romanov.durak.controller.websocket;
 
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -12,10 +11,9 @@ import ru.romanov.durak.model.Game;
 import ru.romanov.durak.model.player.RealPlayer;
 import ru.romanov.durak.util.JsonHelper;
 
-
+@Slf4j
 public class SingleplayerWebSocket extends TextWebSocketHandler {
 
-    private static final Logger logger = LogManager.getLogger(SingleplayerWebSocket.class);
     private Game game;
 
     @Override
@@ -45,7 +43,7 @@ public class SingleplayerWebSocket extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
-        logger.info("Open session " + session.getId());
+        log.info("Open session " + session.getId());
     }
 
     private void startSingleplayerGame(WebSocketSession session) {

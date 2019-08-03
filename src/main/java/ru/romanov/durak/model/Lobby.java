@@ -1,8 +1,7 @@
 package ru.romanov.durak.model;
 
 import com.google.common.collect.HashBiMap;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import ru.romanov.durak.controller.websocket.message.LobbyMessage;
@@ -11,9 +10,9 @@ import ru.romanov.durak.util.JsonHelper;
 
 import java.io.IOException;
 
+@Slf4j
 public class Lobby {
 
-    private static final Logger logger = LogManager.getLogger(Lobby.class);
     private static HashBiMap<String, WebSocketSession> lobby = HashBiMap.create();
 
     public synchronized void addPlayer(String username, WebSocketSession session) {
@@ -56,7 +55,7 @@ public class Lobby {
                 try {
                     session.sendMessage(textMessage);
                 } catch (IOException e) {
-                    logger.error("Cannot send message, reason: " + e.getMessage());
+                    log.error("Cannot send message, reason: " + e.getMessage());
                 }
             }
         }

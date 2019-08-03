@@ -2,8 +2,7 @@ package ru.romanov.durak.model;
 
 
 import lombok.Data;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.romanov.durak.controller.websocket.message.*;
 import ru.romanov.durak.model.player.AIPlayer;
@@ -17,10 +16,9 @@ import java.util.Collections;
 import java.util.List;
 
 @Data
+@Slf4j
 @Component
 public class Game implements Runnable {
-
-    private static final Logger logger = LogManager.getLogger(Game.class);
 
     private UserService userService;
     private Player firstPlayer;
@@ -32,7 +30,7 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
-        logger.info("Start game!");
+        log.info("Start game!");
 
         while (true) {
             if (checkWin()) break;
@@ -44,7 +42,7 @@ public class Game implements Runnable {
             loggingCurrentState();
         }
 
-        logger.info("Game over!");
+        log.info("Game over!");
         sendGameOver();
         updateStatistics();
     }
@@ -199,16 +197,16 @@ public class Game implements Runnable {
 
     // TODO AOP. Maybe remove it?
     private void loggingCurrentState() {
-        logger.debug("========================");
-        logger.debug("First player hand: " + firstPlayer.getHand());
-        logger.debug("Second player hand: " + secondPlayer.getHand());
+        log.debug("========================");
+        log.debug("First player hand: " + firstPlayer.getHand());
+        log.debug("Second player hand: " + secondPlayer.getHand());
         if (deck != null) {
-            logger.debug("Current deck: " + deck);
+            log.debug("Current deck: " + deck);
         }
         if (trump != null) {
-            logger.debug("Trump: " + trump.getName());
+            log.debug("Trump: " + trump.getName());
         }
-        logger.debug("------------------------");
+        log.debug("------------------------");
     }
 
     private void fillHand(Player player) {
