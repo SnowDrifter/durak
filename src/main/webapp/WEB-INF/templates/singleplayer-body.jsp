@@ -2,6 +2,14 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/singleplayer.js"><jsp:text/></script>
 <script>
+    var playerMoveMessage = '<spring:message code="game.move.player"/>';
+    var enemyMoveMessage = '<spring:message code="game.move.enemy"/>';
+    var wrongCardMessage = '<spring:message code="game.wrong.card"/>';
+    var winMessage = '<spring:message code="game.result.win"/>';
+    var loseMessage = '<spring:message code="game.result.lose"/>';
+    var drawMessage = '<spring:message code="game.result.draw"/>';
+    var sessionCloseMessage = '<spring:message code="game.sessionClose"/>';
+
     $(document).ready(initSingleplayerGame());
 </script>
 
@@ -14,33 +22,9 @@
     <div class="deck"></div>
     <div class="player_side"></div>
 
-    <div class="message_window" id="move_player">
-        <spring:message code="game.move.player"/><br/>
-        <button class="close_message">OK</button>
-    </div>
-    <div class="message_window" id="move_enemy">
-        <spring:message code="game.move.enemy"/><br/>
-        <button class="close_message">OK</button>
-    </div>
-    <div class="message_window alert_window" id="wrong_card">
-        <spring:message code="game.wrong.card"/><br/>
-        <button class="close_message">OK</button>
-    </div>
-    <div class="message_window" id="result_win">
-        <br/><spring:message code="game.result.win"/><br/><br/>
-        <button class="close_message">OK</button>
-    </div>
-    <div class="message_window" id="result_lose">
-        <br/><spring:message code="game.result.lose"/><br/><br/>
-        <button class="close_message">OK</button>
-    </div>
-    <div class="message_window" id="result_draw">
-        <br/><spring:message code="game.result.draw"/><br/><br/>
-        <button class="close_message">OK</button>
-    </div>
-    <div class="message_window" id="session_close">
-        <spring:message code="game.sessionClose"/><br/>
-        <button class="close_message">OK</button>
+    <div id="notification">
+        <div id="notification_text"></div>
+        <button id="close_notification_button">OK</button>
     </div>
 
     <button class="action_button" id="finish_button"><spring:message code="game.button.finish"/></button>

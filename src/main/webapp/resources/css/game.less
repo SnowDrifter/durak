@@ -94,7 +94,7 @@
 .enemy_side .card:not(:first-child) {
   margin-left: -75px;
 }
-.message_window {
+#notification {
   font-size: 1.25em;
   display: none;
   padding: 20px;
@@ -109,7 +109,7 @@
   border: 1px solid darken(@message_window, 20%);
   box-shadow: 5px 5px 10px -5px darken(desaturate(@message_window, 18%), 40%);
 }
-.message_window button {
+#notification button {
   width: 50px;
   height: 30px;
   border-radius: 5px;
@@ -119,35 +119,30 @@
   left: 50%;
   margin-left: -25px;
 }
-.message_window button:hover {
+#notification button:hover {
   box-shadow: inset 0 0 5px -3px darken(desaturate(@message_window, 18%), 60%);
 }
-#disconnected{
-  background: @disconnected_message_background;
-  height: 120px;
-  width: 200px;
-}
-#session_close{
+.disconnect_notification{
   background: @disconnected_message_background;
 }
-#result_win{
-  background: @result_win_background;
+.win_notification{
+  background: @result_win_background !important;
   height: 120px;
   width: 200px;
 }
-#result_lose{
-  background: @result_lose_background;
+.lose_notification{
+  background: @result_lose_background !important;
   height: 120px;
   width: 200px;
 }
-#result_draw{
-  background: @result_draw_background;
+.draw_notification{
+  background: @result_draw_background !important;
   height: 120px;
   width: 200px;
 }
-.alert_window {
+.alert_notification {
   color: @alert_font_color;
-  background: @alert_message_window;
+  background: @alert_message_window  !important;
   border: 1px solid darken(@alert_message_window, 20%);
   box-shadow: 5px 5px 10px -5px darken(desaturate(@alert_message_window, 18%), 20%);
 }

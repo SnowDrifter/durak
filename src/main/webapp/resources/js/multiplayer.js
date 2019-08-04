@@ -10,7 +10,7 @@ function initMultiplayerGame() {
 
     websocket.onclose = function () {
         cleanTableAndPlayerCards();
-        $("#session_close").show();
+        showNotification(sessionCloseMessage, "alert_window");
     };
     websocket.onmessage = function (evt) {
         console.log(evt.data); // TODO: temp log
@@ -22,17 +22,17 @@ function initMultiplayerGame() {
                 break;
             }
             case "WRONG_CARD": {
-                $("#wrong_card").show();
+                showNotification(wrongCardMessage, "alert_notification");
                 break;
             }
             case "YOUR_MOVE": {
-                $("#move_player").show();
+                showNotification(playerMoveMessage);
                 $("#take_button").hide();
                 $("#finish_button").show();
                 break;
             }
             case "ENEMY_MOVE": {
-                $("#move_enemy").show();
+                showNotification(enemyMoveMessage);
                 $("#take_button").show();
                 $("#finish_button").hide();
                 break;
@@ -43,7 +43,7 @@ function initMultiplayerGame() {
                 $('#move_enemy').hide();
                 $('#take_button').hide();
                 $('#finish_button').hide();
-                $('#result_win').show();
+                showNotification(winMessage, "win_notification");
                 break;
             }
             case "LOSE": {
@@ -52,7 +52,7 @@ function initMultiplayerGame() {
                 $('#move_enemy').hide();
                 $('#take_button').hide();
                 $('#finish_button').hide();
-                $('#result_lose').show();
+                showNotification(loseMessage, "lose_notification");
                 break;
             }
             case "DRAW": {
@@ -62,7 +62,7 @@ function initMultiplayerGame() {
                 $("#move_enemy").hide();
                 $('#take_button').hide();
                 $('#finish_button').hide();
-                $("#result_draw").show();
+                showNotification(drawMessage, "draw_notification");
                 break;
             }
             case "START_GAME": {
@@ -95,7 +95,7 @@ function initMultiplayerGame() {
                 $('#take_button').hide();
                 $('#finish_button').hide();
                 $(".trump").hide();
-                $('#disconnected').show();
+                showNotification(disconnectedMessage, "alert_window, disconnect_window");
                 break;
             }
         }
@@ -103,12 +103,12 @@ function initMultiplayerGame() {
 }
 
 function closeNotifications() {
-    $('#move_player').hide();
-    $('#move_enemy').hide();
-    $('#disconnected').hide();
-    $('#result_lose').hide();
-    $('#result_win').hide();
-    $('#result_draw').hide();
+    $('#notification').hide();
+}
+
+function showNotification(message, additionalClass) {
+    $("#notification_text").text(message);
+    $("#notification").removeClass().addClass(additionalClass).show();
 }
 
 function addChatMessage(chatMessage) {
@@ -259,7 +259,7 @@ $(document).ready(function () {
     $("#game_container").hide();
 
     $('body').delegate(".actionCard", "click", function () {
-        $('.close_message').click();
+        closeNotifications();
         var card = $(this).attr("id");
         websocket.send(JSON.stringify({type: "SELECT_CARD", card: card}));
     }).delegate(".user", "click", function () {
@@ -274,14 +274,14 @@ $(document).ready(function () {
         if ($(".table").html() === "") return;
         websocket.send(JSON.stringify({type: "FINISH_MOVE"}));
     });
-    $('.close_message').click(function () {
-        $(this).parent().css("display", "none");
+    $('#close_notification_button').click(function () {
+        $(this).parent().hide();
     });
 
     $(document).keypress(function (event) {
         var code = (event.keyCode ? event.keyCode : event.which);
         if (code === 13) { // "Enter"
-            $('.close_message').click();
+            $('#close_notification_button').click();
         }
     });
 

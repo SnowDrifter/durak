@@ -10,7 +10,7 @@ function initSingleplayerGame() {
     };
     websocket.onclose = function () {
         cleanTableAndPlayerCards();
-        $("#session_close").show();
+        showNotification(sessionCloseMessage, "alert_notification");
     };
 
     websocket.onmessage = function (evt) {
@@ -22,17 +22,17 @@ function initSingleplayerGame() {
                 break;
             }
             case "WRONG_CARD": {
-                $("#wrong_card").show();
+                showNotification(wrongCardMessage, "alert_notification");
                 break;
             }
             case "YOUR_MOVE": {
-                $("#move_player").show();
+                showNotification(playerMoveMessage);
                 $("#take_button").hide();
                 $("#finish_button").show();
                 break;
             }
             case "ENEMY_MOVE": {
-                $("#move_enemy").show();
+                showNotification(enemyMoveMessage);
                 $("#take_button").show();
                 $("#finish_button").hide();
                 break;
@@ -43,7 +43,7 @@ function initSingleplayerGame() {
                 $('#move_enemy').hide();
                 $('#take_button').hide();
                 $('#finish_button').hide();
-                $('#result_win').show();
+                showNotification(winMessage, "win_notification");
                 break;
             }
             case "LOSE": {
@@ -52,7 +52,7 @@ function initSingleplayerGame() {
                 $('#move_enemy').hide();
                 $('#take_button').hide();
                 $('#finish_button').hide();
-                $('#result_lose').show();
+                showNotification(loseMessage, "lose_notification");
                 break;
             }
             case "DRAW": {
@@ -62,11 +62,20 @@ function initSingleplayerGame() {
                 $("#move_enemy").hide();
                 $('#take_button').hide();
                 $('#finish_button').hide();
-                $("#result_draw").show();
+                showNotification(drawMessage, "draw_notification");
                 break;
             }
         }
     };
+}
+
+function closeNotifications() {
+    $('#notification').hide();
+}
+
+function showNotification(message, additionalClass) {
+    $("#notification_text").text(message);
+    $("#notification").removeClass().addClass(additionalClass).show();
 }
 
 function updateTableView(message) {
@@ -158,7 +167,6 @@ function addingPlayerCards(playerCardsInHand) {
     playerTrumpsInHand.forEach(function (trumpCardName) {
         $("#" + trumpCardName).appendTo(".player_side");
     });
-
 }
 
 function addingEnemyCards(currentEnemyCardsCount) {
@@ -169,14 +177,12 @@ function addingEnemyCards(currentEnemyCardsCount) {
             $("#back").clone().removeAttr("id").appendTo(".enemy_side");
         }
     }
-
 }
 
 function addingCardsOnTable(tableCards) {
     tableCards.forEach(function (item) {
         $("#" + item).appendTo(".table");
     });
-
 }
 
 $(window).on('load', function () {
@@ -188,7 +194,7 @@ $(window).on('load', function () {
 
 $(document).ready(function () {
     $("body").delegate(".actionCard", "click", function () {
-        $('.close_message').click();
+        closeNotifications();
         var card = $(this).attr("id");
         websocket.send(JSON.stringify({type: "SELECT_CARD", card: card}));
     });
@@ -203,17 +209,16 @@ $(document).ready(function () {
         $(".trump").empty().css("opacity", "1");
         websocket.send(JSON.stringify({type: "INIT_GAME"}));
     });
-    $(".close_message").click(function () {
-        $(this).parent().css("display", "none");
+    $("#close_notification_button").click(function () {
+        $(this).parent().hide();
     });
 
     $(document).keypress(function (event) {
         var code = (event.keyCode ? event.keyCode : event.which);
         if (code === 13) { // "Enter"
-            $(".close_message").click();
+            $("#close_notification_button").click();
         }
     });
-
 });
 
 
