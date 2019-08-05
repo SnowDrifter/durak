@@ -8,25 +8,24 @@ import ru.romanov.durak.controller.websocket.message.*;
 import ru.romanov.durak.model.player.AIPlayer;
 import ru.romanov.durak.model.player.Player;
 import ru.romanov.durak.model.player.RealPlayer;
-import ru.romanov.durak.model.user.User;
-import ru.romanov.durak.user.service.UserService;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 @Data
 @Slf4j
 @Component
 public class Game implements Runnable {
 
-    private UserService userService;
     private Player firstPlayer;
     private Player secondPlayer;
     private List<Card> deck;
     private Card trump;
     private Table table;
     private boolean draw;
+    private Consumer<Game> endGameConsumer = t -> {};
 
     @Override
     public void run() {
@@ -44,7 +43,7 @@ public class Game implements Runnable {
 
         log.info("Game over!");
         sendGameOver();
-        updateStatistics();
+        endGameConsumer.accept(this);
     }
 
     private void move(Player attackPlayer, Player defendPlayer) {
@@ -238,36 +237,6 @@ public class Game implements Runnable {
             return true;
         }
         return false;
-    }
-
-    private void updateStatistics() {
-
-        updateStatisticsForPlayer(firstPlayer);
-
-        if (secondPlayer instanceof RealPlayer) {
-            updateStatisticsForPlayer(secondPlayer);
-        }
-    }
-
-    private void updateStatisticsForPlayer(Player player) {
-        if (player.getUsername() == null) {
-            return;
-        }
-
-        User user = userService.findByUsername(player.getUsername());
-
-        int totalGames = user.getTotalGames();
-        user.setTotalGames(++totalGames);
-
-        if (player.isWin()) {
-            int oldWins = user.getWins();
-            user.setWins(++oldWins);
-        } else {
-            int oldLoses = user.getLoses();
-            user.setLoses(++oldLoses);
-        }
-
-        userService.save(user);
     }
 
     private void initDeck() {
