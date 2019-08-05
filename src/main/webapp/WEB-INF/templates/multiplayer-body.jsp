@@ -31,7 +31,7 @@
 
     <div id="notification">
         <div id="notification_text"></div>
-        <button class="close_notification">OK</button>
+        <button id="close_notification_button">OK</button>
     </div>
 
     <button class="action_button" id="finish_button"><spring:message code="game.button.finish"/></button>
