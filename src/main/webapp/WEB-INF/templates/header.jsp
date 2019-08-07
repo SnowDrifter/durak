@@ -11,29 +11,29 @@
     <br/>
 
     <div class="navigation">
-        <span class="contact"><a href="${pageContext.request.contextPath}/home">
+        <span class="nav_item"><a href="${pageContext.request.contextPath}/home">
             <spring:message code="home"/></a></span>
-        <span class="contact"><a href="${pageContext.request.contextPath}/rules">
+        <span class="nav_item"><a href="${pageContext.request.contextPath}/rules">
             <spring:message code="rules.title"/></a></span>
-        <span class="contact"><a href="${pageContext.request.contextPath}/statistic">
+        <span class="nav_item"><a href="${pageContext.request.contextPath}/statistic">
             <spring:message code="statistics.title"/></a></span>
 
         <security:authorize access="isAnonymous()">
-            <span class="contact right"><a href="${pageContext.request.contextPath}/registration">
+            <span class="nav_item right"><a href="${pageContext.request.contextPath}/registration">
                 <spring:message code="registration"/></a></span>
-            <span class="contact right"><a href="${pageContext.request.contextPath}/login">
+            <span class="nav_item right"><a href="${pageContext.request.contextPath}/login">
                 <spring:message code="login"/></a></span>
         </security:authorize>
 
         <security:authorize access="isAuthenticated()">
-            <span class="contact right"><a href="${pageContext.request.contextPath}/logout">
+            <span class="nav_item right"><a href="${pageContext.request.contextPath}/logout">
                 <spring:message code="logout"/></a></span>
 
-            <span class="contact right"><a href="${pageContext.request.contextPath}/edit">
+            <span class="nav_item right"><a href="${pageContext.request.contextPath}/edit">
                 <spring:message code="edit.menu"/></a></span>
 
             <c:if test="${pageContext.request.userPrincipal.name != null}">
-             <span class="contact right">
+             <span class="nav_item right">
 		        <spring:message code="welcome"/>
                  <span id="username">${pageContext.request.userPrincipal.name}</span>
             </span>

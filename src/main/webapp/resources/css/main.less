@@ -3,6 +3,7 @@
 @import "fonts.less";
 @import "game.less";
 @import "menu.less";
+@import "checkbox.less";
 @import "page/lobby.less";
 @import "page/login.less";
 @import "page/profile.less";
@@ -15,9 +16,11 @@
   padding: 0;
   outline: none;
 }
+
 html, body {
   height: 100%;
 }
+
 body {
   color: @main_font_color;
   background: #f7f7f7;
@@ -25,6 +28,7 @@ body {
   font-family: "Segoe UI", sans-serif;
   line-height: 135%;
 }
+
 a {
   color: @menu_font_color;
   text-decoration: none;
@@ -32,59 +36,67 @@ a {
   -moz-transition: all .6s ease;
   -webkit-transition: all .6s ease;
 }
+
 p {
   text-indent: 20px;
 }
-.navigation a:hover {
-  color: @menu_font_color_hover;
-  text-decoration: none;
-  transition: all .6s ease;
-  -moz-transition: all .6s ease;
-  -webkit-transition: all .6s ease;
+
+.navigation {
+  .nav_item {
+    font-size: 1.5em;
+    font-family: "Beer money", sans-serif;
+    margin-left: 20px;
+  }
+
+  a {
+    padding: 5px;
+    border-radius: 5px;
+    &:hover {
+      background-color: @menu_item_background;
+      color: @menu_font_color_hover;
+      text-decoration: none;
+      transition: all .6s ease;
+      -moz-transition: all .6s ease;
+      -webkit-transition: all .6s ease;
+    }
+  }
 }
-a:active {
-  color: @menu_font_color;
-}
-.navigation a {
-  padding: 5px;
-  border-radius: 5px;
-}
-.navigation a:hover {
-  background-color: @menu_item_background;
-}
+
 img {
   max-width: 100%;
   height: auto;
   width: auto;
 }
-.contact {
-  font-size: 1.5em;
-  font-family: "Beer money", sans-serif;
-  margin-left: 20px;
-}
+
 .right {
   float: right
 }
+
 .left {
   float: left
 }
+
 header, footer {
   background-color: @background_containers;
 }
+
 header {
   border-bottom: 2px solid @borders;
   padding: 1%;
   background: linear-gradient(to top left, @background_containers, lighten(saturate(@background_containers, 30%), 10%));
 }
+
 .lang {
   margin-top: 22px;
   margin-left: 5px;
 }
+
 #wrap {
   display: flex;
   flex-direction: column;
   height: 95%;
 }
+
 #content {
   z-index: 2;
   flex: 1 0 auto;
@@ -95,48 +107,49 @@ header {
   border: 2px solid @borders;
   box-shadow: 5px 5px  20px -3px @container_shadow;
 }
+
 footer {
   flex: 0 0 auto;
   border-top: 2px solid @border_footer;
   padding: 1% 1% 2%;
   height: 20px;
+  img {
+    width: 32px;
+    margin-right: 5px;
+  }
 }
-footer img {
-  width: 32px;
-  margin-right: 5px;
-}
-#footer_content{
+
+#footer_content {
   z-index: 1;
   position: absolute;
   right: 50px;
 }
-.error{
+
+.error {
   color: @error_font_color;
 }
 
-/* Selection Block */
 ::selection {
   color: @selection_font;
   background: @selection_background;
 }
+
 ::-moz-selection {
   color: @selection_font;
   background: @selection_background;
 }
 
-/* Input */
 .field {
   min-height: 25px;
   padding-left: 5px;
   border-radius: 5px;
   border: 2px solid @borders;
-}
-.field:focus {
-  border: 2px solid @menu_font_color;
+  &:focus {
+    border: 2px solid @menu_font_color;
+  }
 }
 
-/* Access denied */
-#access_denied{
+#access_denied {
   height: 300px;
   width: 40%;
   margin-left: 30%;
@@ -150,7 +163,6 @@ footer img {
   line-height: 90px;
 }
 
-/* Accept */
 #accept {
   height: 300px;
   width: 40%;
@@ -164,38 +176,4 @@ footer img {
   font-size: 2em;
   line-height: 90px;
 }
-
-/* region Checkbox */
-label {
-  user-select: none;
-}
-input[type=checkbox].css-checkbox {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  height:1px;
-  width:1px;
-  margin:-1px;
-  padding:0;
-  border:0;
-}
-input[type=checkbox].css-checkbox + label.css-label {
-  padding-left:20px;
-  height:15px;
-  display:inline-block;
-  line-height:15px;
-  background-position: 0 0;
-  font-size:15px;
-  vertical-align:middle;
-  cursor:pointer;
-}
-input[type=checkbox].css-checkbox:checked + label.css-label {
-  background-position: 0 -15px;
-}
-.lite-gray-check{
-  background:url(../images/lite-gray-check.png) no-repeat;
-}
-/* endregion Checkbox */
-
-
 
