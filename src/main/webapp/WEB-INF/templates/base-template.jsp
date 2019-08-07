@@ -15,9 +15,9 @@
 </head>
 
 <body>
-<div class="wrap">
+<div id="wrap">
 <tiles:insertAttribute name="header" />
-    <div class="content">
+    <div id="content">
         <tiles:insertAttribute name="body" />
     </div>
 </div>
