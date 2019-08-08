@@ -47,7 +47,6 @@ p {
     font-family: "Beer money", sans-serif;
     margin-left: 20px;
   }
-
   a {
     padding: 5px;
     border-radius: 5px;
@@ -60,20 +59,19 @@ p {
       -webkit-transition: all .6s ease;
     }
   }
+  .right_section {
+    float: right;
+  }
+  .language_section {
+    display: inline;
+    margin-left: 20px;
+  }
 }
 
 img {
   max-width: 100%;
   height: auto;
   width: auto;
-}
-
-.right {
-  float: right
-}
-
-.left {
-  float: left
 }
 
 header, footer {
@@ -84,11 +82,6 @@ header {
   border-bottom: 2px solid @borders;
   padding: 1%;
   background: linear-gradient(to top left, @background_containers, lighten(saturate(@background_containers, 30%), 10%));
-}
-
-.lang {
-  margin-top: 22px;
-  margin-left: 5px;
 }
 
 #wrap {

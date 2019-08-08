@@ -4,40 +4,30 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <header>
-    <div class="lang right">
-        <a href="?lang=ru"><img src="${pageContext.request.contextPath}/resources/images/RU.png"/></a>
-        <a href="?lang=en"><img src="${pageContext.request.contextPath}/resources/images/GB.png"/></a>
-    </div>
-    <br/>
+    <nav class="navigation">
+        <a class="nav_item" href="${pageContext.request.contextPath}/home"><spring:message code="home"/></a>
+        <a class="nav_item" href="${pageContext.request.contextPath}/rules"><spring:message code="rules.title"/></a>
+        <a class="nav_item" href="${pageContext.request.contextPath}/statistic"><spring:message code="statistics.title"/></a>
 
-    <div class="navigation">
-        <span class="nav_item"><a href="${pageContext.request.contextPath}/home">
-            <spring:message code="home"/></a></span>
-        <span class="nav_item"><a href="${pageContext.request.contextPath}/rules">
-            <spring:message code="rules.title"/></a></span>
-        <span class="nav_item"><a href="${pageContext.request.contextPath}/statistic">
-            <spring:message code="statistics.title"/></a></span>
+        <div class="right_section">
+            <security:authorize access="isAnonymous()">
+                <a class="nav_item" href="${pageContext.request.contextPath}/registration"><spring:message code="registration"/></a>
+                <a class="nav_item" href="${pageContext.request.contextPath}/login"><spring:message code="login"/></a>
+            </security:authorize>
 
-        <security:authorize access="isAnonymous()">
-            <span class="nav_item right"><a href="${pageContext.request.contextPath}/registration">
-                <spring:message code="registration"/></a></span>
-            <span class="nav_item right"><a href="${pageContext.request.contextPath}/login">
-                <spring:message code="login"/></a></span>
-        </security:authorize>
+            <security:authorize access="isAuthenticated()">
+                <a class="nav_item" href="${pageContext.request.contextPath}/logout"><spring:message code="logout"/></a>
+                <a class="nav_item" href="${pageContext.request.contextPath}/edit"><spring:message code="edit.menu"/></a>
 
-        <security:authorize access="isAuthenticated()">
-            <span class="nav_item right"><a href="${pageContext.request.contextPath}/logout">
-                <spring:message code="logout"/></a></span>
+                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                    <span id="username" class="nav_item"><spring:message code="welcome"/>${pageContext.request.userPrincipal.name}</span>
+                </c:if>
+            </security:authorize>
 
-            <span class="nav_item right"><a href="${pageContext.request.contextPath}/edit">
-                <spring:message code="edit.menu"/></a></span>
-
-            <c:if test="${pageContext.request.userPrincipal.name != null}">
-             <span class="nav_item right">
-		        <spring:message code="welcome"/>
-                 <span id="username">${pageContext.request.userPrincipal.name}</span>
-            </span>
-            </c:if>
-        </security:authorize>
-    </div>
+            <div class="language_section">
+                <a href="?lang=ru"><img src="${pageContext.request.contextPath}/resources/images/RU.png"/></a>
+                <a href="?lang=en"><img src="${pageContext.request.contextPath}/resources/images/GB.png"/></a>
+            </div>
+        </div>
+    </nav>
 </header>
