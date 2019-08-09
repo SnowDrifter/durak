@@ -4,22 +4,24 @@ import com.google.common.collect.HashBiMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import ru.romanov.durak.controller.websocket.message.LobbyMessage;
+import ru.romanov.durak.controller.websocket.message.LobbyStateMessage;
 import ru.romanov.durak.controller.websocket.message.Message;
 import ru.romanov.durak.util.JsonHelper;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Set;
 
 @Slf4j
 public class Lobby {
 
     private static HashBiMap<String, WebSocketSession> lobby = HashBiMap.create();
 
-    public synchronized void addPlayer(String username, WebSocketSession session) {
+    public void addPlayer(String username, WebSocketSession session) {
         lobby.put(username, session);
     }
 
-    public synchronized void removeBySession(WebSocketSession session) {
+    public void removeBySession(WebSocketSession session) {
         lobby.inverse().remove(session);
     }
 
@@ -31,19 +33,12 @@ public class Lobby {
         return lobby.getOrDefault(username, null);
     }
 
-    public synchronized String getStringWithUsernames() {
+    public Set<String> getUsernames() {
         if (lobby.isEmpty()) {
-            return "";
+            return Collections.emptySet();
+        } else {
+            return lobby.keySet();
         }
-
-        StringBuilder result = new StringBuilder();
-
-        for (String username : lobby.keySet()) {
-            result.append(username);
-            result.append(",");
-        }
-        result.delete(result.length() - 1, result.length());
-        return result.toString();
     }
 
     public void sendMessageToAll(Message message) {
@@ -59,13 +54,10 @@ public class Lobby {
                 }
             }
         }
-
     }
 
     public void updateLobbyView() {
-        LobbyMessage message = new LobbyMessage();
-        message.setUsernames(getStringWithUsernames());
-        sendMessageToAll(message);
+        sendMessageToAll(new LobbyStateMessage(getUsernames()));
     }
 
 }

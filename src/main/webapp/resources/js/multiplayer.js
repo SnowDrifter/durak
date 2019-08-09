@@ -82,7 +82,7 @@ function initMultiplayerGame() {
                 addChatMessage(message);
                 break;
             }
-            case "LOBBY_MESSAGE": {
+            case "LOBBY_STATE_MESSAGE": {
                 updateLobbyView(message);
                 break;
             }
@@ -120,7 +120,7 @@ function addChatMessage(chatMessage) {
 }
 
 function updateLobbyView(lobbyMessage) {
-    var usersInLobby = lobbyMessage.usernames.split(",");
+    var usersInLobby = lobbyMessage.usernames;
     var tempUsers = $('#users');
 
     if (usersInLobby.length !== 0) {

@@ -16,7 +16,7 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = CardMessage.class, name = "SELECT_CARD"),
         @JsonSubTypes.Type(value = OfferMessage.class, name = "OFFER"),
-        @JsonSubTypes.Type(value = LobbyMessage.class, name = "LOBBY"),
+        @JsonSubTypes.Type(value = LobbyStateMessage.class, name = "LOBBY"),
         @JsonSubTypes.Type(value = ChatMessage.class, name = "CHAT_MESSAGE"),
         @JsonSubTypes.Type(value = ChatMessage.class, name = "LOBBY_CHAT_MESSAGE")
 })

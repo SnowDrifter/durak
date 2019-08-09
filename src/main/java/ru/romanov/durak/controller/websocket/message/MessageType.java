@@ -2,7 +2,7 @@ package ru.romanov.durak.controller.websocket.message;
 
 public enum MessageType {
     CHAT_MESSAGE,
-    LOBBY_MESSAGE,
+    LOBBY_STATE_MESSAGE,
     LOBBY_CHAT_MESSAGE,
     START_GAME,
     UPDATE_TABLE,
