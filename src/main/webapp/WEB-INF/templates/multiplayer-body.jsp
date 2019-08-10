@@ -16,7 +16,7 @@
 
 <div id="lobby">
     <div id="lobby_header"><spring:message code="lobby.header"/></div>
-    <div id="users"></div>
+    <div id="lobby_users"></div>
     <div id="empty_lobby"><spring:message code="lobby.empty"/></div>
 </div>
 

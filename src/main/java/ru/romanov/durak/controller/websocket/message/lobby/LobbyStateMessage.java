@@ -1,7 +1,9 @@
-package ru.romanov.durak.controller.websocket.message;
+package ru.romanov.durak.controller.websocket.message.lobby;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import ru.romanov.durak.controller.websocket.message.Message;
+import ru.romanov.durak.controller.websocket.message.MessageType;
 
 import java.util.Set;
 
@@ -10,7 +12,7 @@ import java.util.Set;
 public class LobbyStateMessage extends Message {
 
     public LobbyStateMessage(Set<String> usernames) {
-        super(MessageType.LOBBY_STATE_MESSAGE);
+        super(MessageType.LOBBY_STATE);
         this.usernames = usernames;
     }
 

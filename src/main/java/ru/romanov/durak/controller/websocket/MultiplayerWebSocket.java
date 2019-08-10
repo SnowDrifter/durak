@@ -29,8 +29,9 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         String username = session.getPrincipal().getName();
-        lobby.addPlayer(username, session);
-        lobby.updateLobbyView();
+        lobby.addUser(username, session);
+        lobby.sendLobbyState(username, session);
+
         log.info("Open session for multiplayer");
     }
 
@@ -45,7 +46,7 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
             }
             case LOBBY_CHAT_MESSAGE: {
                 ChatMessage chatMessage = (ChatMessage) message;
-                lobby.sendMessageToAll(chatMessage);
+                lobby.sendMessageToAll(chatMessage, chatMessage.getUsername());
                 break;
             }
             case CHAT_MESSAGE: {
@@ -77,7 +78,6 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
 
         lobby.removeByUsername(firstUsername);
         lobby.removeByUsername(secondUsername);
-        lobby.updateLobbyView();
 
         Game game = new Game();
         game.setFirstPlayer(firstPlayer);
@@ -100,8 +100,8 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
-        lobby.removeBySession(session);
-        lobby.updateLobbyView();
+        String username = session.getPrincipal().getName();
+        lobby.removeByUsername(username);
 
         for (Game game : games.values()) {
             if (session.equals(game.getFirstPlayer().getSession())) {

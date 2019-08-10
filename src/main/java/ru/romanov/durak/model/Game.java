@@ -336,8 +336,11 @@ public class Game implements Runnable {
     }
 
     public void sendChatMessage(ChatMessage message) {
-        firstPlayer.sendMessage(message);
-        secondPlayer.sendMessage(message);
+        if (firstPlayer.getUsername().equals(message.getUsername())) {
+            secondPlayer.sendMessage(message);
+        } else {
+            firstPlayer.sendMessage(message);
+        }
     }
 
 }

@@ -21,7 +21,7 @@
 
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
                     <span class="nav_item">
-                        <spring:message code="welcome"/><span id="username">${pageContext.request.userPrincipal.name}</span>
+                        <spring:message code="welcome"/> <span id="username">${pageContext.request.userPrincipal.name}</span>
                     </span>
                 </c:if>
             </security:authorize>
