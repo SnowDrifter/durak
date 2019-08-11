@@ -15,58 +15,61 @@ function initSingleplayerGame() {
 
     websocket.onmessage = function (evt) {
         var message = JSON.parse(evt.data);
-
-        switch (message.type) {
-            case "UPDATE_TABLE": {
-                updateTableView(message);
-                break;
-            }
-            case "WRONG_CARD": {
-                showNotification(wrongCardMessage, "alert_notification");
-                break;
-            }
-            case "YOUR_MOVE": {
-                showNotification(playerMoveMessage);
-                $("#take_button").hide();
-                $("#finish_button").show();
-                break;
-            }
-            case "ENEMY_MOVE": {
-                showNotification(enemyMoveMessage);
-                $("#take_button").show();
-                $("#finish_button").hide();
-                break;
-            }
-            case "WIN": {
-                $(".player_side").empty();
-                $('#move_player').hide();
-                $('#move_enemy').hide();
-                $('#take_button').hide();
-                $('#finish_button').hide();
-                showNotification(winMessage, "win_notification");
-                break;
-            }
-            case "LOSE": {
-                $(".enemy_side").empty();
-                $('#move_player').hide();
-                $('#move_enemy').hide();
-                $('#take_button').hide();
-                $('#finish_button').hide();
-                showNotification(loseMessage, "lose_notification");
-                break;
-            }
-            case "DRAW": {
-                $(".enemy_side").empty();
-                $(".player_side").empty();
-                $("#move_player").hide();
-                $("#move_enemy").hide();
-                $('#take_button').hide();
-                $('#finish_button').hide();
-                showNotification(drawMessage, "draw_notification");
-                break;
-            }
-        }
+        parseMessage(message);
     };
+}
+
+function parseMessage(message) {
+    switch (message.type) {
+        case "UPDATE_TABLE": {
+            updateTableView(message);
+            break;
+        }
+        case "WRONG_CARD": {
+            showNotification(wrongCardMessage, "alert_notification");
+            break;
+        }
+        case "YOUR_MOVE": {
+            showNotification(playerMoveMessage);
+            $("#take_button").hide();
+            $("#finish_button").show();
+            break;
+        }
+        case "ENEMY_MOVE": {
+            showNotification(enemyMoveMessage);
+            $("#take_button").show();
+            $("#finish_button").hide();
+            break;
+        }
+        case "WIN": {
+            $(".player_side").empty();
+            $('#move_player').hide();
+            $('#move_enemy').hide();
+            $('#take_button').hide();
+            $('#finish_button').hide();
+            showNotification(winMessage, "win_notification");
+            break;
+        }
+        case "LOSE": {
+            $(".enemy_side").empty();
+            $('#move_player').hide();
+            $('#move_enemy').hide();
+            $('#take_button').hide();
+            $('#finish_button').hide();
+            showNotification(loseMessage, "lose_notification");
+            break;
+        }
+        case "DRAW": {
+            $(".enemy_side").empty();
+            $(".player_side").empty();
+            $("#move_player").hide();
+            $("#move_enemy").hide();
+            $('#take_button').hide();
+            $('#finish_button').hide();
+            showNotification(drawMessage, "draw_notification");
+            break;
+        }
+    }
 }
 
 function closeNotifications() {

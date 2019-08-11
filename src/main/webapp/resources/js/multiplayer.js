@@ -15,11 +15,11 @@ function initMultiplayerGame() {
     websocket.onmessage = function (evt) {
         console.log(evt.data); // TODO: temp log
         var message = JSON.parse(evt.data);
-        resolveMessage(message);
+        parseMessage(message);
     };
 }
 
-function resolveMessage(message) {
+function parseMessage(message) {
     switch (message.type) {
         case "UPDATE_TABLE": {
             updateTableView(message);
