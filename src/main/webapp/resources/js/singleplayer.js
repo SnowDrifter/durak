@@ -43,33 +43,28 @@ function parseMessage(message) {
         }
         case "WIN": {
             $(".player_side").empty();
-            $('#move_player').hide();
-            $('#move_enemy').hide();
-            $('#take_button').hide();
-            $('#finish_button').hide();
+            hideButtons();
             showNotification(winMessage, "win_notification");
             break;
         }
         case "LOSE": {
             $(".enemy_side").empty();
-            $('#move_player').hide();
-            $('#move_enemy').hide();
-            $('#take_button').hide();
-            $('#finish_button').hide();
+            hideButtons();
             showNotification(loseMessage, "lose_notification");
             break;
         }
         case "DRAW": {
             $(".enemy_side").empty();
             $(".player_side").empty();
-            $("#move_player").hide();
-            $("#move_enemy").hide();
-            $('#take_button').hide();
-            $('#finish_button').hide();
+            hideButtons();
             showNotification(drawMessage, "draw_notification");
             break;
         }
     }
+}
+
+function hideButtons() {
+    $('.action_button').hide();
 }
 
 function closeNotifications() {

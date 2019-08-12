@@ -42,30 +42,19 @@ function parseMessage(message) {
             break;
         }
         case "WIN": {
-            $(".player_side").empty();
-            $('#move_player').hide();
-            $('#move_enemy').hide();
-            $('#take_button').hide();
-            $('#finish_button').hide();
+            hideButtons();
             showNotification(winMessage, "win_notification");
             break;
         }
         case "LOSE": {
-            $(".enemy_side").empty();
-            $('#move_player').hide();
-            $('#move_enemy').hide();
-            $('#take_button').hide();
-            $('#finish_button').hide();
+            hideButtons();
             showNotification(loseMessage, "lose_notification");
             break;
         }
         case "DRAW": {
             $(".enemy_side").empty();
             $(".player_side").empty();
-            $("#move_player").hide();
-            $("#move_enemy").hide();
-            $('#take_button').hide();
-            $('#finish_button').hide();
+            hideButtons();
             showNotification(drawMessage, "draw_notification");
             break;
         }
@@ -100,12 +89,11 @@ function parseMessage(message) {
         }
         case "ENEMY_DISCONNECTED": {
             closeNotifications();
+            hideButtons();
             $(".player_side").empty();
             $(".enemy_side").empty();
             $(".table").empty();
             $(".deck").empty();
-            $('#take_button').hide();
-            $('#finish_button').hide();
             $(".trump").hide();
             showNotification(disconnectedMessage, "alert_window, disconnect_window");
             break;
@@ -120,6 +108,10 @@ function closeNotifications() {
 function showNotification(message, additionalClass) {
     $("#notification_text").text(message);
     $("#notification").removeClass().addClass(additionalClass).show();
+}
+
+function hideButtons() {
+    $('.action_button').hide();
 }
 
 function addChatMessage(chatMessage) {
