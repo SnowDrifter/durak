@@ -101,19 +101,6 @@ function parseMessage(message) {
     }
 }
 
-function closeNotifications() {
-    $('#notification').hide();
-}
-
-function showNotification(message, additionalClass) {
-    $("#notification_text").text(message);
-    $("#notification").removeClass().addClass(additionalClass).show();
-}
-
-function hideButtons() {
-    $('.action_button').hide();
-}
-
 function addChatMessage(chatMessage) {
     var date = $.format.date(new Date(chatMessage.creationDate), "HH:mm:ss");
     var username = chatMessage.username;
@@ -148,114 +135,6 @@ function removeUserFromLobby(lobbyMessage) {
     if (users.html() === '') {
         $("#empty_lobby").show();
     }
-}
-
-function updateTableView(message) {
-    var trump = message.trump || null;
-    var playerCardsInHand = message.playerCards ? message.playerCards.split(" ") : [];
-    var currentEnemyCardsCount = message.enemyCardsCount;
-    var deckSize = message.deckSize;
-    var tableCards = message.tableCards ? message.tableCards.split(" ") : [];
-
-    cleanTableAndPlayerCards();
-    addingTrumpAndDeck(trump, deckSize);
-    addingPlayerCards(playerCardsInHand);
-    addingEnemyCards(currentEnemyCardsCount);
-    addingCardsOnTable(tableCards);
-}
-
-function cleanTableAndPlayerCards() {
-    $(".player_side").children().each(function () {
-        var tempCardId = $(this).attr("id");
-
-        $("#" + tempCardId).appendTo("#sump");
-    });
-
-    $(".table").children().each(function () {
-        var tempTableCardId = $(this).attr("id");
-
-        $("#" + tempTableCardId).appendTo("#sump");
-    });
-}
-
-function addingTrumpAndDeck(trump, sizeOfDeck) {
-    var trumpElement = $(".trump");
-
-    if (!trumpElement.html() && trump) {
-        trumpElement.html("<div class='card'><img src='/resources/images/cards/" + trump + ".png'/></div>");
-    }
-
-    if (!trump && sizeOfDeck === 0) {
-        trumpElement.css("opacity", "0.4");
-    }
-
-    if (sizeOfDeck > 0) {
-        sizeOfDeck++;
-
-        if ($(".deck").html() === "") {
-            $(".deck").append("<div class='cards_in_deck'><p class='cards_number'>" + sizeOfDeck + "</p><img src='/resources/images/cards/back.png'/></div>");
-        } else {
-            $(".cards_number").text(sizeOfDeck);
-        }
-
-        if (sizeOfDeck > 9) {
-            $(".cards_number").css("font-size", "2em").css("left", "12px");
-        } else {
-            $(".cards_number").css("font-size", "3em").css("left", "16px");
-        }
-    } else {
-        $(".deck").empty();
-    }
-}
-
-function addingPlayerCards(playerCardsInHand) {
-    var playerTrumpsInHand = [];
-
-    for (var x = 0; x < playerCardsInHand.length; x++) {
-        var card = playerCardsInHand[x];
-
-        if (card.match(trumpSuit)) {
-            playerTrumpsInHand.push(card);
-            delete playerCardsInHand[x];
-        }
-    }
-
-    playerCardsInHand.forEach(function (card) {
-        if (card.match(trumpSuit)) {
-            playerTrumpsInHand.push(card);
-            delete playerCardsInHand[x];
-        }
-    });
-
-    playerCardsInHand.sort();
-    playerTrumpsInHand.sort();
-
-    playerCardsInHand.forEach(function (cardName) {
-        if (cardName) {
-            $("#" + cardName).appendTo(".player_side");
-        }
-    });
-
-    playerTrumpsInHand.forEach(function (trumpCardName) {
-        $("#" + trumpCardName).appendTo(".player_side");
-    });
-
-}
-
-function addingEnemyCards(currentEnemyCardsCount) {
-    if (enemyCardsCount !== currentEnemyCardsCount) {
-        $(".enemy_side").empty();
-
-        for (var k = 0; k < currentEnemyCardsCount; k++) {
-            $("#back").clone().removeAttr("id").appendTo(".enemy_side");
-        }
-    }
-}
-
-function addingCardsOnTable(tableCards) {
-    tableCards.forEach(function (item) {
-        $("#" + item).appendTo(".table");
-    });
 }
 
 $(window).on('load', function () {
@@ -308,30 +187,30 @@ $(document).ready(function () {
         $('#chat_content').toggle();
 
         if ($("#chat").hasClass("isClosed")) {
-            $('#chat').css("height", currentChatHeight).removeClass("isClosed").resizable("enable");
+            $('#chat').height(currentChatHeight).removeClass("isClosed").resizable("enable");
             $("#chat_switch").css({transition: 'all .5s', transform: 'rotate(0deg)'});
         } else {
-            currentChatHeight = $("#chat").css("height");
-            $('#chat').css("height", "30px").addClass("isClosed").resizable("disable");
+            currentChatHeight = $("#chat").height();
+            $('#chat').height(30).addClass("isClosed").resizable("disable");
             $("#chat_switch").css({transition: 'all .5s', transform: 'rotate(180deg)'});
         }
     });
 
-    $('#chat').resizable({
-        ghost: true,
-        minHeight: 200,
-        maxHeight: 800,
-        minWidth: 300,
-        maxWidth: 300,
-        stop: function () {
-            var currentHeight = $("#chat").css("height").replace("px", "");
-            var chatHistoryHeight = currentHeight - 130;
+    $('#chat')
+        .resizable({
+            // ghost: true,
+            minHeight: 150,
+            minWidth: 150,
+            containment: "#content",
+            stop: function () {
+                var currentHeight = $("#chat").height();
+                var chatHistoryHeight = currentHeight - 130;
 
-            var chatHistoryDiv = $('#chat_history');
-            chatHistoryDiv.css("height", chatHistoryHeight).css("min-height", chatHistoryHeight);
-        }
-    }).draggable({
-        containment: 'parent',
+                var chatHistoryDiv = $('#chat_history');
+                chatHistoryDiv.height(chatHistoryHeight).css("min-height", chatHistoryHeight);
+            }
+        }).draggable({
+        containment: "#content",
         handle: '#chat_header'
     });
 });

@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/game.js"><jsp:text/></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/singleplayer.js"><jsp:text/></script>
 <script>
     var playerMoveMessage = '<spring:message code="game.move.player"/>';
