@@ -16,6 +16,8 @@
         <tiles.version>3.0.7</tiles.version>
         <jackson.version>2.9.0</jackson.version>
         <hibernate.version>5.4.2.Final</hibernate.version>
+        <yuicompressor.temp.folder>${project.build.directory}/yuicompressor/resources/js</yuicompressor.temp.folder>
+        <yuicompressor.result.folder>${project.build.directory}/${project.build.finalName}/resources/js</yuicompressor.result.folder>
     </properties>
 
     <build>
@@ -55,6 +57,42 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>yuicompressor-maven-plugin</artifactId>
+                <version>1.5.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compress</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <webappDirectory>${project.build.directory}/yuicompressor</webappDirectory>
+                    <excludes>
+                        <exclude>**/*.min.js</exclude>
+                        <exclude>**/*.css</exclude>
+                    </excludes>
+                    <jswarn>false</jswarn>
+                    <aggregations>
+                        <aggregation>
+                            <output>${yuicompressor.result.folder}/singleplayer-final.min.js</output>
+                            <includes>
+                                <include>${yuicompressor.temp.folder}/singleplayer-min.js</include>
+                                <include>${yuicompressor.temp.folder}/game-min.js</include>
+                            </includes>
+                        </aggregation>
+                        <aggregation>
+                            <output>${yuicompressor.result.folder}/multiplayer-final.min.js</output>
+                            <includes>
+                                <include>${yuicompressor.temp.folder}/multiplayer-min.js</include>
+                                <include>${yuicompressor.temp.folder}/game-min.js</include>
+                            </includes>
+                        </aggregation>
+                    </aggregations>
+                </configuration>
             </plugin>
         </plugins>
     </build>
