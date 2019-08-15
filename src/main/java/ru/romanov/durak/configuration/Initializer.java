@@ -4,6 +4,7 @@ package ru.romanov.durak.configuration;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.resource.ResourceUrlEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.FilterRegistration;
@@ -32,6 +33,11 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
         encodingFilter.setInitParameter("encoding", "UTF-8");
         encodingFilter.setInitParameter("forceEncoding", "true");
         encodingFilter.addMappingForUrlPatterns(null, true, "/*");
+
+        FilterRegistration.Dynamic resourceUrlEncodingFilter = container.addFilter("resource-url-encoding-filter", new ResourceUrlEncodingFilter());
+        resourceUrlEncodingFilter.setInitParameter("encoding", "UTF-8");
+        resourceUrlEncodingFilter.setInitParameter("forceEncoding", "true");
+        resourceUrlEncodingFilter.addMappingForUrlPatterns(null, true, "/*");
     }
 
     @Override
