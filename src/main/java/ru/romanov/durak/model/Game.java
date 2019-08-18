@@ -156,16 +156,12 @@ public class Game implements Runnable {
     private void updateTableViewForPlayer(Player player, Player enemy) {
         TableMessage message = new TableMessage();
 
-        StringBuilder cardsForPlayer = new StringBuilder();
-        if (!player.getHand().isEmpty()) {
-            for (Card card : player.getHand()) {
-                cardsForPlayer.append(card.getName());
-                cardsForPlayer.append(" ");
-            }
-            cardsForPlayer.delete(cardsForPlayer.length() - 1, cardsForPlayer.length());
+        List<String> playerCards = new ArrayList<>();
+        for (Card card : player.getHand()) {
+            playerCards.add(card.getName());
         }
 
-        message.setPlayerCards(cardsForPlayer.toString());
+        message.setPlayerCards(playerCards);
         message.setEnemyCardsCount(enemy.getHand().size());
 
         if (trump != null) {

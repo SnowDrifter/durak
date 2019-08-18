@@ -13,10 +13,10 @@ function showNotification(message, additionalClass) {
 
 function updateTableView(message) {
     var trump = message.trump || null;
-    var playerCardsInHand = message.playerCards ? message.playerCards.split(" ") : [];
+    var playerCardsInHand = message.playerCards ? message.playerCards : [];
     var currentEnemyCardsCount = message.enemyCardsCount;
     var deckSize = message.deckSize;
-    var tableCards = message.tableCards ? message.tableCards.split(" ") : [];
+    var tableCards = message.tableCards ? message.tableCards : [];
 
     cleanTableAndPlayerCards();
     addingTrumpAndDeck(trump, deckSize);

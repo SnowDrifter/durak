@@ -16,24 +16,17 @@ public class Table {
         currentCard = null;
     }
 
-    public String getCardNames() {
-        StringBuilder result = new StringBuilder();
-        if (!oldCards.isEmpty()) {
-            for (Card card : oldCards) {
-                result.append(card.getName());
-                result.append(" ");
-            }
+    public List<String> getCardNames() {
+        List<String> result = new ArrayList<>();
+        for (Card card : oldCards) {
+            result.add(card.getName());
         }
+
         if (currentCard != null) {
-            result.append(currentCard.getName());
-            result.append(" ");
+            result.add(currentCard.getName());
         }
 
-        if (result.length() > 0) {
-            result.delete(result.length() - 1, result.length());
-        }
-
-        return result.toString();
+        return result;
     }
 
     public List<Card> getAllCardsOnTable() {
