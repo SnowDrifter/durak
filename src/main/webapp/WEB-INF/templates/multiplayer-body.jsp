@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/multiplayer-final.min.js"><jsp:text/></script>
+<script type="text/javascript" src="<c:url value="/resources/js/multiplayer-final.min.js"/>"><jsp:text/></script>
 <script>
     var playerMoveMessage = '<spring:message code="game.move.player"/>';
     var enemyMoveMessage = '<spring:message code="game.move.enemy"/>';
