@@ -2,7 +2,7 @@
 <footer>
     <div id="footer_content">
         <a href="https://github.com/SnowDrifter/durak">
-            <img src="${pageContext.request.contextPath}/resources/images/gh.png" alt="GitHub" title="Facebook"/>
+            <img src="${pageContext.request.contextPath}/resources/images/gh.png" alt="GitHub" title="GitHub"/>
         </a>
         <a href="http://vk.com/id7129047">
             <img src="${pageContext.request.contextPath}/resources/images/vk.png" alt="Vkontakte" title="Vkontakte"/>
