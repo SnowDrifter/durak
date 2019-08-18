@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <script type="text/javascript" src="<c:url value="/resources/js/singleplayer-final.min.js"/>"><jsp:text/></script>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <script>
     var playerMoveMessage = '<spring:message code="game.move.player"/>';
     var enemyMoveMessage = '<spring:message code="game.move.enemy"/>';
