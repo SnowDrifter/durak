@@ -20,9 +20,7 @@
                 <a class="nav_item" href="${pageContext.request.contextPath}/edit"><spring:message code="edit.menu"/></a>
 
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
-                    <span class="nav_item">
-                        <spring:message code="welcome"/> <span id="username">${pageContext.request.userPrincipal.name}</span>
-                    </span>
+                    <span class="nav_item"><spring:message code="welcome"/> ${pageContext.request.userPrincipal.name}</span>
                 </c:if>
             </security:authorize>
 

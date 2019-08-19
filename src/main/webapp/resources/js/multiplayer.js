@@ -1,11 +1,9 @@
 var websocket;
 var trumpSuit = "";
 var enemyCardsCount = "";
-var username = "";
 var currentChatHeight = 720;
 
 function initMultiplayerGame() {
-    username = $('#username').text();
     websocket = new WebSocket("ws://" + window.location.host + "/ws/multiplayer?username=" + username);
 
     websocket.onclose = function () {
