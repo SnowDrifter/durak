@@ -1,49 +1,57 @@
 #chat {
-    position: relative;
-    float: left;
-    height: 768px;
-    width: 300px;
-    background: @chat_background;
-    border-radius: 5px;
-    border: 2px solid @borders;
-    margin-left: 1%;
+  position: relative;
+  float: left;
+  height: 768px;
+  width: 300px;
+  background: @chat_background;
+  border-radius: 5px;
+  border: 2px solid @borders;
+  margin-left: 1%;
 }
+
 #chat_text_field {
-    position: absolute;
-    left: 10px;
-    bottom: 40px;
-    width: 270px;
+  box-sizing: border-box;
+  position: absolute !important;
+  bottom: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: calc(~'100% - 20px');
 }
+
 #chat_send {
-    min-height: 20px;
-    min-width: 80px;
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
-    background: darken(desaturate(@chat_background, 25%), 20%);
-    border-radius: 5px;
-    border: 2px solid @borders;
-    transition: all .2s ease;
-}
-#chat_send:hover{
+  min-height: 20px;
+  min-width: 80px;
+  position: absolute !important;
+  left: 10px;
+  bottom: 10px;
+  background: darken(desaturate(@chat_background, 25%), 20%);
+  border-radius: 5px;
+  border: 2px solid @borders;
+  transition: all .2s ease;
+  &:hover {
     background: darken(desaturate(@chat_background, 18%), 30%);
     transition: all .2s ease;
+  }
 }
-#chat_history{
-    margin-left: 10px;
-    margin-top: 10px;
-    max-height: 650px;
-    max-width: 380px;
-    overflow-x: auto;
+
+#chat_history {
+  margin-left: 10px;
+  margin-top: 10px;
+  overflow-x: auto;
 }
-#chat_header{
-    text-align: center;
-    background: darken(desaturate(@chat_background, 25%), 20%);
-    height: 30px;
-    line-height: 30px;
-    font-size: 1.2em;
+
+#chat_header {
+  text-align: center;
+  background: darken(desaturate(@chat_background, 25%), 20%);
+  height: 30px;
+  line-height: 30px;
+  font-size: 1.2em;
 }
-#chat_header img{
-    width: 30px;
-    float: right;
+
+#chat_switch {
+  width: 30px;
+  float: right;
+  &:hover {
+    cursor: pointer;
+  }
 }

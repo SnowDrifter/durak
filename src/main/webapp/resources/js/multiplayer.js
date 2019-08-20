@@ -196,9 +196,8 @@ $(document).ready(function () {
 
     $('#chat')
         .resizable({
-            // ghost: true,
-            minHeight: 150,
-            minWidth: 150,
+            minHeight: 200,
+            minWidth: 200,
             containment: "#content",
             stop: function () {
                 var currentHeight = $("#chat").height();
