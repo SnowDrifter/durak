@@ -221,8 +221,10 @@ function sendChatMessage(event) {
     }
 
     var date = $.format.date(new Date(), "HH:mm:ss");
-    $('#chat_history').prepend("<div>" + "[" + date + "] <b>" + username + "</b>: " + message + "</div>");
+    var chatHistory = $('#chat_history');
+    var additionalClass = chatHistory.children().length % 2 === 0 ? "even_message" : "odd_message";
 
+    chatHistory.append("<div class='chat_message " + additionalClass + "'>" + "[" + date + "] <b>" + username + "</b>: " + message + "</div>");
     chatTextField.val('');
 
     var type = event.data.type;
