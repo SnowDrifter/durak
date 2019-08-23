@@ -3,6 +3,8 @@
 <script type="text/javascript" src="<c:url value="/resources/js/multiplayer-final.min.js"/>"><jsp:text/></script>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <script>
+    var username = '${pageContext.request.userPrincipal.name}';
+
     var playerMoveMessage = '<spring:message code="game.move.player"/>';
     var enemyMoveMessage = '<spring:message code="game.move.enemy"/>';
     var wrongCardMessage = '<spring:message code="game.wrong.card"/>';
