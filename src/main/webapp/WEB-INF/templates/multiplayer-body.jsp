@@ -43,8 +43,10 @@
     <div id="chat_header"><spring:message code="lobby.chat.header"/>  <img src="${pageContext.request.contextPath}/resources/images/arrow_up.png" id="chat_switch"/></div>
     <div id="chat_content">
         <div id="chat_history"></div>
-        <input id="chat_text_field" title="" class="field" type="text"/>
-        <button id="chat_send"><spring:message code="chat.send"/></button>
+        <div id="chat_form">
+            <input id="chat_text_field" title="" class="field" type="text"/>
+            <button id="chat_send_button"><spring:message code="chat.send"/></button>
+        </div>
     </div>
 </div>
 

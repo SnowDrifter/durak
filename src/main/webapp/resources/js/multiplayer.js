@@ -63,9 +63,9 @@ function parseMessage(message) {
             }).css("background-color", "#f7d8af");
             $("#game_container").show();
             $('#chat_header').css("background-color", "#e0af71");
-            $('#chat_send').css("background-color", "#e0af71").unbind("click").click({type: "CHAT_MESSAGE"}, sendChatMessage);
+            $('#chat_send_button').css("background-color", "#e0af71").unbind("click").click({type: "CHAT_MESSAGE"}, sendChatMessage);
             $('#chat_history').empty();
-            $('#game_chat_send').show();
+            $('#game_chat_send_button').show();
             break;
         }
         case "LOBBY_CHAT_MESSAGE":
@@ -126,7 +126,7 @@ function removeUserFromLobby(lobbyMessage) {
     var username = lobbyMessage.username;
     var users = $('#lobby_users');
 
-    users.contents().filter(function(){
+    users.contents().filter(function () {
         return $(this).text() === username;
     }).remove();
 
@@ -173,11 +173,11 @@ $(document).ready(function () {
         }
     });
 
-    $('#chat_send').click({type: "LOBBY_CHAT_MESSAGE"}, sendChatMessage);
+    $('#chat_send_button').click({type: "LOBBY_CHAT_MESSAGE"}, sendChatMessage);
     $('#chat_text_field').keydown(function (e) {
         if (e.which === 13) {
             e.preventDefault();
-            $('#chat_send').click();
+            $('#chat_send_button').click();
         }
     });
 
@@ -226,6 +226,9 @@ function sendChatMessage(event) {
 
     chatHistory.append("<div class='chat_message " + additionalClass + "'>" + "[" + date + "] <b>" + username + "</b>: " + message + "</div>");
     chatTextField.val('');
+
+    //Auto-scroll
+    chatHistory.animate({scrollTop: chatHistory.prop("scrollHeight")}, 150);
 
     var type = event.data.type;
     websocket.send(JSON.stringify({type: type, username: username, message: message}));
