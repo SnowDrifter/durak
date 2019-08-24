@@ -46,7 +46,7 @@
     <div id="chat_content">
         <div id="chat_history"></div>
         <div id="chat_form">
-            <input id="chat_text_field" title="" class="field" type="text"/>
+            <textarea id="chat_text_field" title="" class="field" rows="3"></textarea>
             <button id="chat_send_button"><spring:message code="chat.send"/></button>
         </div>
     </div>
