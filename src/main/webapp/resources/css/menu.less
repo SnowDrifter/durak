@@ -1,55 +1,50 @@
 .game_menu {
-    position: relative;
-    margin-left: 20%;
-    margin-right: 20%;
-}
-.game_menu div {
+  margin-left: 20%;
+  margin-right: 20%;
+  a {
+    display: block;
     font-family: "Nautilus Pompilius", sans-serif;
     font-size: 3em;
     text-shadow: 1px 1px #888;
-    padding-top: 5%;
-    padding-bottom: 5%;
     margin-top: 50px;
     text-align: center;
     min-height: 100%;
     line-height: 100%;
-    border-radius: 5px;
+    border-radius: 10px;
+    padding: 50px 25px;
+  }
 }
+
 #singleplayer_ref {
-    box-shadow: 5px 5px 10px -5px darken(desaturate(@singleplayer_ref_body, 18%), 20%);
-    background-image: linear-gradient(
-            lighten(@singleplayer_ref_body, 30%),
-            desaturate(@singleplayer_ref_body, 20%) 50%,
-            darken(saturate(@singleplayer_ref_body, 10%), 20%) 20%,
-            lighten(@singleplayer_ref_body, 20%));
-    border:0;
-    border-radius:10px;
-    padding:50px 25px;
-}
-#singleplayer_ref:hover {
+  box-shadow: 5px 5px 10px -5px darken(desaturate(@singleplayer_ref_body, 18%), 20%);
+  background-image: linear-gradient(
+          lighten(@singleplayer_ref_body, 30%),
+          desaturate(@singleplayer_ref_body, 20%) 50%,
+          darken(saturate(@singleplayer_ref_body, 10%), 20%) 20%,
+          lighten(@singleplayer_ref_body, 20%));
+  &:hover {
     box-shadow: inset 0 0 10px -3px darken(desaturate(@singleplayer_ref_body, 18%), 12%);
     background-image: linear-gradient(
             lighten(@singleplayer_ref_body, 30%),
             desaturate(@singleplayer_ref_body, 10%) 50%,
             darken(saturate(@singleplayer_ref_body, 5%), 10%) 50%,
             lighten(@singleplayer_ref_body, 20%));
+  }
 }
+
 #multiplayer_ref {
-    box-shadow: 5px 5px 10px -5px darken(desaturate(@multiplayer_ref_body, 18%), 20%);
-    background-image: linear-gradient(
-            lighten(@multiplayer_ref_body, 30%),
-            desaturate(@multiplayer_ref_body, 20%) 50%,
-            darken(saturate(@multiplayer_ref_body, 10%), 20%) 20%,
-            lighten(@multiplayer_ref_body, 20%));
-    border:0;
-    border-radius:10px;
-    padding:50px 25px;
-}
-#multiplayer_ref:hover {
+  box-shadow: 5px 5px 10px -5px darken(desaturate(@multiplayer_ref_body, 18%), 20%);
+  background-image: linear-gradient(
+          lighten(@multiplayer_ref_body, 30%),
+          desaturate(@multiplayer_ref_body, 20%) 50%,
+          darken(saturate(@multiplayer_ref_body, 10%), 20%) 20%,
+          lighten(@multiplayer_ref_body, 20%));
+  &:hover {
     box-shadow: inset 0 0 10px -3px darken(desaturate(@multiplayer_ref_body, 18%), 12%);
     background-image: linear-gradient(
             lighten(@multiplayer_ref_body, 30%),
             desaturate(@multiplayer_ref_body, 10%) 50%,
             darken(saturate(@multiplayer_ref_body, 5%), 10%) 50%,
             lighten(@multiplayer_ref_body, 20%));
+  }
 }
