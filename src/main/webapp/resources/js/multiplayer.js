@@ -1,7 +1,6 @@
 var websocket;
 var trumpSuit = "";
 var enemyCardsCount = "";
-var currentChatHeight = 720;
 
 function initMultiplayerGame() {
     websocket = new WebSocket("ws://" + window.location.host + "/ws/multiplayer?username=" + username);
@@ -185,30 +184,12 @@ $(document).ready(function () {
         $('#chat_content').toggle();
 
         if ($("#chat").hasClass("isClosed")) {
-            $('#chat').height(currentChatHeight).removeClass("isClosed").resizable("enable");
+            $('#chat').height('100%').removeClass("isClosed");
             $("#chat_switch").css({transition: 'all .5s', transform: 'rotate(0deg)'});
         } else {
-            currentChatHeight = $("#chat").height();
-            $('#chat').height(30).addClass("isClosed").resizable("disable");
+            $('#chat').height(30).addClass("isClosed");
             $("#chat_switch").css({transition: 'all .5s', transform: 'rotate(180deg)'});
         }
-    });
-
-    $('#chat')
-        .resizable({
-            minHeight: 200,
-            minWidth: 200,
-            containment: "#content",
-            stop: function () {
-                var currentHeight = $("#chat").height();
-                var chatHistoryHeight = currentHeight - 130;
-
-                var chatHistoryDiv = $('#chat_history');
-                chatHistoryDiv.height(chatHistoryHeight).css("min-height", chatHistoryHeight);
-            }
-        }).draggable({
-        containment: "#content",
-        handle: '#chat_header'
     });
 });
 
