@@ -1,11 +1,11 @@
 #lobby {
+  height: 100%;
+  width: 60%;
   float: left;
   margin-left: 5%;
   background: @main_background;
   border: 2px solid @borders;
   border-radius: 5px;
-  width: 60%;
-  height: 768px;
 }
 
 #lobby_header {
@@ -14,6 +14,7 @@
   text-align: center;
   font-size: 1.5em;
   line-height: 60px;
+  user-select: none;
 }
 
 #lobby_users {
@@ -43,8 +44,10 @@
 }
 
 #empty_lobby {
+  height: calc(~'100% - 60px');
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.25em;
-  text-align: center;
-  padding-top: 40px;
-  line-height: 500px;
+  user-select: none;
 }

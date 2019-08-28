@@ -1,21 +1,22 @@
 #chat {
   position: relative;
-  float: left;
-  height: 768px;
-  width: 300px;
+  float: right;
+  height: 100%;
+  width: calc(~'29% - 8px');
+  margin-left: 1%;
+  margin-right: 5%;
   background: @chat_background;
   border-radius: 5px;
   border: 2px solid @borders;
-  margin-left: 1%;
 }
 
 #chat_header {
   text-align: center;
   background: darken(desaturate(@chat_background, 25%), 20%);
-  border-bottom: 1px solid @borders;
   height: 30px;
   line-height: 30px;
   font-size: 1.2em;
+  user-select: none;
 }
 
 #chat_switch {
@@ -79,7 +80,7 @@
   margin-top: 5px;
   background: darken(desaturate(@chat_background, 25%), 20%);
   border-radius: 5px;
-  border: 2px solid @borders;
+  border: 1px solid @borders;
   transition: all .2s ease;
   &:hover {
     background: darken(desaturate(@chat_background, 18%), 30%);
