@@ -102,8 +102,7 @@ function addChatMessage(chatMessage) {
     var date = $.format.date(new Date(chatMessage.creationDate), "HH:mm:ss");
     var username = chatMessage.username;
     var message = chatMessage.message;
-
-    $('#chat_history').prepend("<div>" + "[" + date + "] <b>" + username + "</b>: " + message + "</div>");
+    appendChatMessage(username, message, date);
 }
 
 function updateLobbyView(lobbyMessage) {
@@ -111,6 +110,7 @@ function updateLobbyView(lobbyMessage) {
     var users = $('#lobby_users');
 
     if (usersInLobby.length !== 0) {
+        $("#empty_lobby").hide();
         usersInLobby.forEach(function (user) {
             users.append("<div class='lobby_user'>" + user + "</div>");
         });
@@ -119,6 +119,7 @@ function updateLobbyView(lobbyMessage) {
 
 function addUserToLobby(lobbyMessage) {
     $('#lobby_users').append("<div class='lobby_user'>" + lobbyMessage.username + "</div>");
+    $("#empty_lobby").hide();
 }
 
 function removeUserFromLobby(lobbyMessage) {
@@ -202,15 +203,19 @@ function sendChatMessage(event) {
     }
 
     var date = $.format.date(new Date(), "HH:mm:ss");
+    appendChatMessage(username, message, date);
+    chatTextField.val('');
+
+    var type = event.data.type;
+    websocket.send(JSON.stringify({type: type, username: username, message: message}));
+}
+
+function appendChatMessage(username, message, date) {
     var chatHistory = $('#chat_history');
     var additionalClass = chatHistory.children().length % 2 === 0 ? "even_message" : "odd_message";
 
     chatHistory.append("<div class='chat_message " + additionalClass + "'>" + "[" + date + "] <b>" + username + "</b>: " + message + "</div>");
-    chatTextField.val('');
 
     //Auto-scroll
     chatHistory.animate({scrollTop: chatHistory.prop("scrollHeight")}, 150);
-
-    var type = event.data.type;
-    websocket.send(JSON.stringify({type: type, username: username, message: message}));
 }
