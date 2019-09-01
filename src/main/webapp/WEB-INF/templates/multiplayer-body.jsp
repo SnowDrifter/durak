@@ -5,14 +5,14 @@
 <script>
     var username = '${pageContext.request.userPrincipal.name}';
 
-    var playerMoveMessage = '<spring:message code="game.move.player"/>';
-    var enemyMoveMessage = '<spring:message code="game.move.enemy"/>';
-    var wrongCardMessage = '<spring:message code="game.wrong.card"/>';
-    var winMessage = '<spring:message code="game.result.win"/>';
-    var loseMessage = '<spring:message code="game.result.lose"/>';
-    var drawMessage = '<spring:message code="game.result.draw"/>';
-    var disconnectedMessage = '<spring:message code="game.disconnected"/>';
-    var sessionCloseMessage = '<spring:message code="game.sessionClose"/>';
+    var playerMoveText = '<spring:message code="game.move.player"/>';
+    var enemyMoveText = '<spring:message code="game.move.enemy"/>';
+    var wrongCardText = '<spring:message code="game.wrong.card"/>';
+    var winText = '<spring:message code="game.result.win"/>';
+    var loseText = '<spring:message code="game.result.lose"/>';
+    var drawText = '<spring:message code="game.result.draw"/>';
+    var disconnectedText = '<spring:message code="game.disconnected"/>';
+    var sessionCloseText = '<spring:message code="game.sessionClose"/>';
 
     $(document).ready(initMultiplayerGame());
 </script>

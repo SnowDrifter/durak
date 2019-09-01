@@ -7,7 +7,7 @@ function initMultiplayerGame() {
 
     websocket.onclose = function () {
         cleanTableAndPlayerCards();
-        showNotification(sessionCloseMessage, "alert_window");
+        showNotification(sessionCloseText, "alert_window");
     };
     websocket.onmessage = function (evt) {
         console.log(evt.data); // TODO: temp log
@@ -23,36 +23,36 @@ function parseMessage(message) {
             break;
         }
         case "WRONG_CARD": {
-            showNotification(wrongCardMessage, "alert_notification");
+            showNotification(wrongCardText, "alert_notification");
             break;
         }
         case "YOUR_MOVE": {
-            showNotification(playerMoveMessage);
+            showNotification(playerMoveText);
             $("#take_button").hide();
             $("#finish_button").show();
             break;
         }
         case "ENEMY_MOVE": {
-            showNotification(enemyMoveMessage);
+            showNotification(enemyMoveText);
             $("#take_button").show();
             $("#finish_button").hide();
             break;
         }
         case "WIN": {
             hideButtons();
-            showNotification(winMessage, "win_notification");
+            showNotification(winText, "win_notification");
             break;
         }
         case "LOSE": {
             hideButtons();
-            showNotification(loseMessage, "lose_notification");
+            showNotification(loseText, "lose_notification");
             break;
         }
         case "DRAW": {
             $(".enemy_side").empty();
             $(".player_side").empty();
             hideButtons();
-            showNotification(drawMessage, "draw_notification");
+            showNotification(drawText, "draw_notification");
             break;
         }
         case "INVITE": {
@@ -96,7 +96,7 @@ function parseMessage(message) {
             $(".table").empty();
             $(".deck").empty();
             $(".trump").hide();
-            showNotification(disconnectedMessage, "alert_window, disconnect_window");
+            showNotification(disconnectedText, "alert_window, disconnect_window");
             break;
         }
     }

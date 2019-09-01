@@ -10,7 +10,7 @@ function initSingleplayerGame() {
     };
     websocket.onclose = function () {
         cleanTableAndPlayerCards();
-        showNotification(sessionCloseMessage, "alert_notification");
+        showNotification(sessionCloseText, "alert_notification");
     };
 
     websocket.onmessage = function (evt) {
@@ -26,17 +26,17 @@ function parseMessage(message) {
             break;
         }
         case "WRONG_CARD": {
-            showNotification(wrongCardMessage, "alert_notification");
+            showNotification(wrongCardText, "alert_notification");
             break;
         }
         case "YOUR_MOVE": {
-            showNotification(playerMoveMessage);
+            showNotification(playerMoveText);
             $("#take_button").hide();
             $("#finish_button").show();
             break;
         }
         case "ENEMY_MOVE": {
-            showNotification(enemyMoveMessage);
+            showNotification(enemyMoveText);
             $("#take_button").show();
             $("#finish_button").hide();
             break;
@@ -44,20 +44,20 @@ function parseMessage(message) {
         case "WIN": {
             $(".player_side").empty();
             hideButtons();
-            showNotification(winMessage, "win_notification");
+            showNotification(winText, "win_notification");
             break;
         }
         case "LOSE": {
             $(".enemy_side").empty();
             hideButtons();
-            showNotification(loseMessage, "lose_notification");
+            showNotification(loseText, "lose_notification");
             break;
         }
         case "DRAW": {
             $(".enemy_side").empty();
             $(".player_side").empty();
             hideButtons();
-            showNotification(drawMessage, "draw_notification");
+            showNotification(drawText, "draw_notification");
             break;
         }
     }
