@@ -3,9 +3,9 @@ package ru.romanov.durak.model.player;
 import lombok.Data;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import ru.romanov.durak.controller.websocket.message.DefaultMessage;
-import ru.romanov.durak.controller.websocket.message.Message;
-import ru.romanov.durak.controller.websocket.message.MessageType;
+import ru.romanov.durak.websocket.message.DefaultMessage;
+import ru.romanov.durak.websocket.message.Message;
+import ru.romanov.durak.websocket.message.MessageType;
 import ru.romanov.durak.model.Card;
 import ru.romanov.durak.util.JsonHelper;
 

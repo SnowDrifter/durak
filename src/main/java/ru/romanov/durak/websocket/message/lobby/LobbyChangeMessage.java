@@ -1,9 +1,9 @@
-package ru.romanov.durak.controller.websocket.message.lobby;
+package ru.romanov.durak.websocket.message.lobby;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import ru.romanov.durak.controller.websocket.message.Message;
-import ru.romanov.durak.controller.websocket.message.MessageType;
+import ru.romanov.durak.websocket.message.Message;
+import ru.romanov.durak.websocket.message.MessageType;
 
 @Data
 @EqualsAndHashCode(callSuper = true)

@@ -1,4 +1,4 @@
-package ru.romanov.durak.controller.websocket.message;
+package ru.romanov.durak.websocket.message;
 
 public enum MessageType {
     CHAT_MESSAGE,
@@ -20,5 +20,6 @@ public enum MessageType {
     INVITE,
     ACCEPT_INVITE,
     REJECT_INVITE,
+    CANCEL_INVITE,
     ENEMY_DISCONNECTED
 }

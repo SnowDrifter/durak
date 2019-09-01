@@ -1,4 +1,4 @@
-package ru.romanov.durak.controller.websocket.message;
+package ru.romanov.durak.websocket.message;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

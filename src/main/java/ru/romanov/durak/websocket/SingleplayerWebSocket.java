@@ -1,12 +1,12 @@
-package ru.romanov.durak.controller.websocket;
+package ru.romanov.durak.websocket;
 
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import ru.romanov.durak.controller.websocket.message.CardMessage;
-import ru.romanov.durak.controller.websocket.message.Message;
+import ru.romanov.durak.websocket.message.CardMessage;
+import ru.romanov.durak.websocket.message.Message;
 import ru.romanov.durak.model.Game;
 import ru.romanov.durak.model.player.RealPlayer;
 import ru.romanov.durak.util.JsonHelper;

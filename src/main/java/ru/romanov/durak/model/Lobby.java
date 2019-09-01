@@ -6,11 +6,11 @@ import net.jodah.expiringmap.ExpirationListener;
 import net.jodah.expiringmap.ExpiringMap;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import ru.romanov.durak.controller.websocket.message.Message;
-import ru.romanov.durak.controller.websocket.message.MessageType;
-import ru.romanov.durak.controller.websocket.message.InviteMessage;
-import ru.romanov.durak.controller.websocket.message.lobby.LobbyChangeMessage;
-import ru.romanov.durak.controller.websocket.message.lobby.LobbyStateMessage;
+import ru.romanov.durak.websocket.message.Message;
+import ru.romanov.durak.websocket.message.MessageType;
+import ru.romanov.durak.websocket.message.InviteMessage;
+import ru.romanov.durak.websocket.message.lobby.LobbyChangeMessage;
+import ru.romanov.durak.websocket.message.lobby.LobbyStateMessage;
 import ru.romanov.durak.util.JsonHelper;
 
 import java.io.IOException;
@@ -18,8 +18,8 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static ru.romanov.durak.controller.websocket.message.MessageType.INVITE;
-import static ru.romanov.durak.controller.websocket.message.MessageType.REJECT_INVITE;
+import static ru.romanov.durak.websocket.message.MessageType.INVITE;
+import static ru.romanov.durak.websocket.message.MessageType.REJECT_INVITE;
 
 @Slf4j
 public class Lobby {

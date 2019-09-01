@@ -23,8 +23,8 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
-import ru.romanov.durak.controller.websocket.MultiplayerWebSocket;
-import ru.romanov.durak.controller.websocket.SingleplayerWebSocket;
+import ru.romanov.durak.websocket.MultiplayerWebSocket;
+import ru.romanov.durak.websocket.SingleplayerWebSocket;
 import ru.romanov.durak.model.Lobby;
 
 import java.util.Locale;
