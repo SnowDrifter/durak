@@ -55,6 +55,10 @@ function parseMessage(message) {
             showNotification(drawMessage, "draw_notification");
             break;
         }
+        case "INVITE": {
+            showInvite(message);
+            break;
+        }
         case "START_GAME": {
             $("#lobby").hide();
             $("#chat").offset(function (i, val) {
@@ -135,6 +139,11 @@ function removeUserFromLobby(lobbyMessage) {
     }
 }
 
+function showInvite(message) {
+    var result = confirm("Приглашение от " + message.initiator) ? "ACCEPT_INVITE" : "REJECT_INVITE";
+    websocket.send(JSON.stringify({type: result, invitee: username}));
+}
+
 $(window).on('load', function () {
     var $preloader = $('#preloader'),
         $spinner = $preloader.find('.spinner');
@@ -152,7 +161,7 @@ $(document).ready(function () {
         websocket.send(JSON.stringify({type: "SELECT_CARD", card: card}));
     }).delegate(".lobby_user", "click", function () {
         var targetUser = $(this).text();
-        websocket.send(JSON.stringify({type: "OFFER", firstUsername: username, secondUsername: targetUser}));
+        websocket.send(JSON.stringify({type: "INVITE", initiator: username, invitee: targetUser}));
     });
 
     $('#take_button').click(function () {

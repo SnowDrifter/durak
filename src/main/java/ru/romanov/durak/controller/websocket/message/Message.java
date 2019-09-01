@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.romanov.durak.controller.websocket.message.lobby.LobbyStateMessage;
 
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.As.EXISTING_PROPERTY;
 import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
@@ -16,7 +15,7 @@ import static com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME;
 @JsonTypeInfo(use = NAME, property = "type", defaultImpl = DefaultMessage.class, visible = true, include = EXISTING_PROPERTY)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = CardMessage.class, name = "SELECT_CARD"),
-        @JsonSubTypes.Type(value = OfferMessage.class, name = "OFFER"),
+        @JsonSubTypes.Type(value = InviteMessage.class, name = "INVITE"),
         @JsonSubTypes.Type(value = ChatMessage.class, name = "CHAT_MESSAGE"),
         @JsonSubTypes.Type(value = ChatMessage.class, name = "LOBBY_CHAT_MESSAGE")
 })

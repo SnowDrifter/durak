@@ -9,6 +9,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.romanov.durak.controller.websocket.message.*;
 import ru.romanov.durak.model.Game;
+import ru.romanov.durak.model.GameInvite;
 import ru.romanov.durak.model.Lobby;
 import ru.romanov.durak.model.player.Player;
 import ru.romanov.durak.model.player.RealPlayer;
@@ -40,8 +41,20 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         Message message = JsonHelper.parseJson(textMessage.getPayload(), Message.class);
 
         switch (message.getType()) {
-            case OFFER: {
-                startMultiplayerGame((OfferMessage) message);
+            case INVITE: {
+                InviteMessage inviteMessage = (InviteMessage) message;
+                lobby.createInvite(inviteMessage.getInitiator(), inviteMessage.getInvitee());
+                break;
+            }
+            case ACCEPT_INVITE: {
+                String invitee = session.getPrincipal().getName();
+                GameInvite invite = lobby.getInvite(invitee);
+                startMultiplayerGame(invite);
+                break;
+            }
+            case REJECT_INVITE: {
+                String invitee = session.getPrincipal().getName();
+                lobby.rejectInvite(invitee);
                 break;
             }
             case LOBBY_CHAT_MESSAGE: {
@@ -63,15 +76,15 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         }
     }
 
-    private void startMultiplayerGame(OfferMessage message) {
-        String firstUsername = message.getFirstUsername();
-        String secondUsername = message.getSecondUsername();
+    private void startMultiplayerGame(GameInvite invite) {
+        String firstUsername = invite.getInitiator();
+        String secondUsername = invite.getInvitee();
 
         RealPlayer firstPlayer = new RealPlayer();
         RealPlayer secondPlayer = new RealPlayer();
 
-        firstPlayer.setUsername(message.getFirstUsername());
-        secondPlayer.setUsername(message.getSecondUsername());
+        firstPlayer.setUsername(firstUsername);
+        secondPlayer.setUsername(secondUsername);
 
         firstPlayer.setSession(lobby.getSessionByUsername(firstUsername));
         secondPlayer.setSession(lobby.getSessionByUsername(secondUsername));

@@ -17,6 +17,8 @@ public enum MessageType {
     WIN,
     LOSE,
     DRAW,
-    OFFER,
+    INVITE,
+    ACCEPT_INVITE,
+    REJECT_INVITE,
     ENEMY_DISCONNECTED
 }
