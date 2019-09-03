@@ -3,11 +3,11 @@ package ru.romanov.durak.model.player;
 import lombok.Data;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+import ru.romanov.durak.model.Card;
+import ru.romanov.durak.util.JsonHelper;
 import ru.romanov.durak.websocket.message.DefaultMessage;
 import ru.romanov.durak.websocket.message.Message;
 import ru.romanov.durak.websocket.message.MessageType;
-import ru.romanov.durak.model.Card;
-import ru.romanov.durak.util.JsonHelper;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,6 +26,7 @@ public class RealPlayer extends Player {
         lastClickedCard = null;
     }
 
+    @Override
     public void selectCard(String cardName) {
         for (Card card : hand) {
             if (card.getName().equals(cardName)) {
@@ -118,22 +119,6 @@ public class RealPlayer extends Player {
         return null;
     }
 
-    private boolean checkDefendCard(Card trying, Card tempEnemyCard) {
-        return (tempEnemyCard.getPower() < trying.getPower() && trying.isTrump()) ||
-                (tempEnemyCard.getSuit() == trying.getSuit() && tempEnemyCard.getPower() < trying.getPower());
-    }
-
-    @Override
-    public void sendMessage(String message) {
-        if (session.isOpen()) {
-            try {
-                session.sendMessage(new TextMessage(message));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     @Override
     public void sendMessage(Message message) {
         if (session.isOpen()) {
@@ -156,4 +141,8 @@ public class RealPlayer extends Player {
         sendMessage(new DefaultMessage(MessageType.ENEMY_MOVE));
     }
 
+    private boolean checkDefendCard(Card trying, Card tempEnemyCard) {
+        return (tempEnemyCard.getPower() < trying.getPower() && trying.isTrump()) ||
+                (tempEnemyCard.getSuit() == trying.getSuit() && tempEnemyCard.getPower() < trying.getPower());
+    }
 }

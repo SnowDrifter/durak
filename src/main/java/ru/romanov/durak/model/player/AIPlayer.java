@@ -141,11 +141,6 @@ public class AIPlayer extends Player {
     }
 
     @Override
-    public void sendMessage(String message) {
-        // AIPlayer does not send messages
-    }
-
-    @Override
     public void sendMessage(Message message) {
         // AIPlayer does not send messages
     }

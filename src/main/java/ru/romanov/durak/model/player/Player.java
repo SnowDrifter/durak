@@ -33,8 +33,6 @@ public abstract class Player {
 
     abstract public String getUsername();
 
-    abstract public void sendMessage(String message);
-
     abstract public void sendMessage(Message message);
 
     abstract public WebSocketSession getSession();
