@@ -25,7 +25,6 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import ru.romanov.durak.websocket.MultiplayerWebSocket;
 import ru.romanov.durak.websocket.SingleplayerWebSocket;
-import ru.romanov.durak.model.Lobby;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -102,11 +101,6 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements WebSocketCo
         resource.setCacheSeconds(5 * 60);
         resource.setDefaultEncoding("UTF-8");
         return resource;
-    }
-
-    @Bean
-    public Lobby lobby() {
-        return new Lobby();
     }
 
     @Bean

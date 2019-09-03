@@ -7,10 +7,11 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import ru.romanov.durak.lobby.InviteServiceImpl;
+import ru.romanov.durak.lobby.LobbyService;
 import ru.romanov.durak.websocket.message.*;
 import ru.romanov.durak.model.Game;
 import ru.romanov.durak.model.GameInvite;
-import ru.romanov.durak.model.Lobby;
 import ru.romanov.durak.model.player.Player;
 import ru.romanov.durak.model.player.RealPlayer;
 import ru.romanov.durak.model.user.User;
@@ -24,14 +25,17 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private LobbyService lobbyService;
+    @Autowired
+    private InviteServiceImpl inviteService;
     private static HashMap<String, Game> games = new HashMap<>();
-    private Lobby lobby = new Lobby();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         String username = session.getPrincipal().getName();
-        lobby.addUser(username, session);
-        lobby.sendLobbyState(username, session);
+        lobbyService.addUser(username, session);
+        lobbyService.sendLobbyState(username, session);
 
         log.info("Open session for multiplayer");
     }
@@ -43,23 +47,23 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         switch (message.getType()) {
             case INVITE: {
                 InviteMessage inviteMessage = (InviteMessage) message;
-                lobby.createInvite(inviteMessage.getInitiator(), inviteMessage.getInvitee());
+                inviteService.createInvite(inviteMessage.getInitiator(), inviteMessage.getInvitee());
                 break;
             }
             case ACCEPT_INVITE: {
                 String invitee = session.getPrincipal().getName();
-                GameInvite invite = lobby.getInvite(invitee);
+                GameInvite invite = inviteService.getInvite(invitee);
                 startMultiplayerGame(invite);
                 break;
             }
             case REJECT_INVITE: {
                 String invitee = session.getPrincipal().getName();
-                lobby.rejectInvite(invitee);
+                inviteService.rejectInvite(invitee);
                 break;
             }
             case LOBBY_CHAT_MESSAGE: {
                 ChatMessage chatMessage = (ChatMessage) message;
-                lobby.sendMessageToAll(chatMessage, chatMessage.getUsername());
+                lobbyService.sendMessageToAll(chatMessage, chatMessage.getUsername());
                 break;
             }
             case CHAT_MESSAGE: {
@@ -86,11 +90,11 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         firstPlayer.setUsername(firstUsername);
         secondPlayer.setUsername(secondUsername);
 
-        firstPlayer.setSession(lobby.getSessionByUsername(firstUsername));
-        secondPlayer.setSession(lobby.getSessionByUsername(secondUsername));
+        firstPlayer.setSession(lobbyService.getSessionByUsername(firstUsername));
+        secondPlayer.setSession(lobbyService.getSessionByUsername(secondUsername));
 
-        lobby.removeByUsername(firstUsername);
-        lobby.removeByUsername(secondUsername);
+        lobbyService.removeByUsername(firstUsername);
+        lobbyService.removeByUsername(secondUsername);
 
         Game game = new Game();
         game.setFirstPlayer(firstPlayer);
@@ -114,7 +118,7 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         String username = session.getPrincipal().getName();
-        lobby.removeByUsername(username);
+        lobbyService.removeByUsername(username);
 
         for (Game game : games.values()) {
             if (session.equals(game.getFirstPlayer().getSession())) {
