@@ -13,7 +13,7 @@ import ru.romanov.durak.websocket.message.*;
 import ru.romanov.durak.model.Game;
 import ru.romanov.durak.model.GameInvite;
 import ru.romanov.durak.model.player.Player;
-import ru.romanov.durak.model.player.RealPlayer;
+import ru.romanov.durak.model.player.HumanPlayer;
 import ru.romanov.durak.model.user.User;
 import ru.romanov.durak.user.service.UserService;
 import ru.romanov.durak.util.JsonHelper;
@@ -84,8 +84,8 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         String firstUsername = invite.getInitiator();
         String secondUsername = invite.getInvitee();
 
-        RealPlayer firstPlayer = new RealPlayer();
-        RealPlayer secondPlayer = new RealPlayer();
+        HumanPlayer firstPlayer = new HumanPlayer();
+        HumanPlayer secondPlayer = new HumanPlayer();
 
         firstPlayer.setUsername(firstUsername);
         secondPlayer.setUsername(secondUsername);

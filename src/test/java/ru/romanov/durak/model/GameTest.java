@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import ru.romanov.durak.model.player.AIPlayer;
-import ru.romanov.durak.model.player.RealPlayer;
+import ru.romanov.durak.model.player.HumanPlayer;
 
 public class GameTest {
 
@@ -15,9 +15,9 @@ public class GameTest {
     public void testInit() {
         game = new Game();
 
-        RealPlayer firstPlayer = new RealPlayer();
+        HumanPlayer firstPlayer = new HumanPlayer();
         firstPlayer.setUsername("admin");
-        game.setFirstPlayer(new RealPlayer());
+        game.setFirstPlayer(new HumanPlayer());
 
         game.initGame();
     }

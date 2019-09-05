@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Data
-public class RealPlayer extends Player {
+public class HumanPlayer extends Player {
 
     private String username;
     private WebSocketSession session;
@@ -120,6 +120,7 @@ public class RealPlayer extends Player {
     }
 
     @Override
+    //TODO: remove it
     public void sendMessage(Message message) {
         if (session.isOpen()) {
             try {

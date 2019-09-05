@@ -8,7 +8,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.romanov.durak.websocket.message.CardMessage;
 import ru.romanov.durak.websocket.message.Message;
 import ru.romanov.durak.model.Game;
-import ru.romanov.durak.model.player.RealPlayer;
+import ru.romanov.durak.model.player.HumanPlayer;
 import ru.romanov.durak.util.JsonHelper;
 
 @Slf4j
@@ -48,7 +48,7 @@ public class SingleplayerWebSocket extends TextWebSocketHandler {
 
     private void startSingleplayerGame(WebSocketSession session) {
         game = new Game();
-        RealPlayer player = new RealPlayer();
+        HumanPlayer player = new HumanPlayer();
         player.setGame(game);
         player.setSession(session);
         game.setFirstPlayer(player);
