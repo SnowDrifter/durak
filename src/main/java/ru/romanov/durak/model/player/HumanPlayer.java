@@ -64,11 +64,6 @@ public class HumanPlayer extends Player {
                 lastClickedCard = null;
                 sendMessage(new DefaultMessage(MessageType.WRONG_CARD));
             }
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
 
         return null;
@@ -107,12 +102,6 @@ public class HumanPlayer extends Player {
 
                 lastClickedCard = null;
                 sendMessage(new DefaultMessage(MessageType.WRONG_CARD));
-            }
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
 

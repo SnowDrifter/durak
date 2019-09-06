@@ -95,12 +95,6 @@ public class AIPlayer extends Player {
             return null;
         }
 
-        try {
-            Thread.sleep(250);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         Card cardForDefending;
 
         if (attackingCard.isTrump()) {
