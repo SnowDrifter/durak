@@ -11,6 +11,5 @@ public class ChatMessage extends Message {
 
     private String username;
     private String message;
-    private Date creationDate = new Date();
 
 }

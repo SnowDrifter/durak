@@ -103,7 +103,7 @@ function parseMessage(message) {
 }
 
 function addChatMessage(chatMessage) {
-    var date = $.format.date(new Date(chatMessage.creationDate), "HH:mm:ss");
+    var date = $.format.date(new Date(), "HH:mm:ss");
     var username = chatMessage.username;
     var message = chatMessage.message;
     appendChatMessage(username, message, date);
