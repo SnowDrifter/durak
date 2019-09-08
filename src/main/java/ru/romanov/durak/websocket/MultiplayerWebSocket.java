@@ -7,16 +7,16 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import ru.romanov.durak.lobby.InviteServiceImpl;
+import ru.romanov.durak.lobby.InviteService;
 import ru.romanov.durak.lobby.LobbyService;
-import ru.romanov.durak.websocket.message.*;
 import ru.romanov.durak.model.Game;
 import ru.romanov.durak.model.GameInvite;
-import ru.romanov.durak.model.player.Player;
 import ru.romanov.durak.model.player.HumanPlayer;
+import ru.romanov.durak.model.player.Player;
 import ru.romanov.durak.model.user.User;
 import ru.romanov.durak.user.service.UserService;
 import ru.romanov.durak.util.JsonHelper;
+import ru.romanov.durak.websocket.message.*;
 
 import java.util.HashMap;
 
@@ -28,15 +28,17 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
     @Autowired
     private LobbyService lobbyService;
     @Autowired
-    private InviteServiceImpl inviteService;
+    private InviteService inviteService;
+    @Autowired
+    private WebSocketService webSocketService;
     private static HashMap<String, Game> games = new HashMap<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         String username = session.getPrincipal().getName();
-        lobbyService.addUser(username, session);
-        lobbyService.sendLobbyState(username, session);
-
+        webSocketService.addSession(username, session);
+        lobbyService.addUser(username);
+        lobbyService.sendLobbyState(username);
         log.info("Open session for multiplayer");
     }
 
@@ -90,9 +92,6 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         firstPlayer.setUsername(firstUsername);
         secondPlayer.setUsername(secondUsername);
 
-        firstPlayer.setSession(lobbyService.getSessionByUsername(firstUsername));
-        secondPlayer.setSession(lobbyService.getSessionByUsername(secondUsername));
-
         lobbyService.removeByUsername(firstUsername);
         lobbyService.removeByUsername(secondUsername);
 
@@ -100,14 +99,14 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         game.setFirstPlayer(firstPlayer);
         game.setSecondPlayer(secondPlayer);
         game.setEndGameConsumer(this::updateStatistics);
-
+        game.setWebSocketService(webSocketService);
         game.initGame();
 
         firstPlayer.setGame(game);
         secondPlayer.setGame(game);
 
-        firstPlayer.sendMessage(new DefaultMessage(MessageType.START_GAME));
-        secondPlayer.sendMessage(new DefaultMessage(MessageType.START_GAME));
+        webSocketService.sendMessage(firstUsername, new DefaultMessage(MessageType.START_GAME));
+        webSocketService.sendMessage(secondUsername, new DefaultMessage(MessageType.START_GAME));
 
         games.put(firstUsername, game);
         games.put(secondUsername, game);
@@ -118,13 +117,14 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         String username = session.getPrincipal().getName();
+        webSocketService.removeSession(username);
         lobbyService.removeByUsername(username);
 
         for (Game game : games.values()) {
-            if (session.equals(game.getFirstPlayer().getSession())) {
-                game.getSecondPlayer().sendMessage(new DefaultMessage(MessageType.ENEMY_DISCONNECTED));
-            } else if (session.equals(game.getSecondPlayer().getSession())) {
-                game.getFirstPlayer().sendMessage(new DefaultMessage(MessageType.ENEMY_DISCONNECTED));
+            if (username.equals(game.getFirstPlayer().getUsername())) {
+                webSocketService.sendMessage(game.getSecondPlayer().getUsername(), new DefaultMessage(MessageType.ENEMY_DISCONNECTED));
+            } else if (username.equals(game.getSecondPlayer().getUsername())) {
+                webSocketService.sendMessage(game.getFirstPlayer().getUsername(), new DefaultMessage(MessageType.ENEMY_DISCONNECTED));
             }
         }
     }

@@ -2,8 +2,6 @@ package ru.romanov.durak.model.player;
 
 
 import lombok.Data;
-import org.springframework.web.socket.WebSocketSession;
-import ru.romanov.durak.websocket.message.Message;
 import ru.romanov.durak.model.Card;
 import ru.romanov.durak.model.Game;
 
@@ -27,14 +25,6 @@ public abstract class Player {
 
     abstract public void selectCard(String cardName);
 
-    abstract public void yourMove();
-
-    abstract public void enemyMove();
-
     abstract public String getUsername();
-
-    abstract public void sendMessage(Message message);
-
-    abstract public WebSocketSession getSession();
 
 }

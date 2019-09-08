@@ -2,8 +2,7 @@ package ru.romanov.durak.model.player;
 
 
 import lombok.Data;
-import org.springframework.web.socket.WebSocketSession;
-import ru.romanov.durak.websocket.message.Message;
+import lombok.EqualsAndHashCode;
 import ru.romanov.durak.model.Card;
 import ru.romanov.durak.model.Game;
 import ru.romanov.durak.model.Table;
@@ -11,6 +10,7 @@ import ru.romanov.durak.model.Table;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class AIPlayer extends Player {
 
     public AIPlayer(Game game) {
@@ -135,11 +135,6 @@ public class AIPlayer extends Player {
     }
 
     @Override
-    public void sendMessage(Message message) {
-        // AIPlayer does not send messages
-    }
-
-    @Override
     public void resetStatus() {
         setTake(false);
         setFinishMove(false);
@@ -153,22 +148,6 @@ public class AIPlayer extends Player {
     @Override
     public void selectCard(String cardName) {
         // Not necessary for AIPlayer
-    }
-
-    @Override
-    public void yourMove() {
-        // AIPlayer does not send notifications
-    }
-
-    @Override
-    public void enemyMove() {
-        // AIPlayer does not send notifications
-    }
-
-    @Override
-    public WebSocketSession getSession() {
-        // AIPlayer doesn't have session
-        return null;
     }
 
 }

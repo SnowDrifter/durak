@@ -8,6 +8,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class Card {
 
+    public static final Card INVALID_CARD = new Card("invalid", null, -1, false);
+
     private String name;
     private Suit suit;
     private int power;

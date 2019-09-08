@@ -3,11 +3,11 @@ package ru.romanov.durak.model;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-import ru.romanov.durak.websocket.message.*;
 import ru.romanov.durak.model.player.AIPlayer;
-import ru.romanov.durak.model.player.Player;
 import ru.romanov.durak.model.player.HumanPlayer;
+import ru.romanov.durak.model.player.Player;
+import ru.romanov.durak.websocket.WebSocketService;
+import ru.romanov.durak.websocket.message.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +16,6 @@ import java.util.function.Consumer;
 
 @Data
 @Slf4j
-@Component
 public class Game implements Runnable {
 
     private Player firstPlayer;
@@ -26,24 +25,30 @@ public class Game implements Runnable {
     private Table table;
     private boolean draw;
     private Consumer<Game> endGameConsumer = t -> {};
+    private WebSocketService webSocketService;
 
     @Override
     public void run() {
-        log.info("Start game!");
+        try {
+            log.info("Start game!");
 
-        while (true) {
-            if (checkWin()) break;
-            move(firstPlayer, secondPlayer);
-            loggingCurrentState();
+            while (true) {
+                if (checkWin()) break;
+                move(firstPlayer, secondPlayer);
+                loggingCurrentState();
 
-            if (checkWin()) break;
-            move(secondPlayer, firstPlayer);
-            loggingCurrentState();
+                if (checkWin()) break;
+                move(secondPlayer, firstPlayer);
+                loggingCurrentState();
+            }
+
+            log.info("Game over!");
+            sendGameOver();
+            endGameConsumer.accept(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
         }
-
-        log.info("Game over!");
-        sendGameOver();
-        endGameConsumer.accept(this);
     }
 
     private void move(Player attackPlayer, Player defendPlayer) {
@@ -53,8 +58,8 @@ public class Game implements Runnable {
         defendPlayer.resetStatus();
 
         if (!checkWin()) {
-            attackPlayer.yourMove();
-            defendPlayer.enemyMove();
+            webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.YOUR_MOVE));
+            webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.ENEMY_MOVE));
         }
 
         updateTableView();
@@ -70,7 +75,10 @@ public class Game implements Runnable {
                 fillHand(attackPlayer);
                 fillHand(defendPlayer);
                 attackPlayer.setFinishMove(false);
-                return;
+                break;
+            } else if (Card.INVALID_CARD.equals(currentCard)) {
+                webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.WRONG_CARD));
+                continue;
             }
 
             table.setCurrentCard(currentCard);
@@ -92,6 +100,9 @@ public class Game implements Runnable {
                 move(attackPlayer, defendPlayer);
 
                 return;
+            } else if (Card.INVALID_CARD.equals(answer)) {
+                webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.WRONG_CARD));
+                continue;
             }
 
             table.setCurrentCard(null);
@@ -174,19 +185,19 @@ public class Game implements Runnable {
             message.setTableCards(table.getCardNames());
         }
 
-        player.sendMessage(message);
+        webSocketService.sendMessage(player.getUsername(), message);
     }
 
     private void sendGameOver() {
         if (isDraw()) {
-            firstPlayer.sendMessage(new DefaultMessage(MessageType.DRAW));
-            secondPlayer.sendMessage(new DefaultMessage(MessageType.DRAW));
+            webSocketService.sendMessage(firstPlayer.getUsername(), new DefaultMessage(MessageType.DRAW));
+            webSocketService.sendMessage(secondPlayer.getUsername(), new DefaultMessage(MessageType.DRAW));
         } else if (firstPlayer.isWin()) {
-            firstPlayer.sendMessage(new DefaultMessage(MessageType.WIN));
-            secondPlayer.sendMessage(new DefaultMessage(MessageType.LOSE));
+            webSocketService.sendMessage(firstPlayer.getUsername(), new DefaultMessage(MessageType.WIN));
+            webSocketService.sendMessage(secondPlayer.getUsername(), new DefaultMessage(MessageType.LOSE));
         } else if (secondPlayer.isWin()) {
-            firstPlayer.sendMessage(new DefaultMessage(MessageType.LOSE));
-            secondPlayer.sendMessage(new DefaultMessage(MessageType.WIN));
+            webSocketService.sendMessage(firstPlayer.getUsername(), new DefaultMessage(MessageType.LOSE));
+            webSocketService.sendMessage(secondPlayer.getUsername(), new DefaultMessage(MessageType.WIN));
         }
     }
 
@@ -332,11 +343,7 @@ public class Game implements Runnable {
     }
 
     public void sendChatMessage(ChatMessage message) {
-        if (firstPlayer.getUsername().equals(message.getUsername())) {
-            secondPlayer.sendMessage(message);
-        } else {
-            firstPlayer.sendMessage(message);
-        }
+        webSocketService.sendMessage(message.getUsername(), message);
     }
 
 }
