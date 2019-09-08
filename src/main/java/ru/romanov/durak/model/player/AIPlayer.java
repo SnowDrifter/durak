@@ -4,7 +4,7 @@ package ru.romanov.durak.model.player;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import ru.romanov.durak.model.Card;
-import ru.romanov.durak.model.Game;
+import ru.romanov.durak.game.Game;
 import ru.romanov.durak.model.Table;
 
 import java.util.List;

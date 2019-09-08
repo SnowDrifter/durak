@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import ru.romanov.durak.model.Card;
-import ru.romanov.durak.model.Game;
+import ru.romanov.durak.game.Game;
 import ru.romanov.durak.model.Suit;
 import ru.romanov.durak.model.Table;
 

@@ -37,26 +37,24 @@ public class HumanPlayer extends Player {
 
         List<Card> oldCardsOnTable = game.getTable().getOldCards();
 
-        while (!finishMove) {
-            if (oldCardsOnTable.size() == 0 && lastClickedCard != null) {
-                // Select card for empty table.
-                Card resultCard = lastClickedCard;
-                hand.remove(resultCard);
-                lastClickedCard = null;
-                return resultCard;
-            } else if (oldCardsOnTable.size() > 0 && lastClickedCard != null) {
-                for (Card oldCard : oldCardsOnTable) {
-                    if (oldCard.getPower() == lastClickedCard.getPower()) {
-                        Card resultCard = lastClickedCard;
-                        hand.remove(resultCard);
-                        lastClickedCard = null;
-                        return resultCard;
-                    }
+        if (oldCardsOnTable.size() == 0 && lastClickedCard != null) {
+            // Select card for empty table.
+            Card resultCard = lastClickedCard;
+            hand.remove(resultCard);
+            lastClickedCard = null;
+            return resultCard;
+        } else if (oldCardsOnTable.size() > 0 && lastClickedCard != null) {
+            for (Card oldCard : oldCardsOnTable) {
+                if (oldCard.getPower() == lastClickedCard.getPower()) {
+                    Card resultCard = lastClickedCard;
+                    hand.remove(resultCard);
+                    lastClickedCard = null;
+                    return resultCard;
                 }
-
-                lastClickedCard = null;
-                return Card.INVALID_CARD;
             }
+
+            lastClickedCard = null;
+            return Card.INVALID_CARD;
         }
 
         return null;
@@ -73,29 +71,27 @@ public class HumanPlayer extends Player {
             tempEnemyCard.setPower(enemyCard.getPower() + 10);
         }
 
-        while (!take) {
-            if (lastClickedCard != null) {
-                Card trying = lastClickedCard;
+        if (lastClickedCard != null) {
+            Card trying = lastClickedCard;
 
+            if (lastClickedCard.isTrump()) {
+                trying.setPower(lastClickedCard.getPower() + 10);
+            }
+
+            if (checkDefendCard(trying, tempEnemyCard)) {
                 if (lastClickedCard.isTrump()) {
-                    trying.setPower(lastClickedCard.getPower() + 10);
-                }
-
-                if (checkDefendCard(trying, tempEnemyCard)) {
-
-                    if (lastClickedCard.isTrump()) {
-                        trying.setPower(lastClickedCard.getPower() - 10);  // Reset power after check.
-                    }
-
-                    lastClickedCard = null;
-                    hand.remove(trying);
-                    return trying;
+                    trying.setPower(lastClickedCard.getPower() - 10);  // Reset power after check.
                 }
 
                 lastClickedCard = null;
-                return Card.INVALID_CARD;
+                hand.remove(trying);
+                return trying;
             }
+
+            lastClickedCard = null;
+            return Card.INVALID_CARD;
         }
+
 
         return null;
     }

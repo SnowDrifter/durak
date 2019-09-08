@@ -9,7 +9,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.romanov.durak.lobby.InviteService;
 import ru.romanov.durak.lobby.LobbyService;
-import ru.romanov.durak.model.Game;
+import ru.romanov.durak.game.Game;
 import ru.romanov.durak.model.GameInvite;
 import ru.romanov.durak.model.player.HumanPlayer;
 import ru.romanov.durak.model.player.Player;

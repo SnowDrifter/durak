@@ -1,8 +1,11 @@
-package ru.romanov.durak.model;
+package ru.romanov.durak.game;
 
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import ru.romanov.durak.model.Card;
+import ru.romanov.durak.model.Suit;
+import ru.romanov.durak.model.Table;
 import ru.romanov.durak.model.player.AIPlayer;
 import ru.romanov.durak.model.player.HumanPlayer;
 import ru.romanov.durak.model.player.Player;
@@ -26,34 +29,29 @@ public class Game implements Runnable {
     private boolean draw;
     private Consumer<Game> endGameConsumer = t -> {};
     private WebSocketService webSocketService;
+    private GameState state;
 
     @Override
     public void run() {
-        try {
-            log.info("Start game!");
+        log.info("Start game!");
 
-            while (true) {
-                if (checkWin()) break;
-                move(firstPlayer, secondPlayer);
-                loggingCurrentState();
+        while (true) {
+            if (checkWin()) break;
+            move(firstPlayer, secondPlayer);
+            loggingCurrentState();
 
-                if (checkWin()) break;
-                move(secondPlayer, firstPlayer);
-                loggingCurrentState();
-            }
-
-            log.info("Game over!");
-            sendGameOver();
-            endGameConsumer.accept(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error(e.getMessage());
+            if (checkWin()) break;
+            move(secondPlayer, firstPlayer);
+            loggingCurrentState();
         }
+
+        log.info("Game over!");
+        sendGameOver();
+        endGameConsumer.accept(this);
     }
 
     private void move(Player attackPlayer, Player defendPlayer) {
-        if (checkWin()) return;
-
+        state = GameState.ATTACK;
         attackPlayer.resetStatus();
         defendPlayer.resetStatus();
 
@@ -66,50 +64,78 @@ public class Game implements Runnable {
         loggingCurrentState();
 
         while (true) {
-            attackPlayer.resetStatus();
-            Card currentCard = attackPlayer.attack();
-            updateTableView();
+            switch (state) {
+                case ATTACK: {
+                    if (checkWin()) {
+                        return;
+                    }
 
-            if (currentCard == null || attackPlayer.isFinishMove()) {
-                table.resetTable();
-                fillHand(attackPlayer);
-                fillHand(defendPlayer);
-                attackPlayer.setFinishMove(false);
-                break;
-            } else if (Card.INVALID_CARD.equals(currentCard)) {
-                webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.WRONG_CARD));
-                continue;
+                    if (attackPlayer.isFinishMove()) {
+                        table.resetTable();
+                        fillHand(attackPlayer);
+                        fillHand(defendPlayer);
+                        attackPlayer.setFinishMove(false);
+                        return;
+                    }
+
+                    Card currentCard = attackPlayer.attack();
+                    if (currentCard == null) {
+                        break;
+                    }
+
+                    if (Card.INVALID_CARD.equals(currentCard)) {
+                        webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.WRONG_CARD));
+                        break;
+                    }
+
+                    table.setCurrentCard(currentCard);
+                    loggingCurrentState();
+                    updateTableView();
+                    attackPlayer.resetStatus();
+                    state = GameState.DEFEND;
+                    break;
+                }
+                case DEFEND: {
+                    if (checkWin()) return;
+
+                    if (defendPlayer.isTake()) {
+                        defendPlayer.getHand().addAll(table.getOldCards());
+                        defendPlayer.getHand().add(table.getCurrentCard());
+                        table.resetTable();
+                        fillHand(attackPlayer);
+                        defendPlayer.setTake(false);
+
+                        updateTableView();
+                        move(attackPlayer, defendPlayer);
+                        return;
+                    }
+
+                    Card answer = defendPlayer.defend(table.getCurrentCard());
+                    if (answer == null) {
+                        break;
+                    }
+
+                    if (Card.INVALID_CARD.equals(answer)) {
+                        webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.WRONG_CARD));
+                        break;
+                    }
+
+                    table.getOldCards().add(table.getCurrentCard());
+                    table.getOldCards().add(answer);
+                    table.setCurrentCard(null);
+                    updateTableView();
+                    loggingCurrentState();
+
+                    defendPlayer.resetStatus();
+                    state = GameState.ATTACK;
+                    break;
+                }
             }
 
-            table.setCurrentCard(currentCard);
-            loggingCurrentState();
-            updateTableView();
-
-            defendPlayer.resetStatus();
-            Card answer = defendPlayer.defend(currentCard);
-            updateTableView();
-
-            if (answer == null || defendPlayer.isTake()) {
-                defendPlayer.getHand().addAll(table.getOldCards());
-                defendPlayer.getHand().add(currentCard);
-                table.resetTable();
-                fillHand(attackPlayer);
-                defendPlayer.setTake(false);
-
-                updateTableView();
-                move(attackPlayer, defendPlayer);
-
-                return;
-            } else if (Card.INVALID_CARD.equals(answer)) {
-                webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.WRONG_CARD));
-                continue;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ignored) {
             }
-
-            table.setCurrentCard(null);
-            table.getOldCards().add(currentCard);
-            table.getOldCards().add(answer);
-            updateTableView();
-            loggingCurrentState();
         }
     }
 
@@ -143,6 +169,7 @@ public class Game implements Runnable {
 
     public void initGame() {
         table = new Table();
+        state = GameState.ATTACK;
         initDeck();
         Collections.shuffle(deck);
 
