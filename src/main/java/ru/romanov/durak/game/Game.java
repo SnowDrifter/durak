@@ -341,32 +341,13 @@ public class Game implements Runnable {
     }
 
     private Card selectTrump() {
-        Card trump = null;
+        int power = (int) (Math.random() * 9) + 1;
+        int suitNumber = (int) (Math.random() * 4);
 
-        int trumpValue = (int) (Math.random() * 9) + 1;
-        int trumpSuitNumber = (int) (Math.random() * 4);
-        String trumpName;
+        Suit suit = Suit.values()[suitNumber];
+        String name = suit.name().substring(0, 1).toLowerCase() + power;
 
-        switch (trumpSuitNumber) {
-            case (0):
-                trumpName = "c" + trumpValue;
-                trump = new Card(trumpName, Suit.CLUBS, trumpValue, true);
-                break;
-            case (1):
-                trumpName = "d" + trumpValue;
-                trump = new Card(trumpName, Suit.DIAMONDS, trumpValue, true);
-                break;
-            case (2):
-                trumpName = "h" + trumpValue;
-                trump = new Card(trumpName, Suit.HEARTS, trumpValue, true);
-                break;
-            case (3):
-                trumpName = "s" + trumpValue;
-                trump = new Card(trumpName, Suit.SPADES, trumpValue, true);
-                break;
-        }
-
-        return trump;
+        return new Card(name, suit, power, true);
     }
 
     public void sendChatMessage(ChatMessage message) {
