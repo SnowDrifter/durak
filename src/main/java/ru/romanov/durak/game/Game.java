@@ -74,7 +74,6 @@ public class Game implements Runnable {
                         table.resetTable();
                         fillHand(attackPlayer);
                         fillHand(defendPlayer);
-                        attackPlayer.setFinishMove(false);
                         return;
                     }
 
@@ -96,14 +95,15 @@ public class Game implements Runnable {
                     break;
                 }
                 case DEFEND: {
-                    if (checkWin()) return;
+                    if (checkWin()) {
+                        return;
+                    }
 
                     if (defendPlayer.isTake()) {
                         defendPlayer.getHand().addAll(table.getOldCards());
                         defendPlayer.getHand().add(table.getCurrentCard());
                         table.resetTable();
                         fillHand(attackPlayer);
-                        defendPlayer.setTake(false);
 
                         updateTableView();
                         move(attackPlayer, defendPlayer);
