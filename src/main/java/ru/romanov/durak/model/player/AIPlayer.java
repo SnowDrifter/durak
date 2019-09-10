@@ -3,11 +3,13 @@ package ru.romanov.durak.model.player;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import ru.romanov.durak.model.Card;
 import ru.romanov.durak.game.Game;
+import ru.romanov.durak.model.Card;
 import ru.romanov.durak.model.Table;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -23,115 +25,63 @@ public class AIPlayer extends Player {
             return null;
         }
 
-        Card attackingCard;
+        List<Card> oldCardsOnTable = game.getTable().getOldCards();
 
-        if (isFirstAttack()) {
-            attackingCard = firstAttack();
-        } else {
-            attackingCard = attackWithCardsOnTable();
-        }
+        Card result = null;
+        if (oldCardsOnTable.isEmpty()) {
+            result = hand.iterator().next();
 
-        if (attackingCard != null) {
-            return attackingCard;
-        } else {
-            setFinishMove(true);
-            return null;
-        }
-    }
-
-    private boolean isFirstAttack() {
-        Table currentTable = game.getTable();
-        List<Card> oldCards = currentTable.getOldCards();
-        return oldCards.isEmpty();
-    }
-
-    private Card firstAttack() {
-        Card cardForAttacking = tryingFirstAttackWithoutTrumps();
-        if (cardForAttacking == null) {
-            cardForAttacking = tryingFirstFullAttack();
-        }
-
-        return cardForAttacking;
-    }
-
-    private Card tryingFirstAttackWithoutTrumps() {
-        for (Card tryingCard : hand) {
-            if (tryingCard.isTrump()) {
-                continue;
+            for (Card card : hand) {
+                if (result.isStronger(card)) {
+                    result = card;
+                    break;
+                }
             }
+        } else {
+            Table table = game.getTable();
+            Set<Integer> oldCardsPower = table.getOldCards()
+                    .stream()
+                    .map(Card::getPower)
+                    .collect(Collectors.toSet());
 
-            hand.remove(tryingCard);
-            return tryingCard;
-        }
-
-        return null;
-    }
-
-    private Card tryingFirstFullAttack() {
-        Card tryingCard = hand.iterator().next();
-        hand.remove(tryingCard);
-        return tryingCard;
-    }
-
-    private Card attackWithCardsOnTable() {
-        Table currentTable = game.getTable();
-        List<Card> oldCards = currentTable.getOldCards();
-
-        for (Card tryingCard : hand) {
-            for (Card oldCard : oldCards) {
-                if (oldCard.getPower() == tryingCard.getPower()) {
-                    hand.remove(tryingCard);
-                    return tryingCard;
+            for (Card card : hand) {
+                if (oldCardsPower.contains(card.getPower())) {
+                    result = card;
+                    break;
                 }
             }
         }
 
-        return null;
+        if (result != null) {
+            hand.remove(result);
+        } else {
+            setFinishMove(true);
+        }
+
+        return result;
     }
 
     @Override
-    public Card defend(Card attackingCard) {
+    public Card defend(Card enemyCard) {
         if (game.checkWin()) {
             return null;
         }
 
-        Card cardForDefending;
-
-        if (attackingCard.isTrump()) {
-            cardForDefending = defendVersusTrump(attackingCard);
-        } else {
-            cardForDefending = defendVersusSimpleCard(attackingCard);
+        Card result = null;
+        for (Card card : hand) {
+            if (card.isStronger(enemyCard)) {
+                result = card;
+                break;
+            }
         }
 
-        if (cardForDefending != null) {
-            return cardForDefending;
+        if (result != null) {
+            hand.remove(result);
         } else {
             setTake(true);
-            return null;
         }
-    }
 
-    private Card defendVersusTrump(Card attackingCard) {
-        for (Card tryingCard : hand) {
-            if (tryingCard.isTrump() && tryingCard.getPower() > attackingCard.getPower()) {
-                hand.remove(tryingCard);
-                return tryingCard;
-            }
-        }
-        return null;
-    }
-
-    private Card defendVersusSimpleCard(Card attackingCard) {
-        for (Card trying : hand) {
-            if (trying.getSuit() == attackingCard.getSuit() && trying.getPower() > attackingCard.getPower()) {
-                hand.remove(trying);
-                return trying;
-            } else if (trying.isTrump() && trying.getPower() + 10 > attackingCard.getPower()) {
-                hand.remove(trying);
-                return trying;
-            }
-        }
-        return null;
+        return result;
     }
 
     @Override

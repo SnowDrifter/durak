@@ -19,7 +19,7 @@ public abstract class Player {
 
     abstract public Card attack();
 
-    abstract public Card defend(Card card);
+    abstract public Card defend(Card enemyCard);
 
     abstract public void resetStatus();
 
