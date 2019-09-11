@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import ru.romanov.durak.model.Card;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -31,73 +33,52 @@ public class HumanPlayer extends Player {
 
     @Override
     public Card attack() {
-        if (game.checkWin()) {
+        if (game.checkWin() || lastClickedCard == null) {
             return null;
         }
 
         List<Card> oldCardsOnTable = game.getTable().getOldCards();
 
-        if (oldCardsOnTable.size() == 0 && lastClickedCard != null) {
+        Card result = null;
+        if (oldCardsOnTable.isEmpty()) {
             // Select card for empty table.
-            Card resultCard = lastClickedCard;
-            hand.remove(resultCard);
-            lastClickedCard = null;
-            return resultCard;
-        } else if (oldCardsOnTable.size() > 0 && lastClickedCard != null) {
-            for (Card oldCard : oldCardsOnTable) {
-                if (oldCard.getPower() == lastClickedCard.getPower()) {
-                    Card resultCard = lastClickedCard;
-                    hand.remove(resultCard);
-                    lastClickedCard = null;
-                    return resultCard;
-                }
-            }
+            result = lastClickedCard;
+        } else {
+            Set<Integer> oldCardsPower = oldCardsOnTable.stream()
+                    .map(Card::getPower)
+                    .collect(Collectors.toSet());
 
-            lastClickedCard = null;
-            return Card.INVALID_CARD;
+            if (oldCardsPower.contains(lastClickedCard.getPower())) {
+                result = lastClickedCard;
+            }
         }
 
-        return null;
+        if (result != null) {
+            hand.remove(lastClickedCard);
+        } else {
+            result = Card.INVALID_CARD;
+        }
+
+        lastClickedCard = null;
+        return result;
     }
 
     @Override
     public Card defend(Card enemyCard) {
-        if (game.checkWin()) {
+        if (game.checkWin() || lastClickedCard == null) {
             return null;
         }
 
-        Card tempEnemyCard = enemyCard;
-        if (tempEnemyCard.isTrump()) {
-            tempEnemyCard.setPower(enemyCard.getPower() + 10);
+        Card result;
+        if (lastClickedCard.isStronger(enemyCard)) {
+            result = lastClickedCard;
+            hand.remove(lastClickedCard);
+        } else {
+            result = Card.INVALID_CARD;
         }
 
-        if (lastClickedCard != null) {
-            Card trying = lastClickedCard;
-
-            if (lastClickedCard.isTrump()) {
-                trying.setPower(lastClickedCard.getPower() + 10);
-            }
-
-            if (checkDefendCard(trying, tempEnemyCard)) {
-                if (lastClickedCard.isTrump()) {
-                    trying.setPower(lastClickedCard.getPower() - 10);  // Reset power after check.
-                }
-
-                lastClickedCard = null;
-                hand.remove(trying);
-                return trying;
-            }
-
-            lastClickedCard = null;
-            return Card.INVALID_CARD;
-        }
-
-
-        return null;
+        lastClickedCard = null;
+        return result;
     }
 
-    private boolean checkDefendCard(Card trying, Card tempEnemyCard) {
-        return (tempEnemyCard.getPower() < trying.getPower() && trying.isTrump()) ||
-                (tempEnemyCard.getSuit() == trying.getSuit() && tempEnemyCard.getPower() < trying.getPower());
-    }
 }
