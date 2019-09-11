@@ -77,7 +77,7 @@ public class Game implements Runnable {
                         return;
                     }
 
-                    Card currentCard = attackPlayer.attack();
+                    Card currentCard = attackPlayer.attack(table.getOldCards());
                     if (currentCard == null) {
                         break;
                     }
@@ -174,7 +174,7 @@ public class Game implements Runnable {
         Collections.shuffle(deck);
 
         if (secondPlayer == null) {
-            secondPlayer = new AIPlayer(this);
+            secondPlayer = new AIPlayer();
         }
 
         for (int i = 0; i < 6; i++) {

@@ -15,11 +15,7 @@ public class GameTest {
     @Before
     public void testInit() {
         game = new Game();
-
-        HumanPlayer firstPlayer = new HumanPlayer();
-        firstPlayer.setUsername("admin");
-        game.setFirstPlayer(new HumanPlayer());
-
+        game.setFirstPlayer(new HumanPlayer("admin");
         game.initGame();
     }
 
@@ -35,7 +31,6 @@ public class GameTest {
     public void testCheckWin(){
         assertFalse(game.checkWin());
     }
-
 
     @Test
     public void testTrump(){

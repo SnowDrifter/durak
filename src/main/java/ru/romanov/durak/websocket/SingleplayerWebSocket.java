@@ -11,6 +11,7 @@ import ru.romanov.durak.websocket.message.CardMessage;
 import ru.romanov.durak.websocket.message.Message;
 import ru.romanov.durak.game.Game;
 import ru.romanov.durak.model.player.HumanPlayer;
+import ru.romanov.durak.model.player.Player;
 import ru.romanov.durak.util.JsonHelper;
 
 @Slf4j
@@ -58,9 +59,7 @@ public class SingleplayerWebSocket extends TextWebSocketHandler {
 
     private void startSingleplayerGame(WebSocketSession session) {
         game = new Game();
-        HumanPlayer player = new HumanPlayer();
-        player.setUsername(session.getId());
-        player.setGame(game);
+        Player player = new HumanPlayer(session.getId());
         game.setFirstPlayer(player);
         game.setWebSocketService(webSocketService);
         game.initGame();

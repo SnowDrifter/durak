@@ -3,21 +3,20 @@ package ru.romanov.durak.model.player;
 
 import lombok.Data;
 import ru.romanov.durak.model.Card;
-import ru.romanov.durak.game.Game;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
 public abstract class Player {
 
     protected Set<Card> hand = new HashSet<>();
-    protected Game game;
     protected boolean take;
     protected boolean finishMove;
     protected boolean win;
 
-    abstract public Card attack();
+    abstract public Card attack(List<Card> oldCards);
 
     abstract public Card defend(Card enemyCard);
 

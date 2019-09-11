@@ -15,6 +15,10 @@ public class HumanPlayer extends Player {
     private String username;
     private Card lastClickedCard;
 
+    public HumanPlayer(String username) {
+        this.username = username;
+    }
+
     @Override
     public void resetStatus() {
         setTake(false);
@@ -32,19 +36,17 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public Card attack() {
-        if (game.checkWin() || lastClickedCard == null) {
+    public Card attack(List<Card> oldCards) {
+        if (lastClickedCard == null) {
             return null;
         }
 
-        List<Card> oldCardsOnTable = game.getTable().getOldCards();
-
         Card result = null;
-        if (oldCardsOnTable.isEmpty()) {
+        if (oldCards.isEmpty()) {
             // Select card for empty table.
             result = lastClickedCard;
         } else {
-            Set<Integer> oldCardsPower = oldCardsOnTable.stream()
+            Set<Integer> oldCardsPower = oldCards.stream()
                     .map(Card::getPower)
                     .collect(Collectors.toSet());
 
@@ -65,7 +67,7 @@ public class HumanPlayer extends Player {
 
     @Override
     public Card defend(Card enemyCard) {
-        if (game.checkWin() || lastClickedCard == null) {
+        if (lastClickedCard == null) {
             return null;
         }
 

@@ -86,11 +86,8 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         String firstUsername = invite.getInitiator();
         String secondUsername = invite.getInvitee();
 
-        HumanPlayer firstPlayer = new HumanPlayer();
-        HumanPlayer secondPlayer = new HumanPlayer();
-
-        firstPlayer.setUsername(firstUsername);
-        secondPlayer.setUsername(secondUsername);
+        Player firstPlayer = new HumanPlayer(firstUsername);
+        Player secondPlayer = new HumanPlayer(secondUsername);
 
         lobbyService.removeByUsername(firstUsername);
         lobbyService.removeByUsername(secondUsername);
@@ -101,9 +98,6 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         game.setEndGameConsumer(this::updateStatistics);
         game.setWebSocketService(webSocketService);
         game.initGame();
-
-        firstPlayer.setGame(game);
-        secondPlayer.setGame(game);
 
         webSocketService.sendMessage(firstUsername, new DefaultMessage(MessageType.START_GAME));
         webSocketService.sendMessage(secondUsername, new DefaultMessage(MessageType.START_GAME));

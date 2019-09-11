@@ -3,9 +3,7 @@ package ru.romanov.durak.model.player;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import ru.romanov.durak.game.Game;
 import ru.romanov.durak.model.Card;
-import ru.romanov.durak.model.Table;
 
 import java.util.List;
 import java.util.Set;
@@ -15,20 +13,10 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(callSuper = true)
 public class AIPlayer extends Player {
 
-    public AIPlayer(Game game) {
-        this.game = game;
-    }
-
     @Override
-    public Card attack() {
-        if (game.checkWin()) {
-            return null;
-        }
-
-        List<Card> oldCardsOnTable = game.getTable().getOldCards();
-
+    public Card attack(List<Card> oldCards) {
         Card result = null;
-        if (oldCardsOnTable.isEmpty()) {
+        if (oldCards.isEmpty()) {
             result = hand.iterator().next();
 
             for (Card card : hand) {
@@ -38,8 +26,7 @@ public class AIPlayer extends Player {
                 }
             }
         } else {
-            Table table = game.getTable();
-            Set<Integer> oldCardsPower = table.getOldCards()
+            Set<Integer> oldCardsPower = oldCards
                     .stream()
                     .map(Card::getPower)
                     .collect(Collectors.toSet());
@@ -63,10 +50,6 @@ public class AIPlayer extends Player {
 
     @Override
     public Card defend(Card enemyCard) {
-        if (game.checkWin()) {
-            return null;
-        }
-
         Card result = null;
         for (Card card : hand) {
             if (card.isStronger(enemyCard)) {
