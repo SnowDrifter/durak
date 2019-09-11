@@ -32,7 +32,7 @@ public class AIPlayerTest {
 
         game.setTable(new Table());
 
-        player = new AIPlayer(game);
+        player = new AIPlayer();
 
         Set<Card> playerHand = new HashSet<>();
         playerHand.add(new Card("h6", Suit.HEARTS, 6, false));
@@ -43,7 +43,7 @@ public class AIPlayerTest {
 
     @Test
     public void testFirstAttack(){
-        Card card = player.attack();
+        Card card = player.attack(new ArrayList<>());
 
         assertNotNull(card);
         assertEquals("h6", card.getName());
@@ -57,7 +57,7 @@ public class AIPlayerTest {
         oldCards.add(new Card("d6", Suit.DIAMONDS, 6, false));
         game.getTable().setOldCards(oldCards);
 
-        Card card = player.attack();
+        Card card = player.attack(oldCards);
 
         assertEquals("h6", card.getName());
         assertEquals(6, card.getPower());
@@ -71,7 +71,7 @@ public class AIPlayerTest {
         oldCards.add(new Card("d5", Suit.DIAMONDS, 5, false));
         game.getTable().setOldCards(oldCards);
 
-        Card card = player.attack();
+        Card card = player.attack(oldCards);
 
         assertEquals("s2", card.getName());
         assertEquals(2, card.getPower());
@@ -84,7 +84,7 @@ public class AIPlayerTest {
         oldCards.add(new Card("d4", Suit.DIAMONDS, 4, false));
         game.getTable().setOldCards(oldCards);
 
-        Card card = player.attack();
+        Card card = player.attack(oldCards);
 
         assertNull(card);
         assertTrue(player.isFinishMove());
@@ -115,10 +115,5 @@ public class AIPlayerTest {
         assertNull(card);
         assertTrue(player.isTake());
     }
-
-
-
-
-
 
 }
