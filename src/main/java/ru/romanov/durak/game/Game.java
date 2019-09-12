@@ -100,8 +100,7 @@ public class Game implements Runnable {
                     }
 
                     if (defendPlayer.isTake()) {
-                        defendPlayer.getHand().addAll(table.getOldCards());
-                        defendPlayer.getHand().add(table.getCurrentCard());
+                        defendPlayer.addToHand(table.getAllCardsOnTable());
                         table.resetTable();
                         fillHand(attackPlayer);
 
@@ -178,8 +177,8 @@ public class Game implements Runnable {
         }
 
         for (int i = 0; i < 6; i++) {
-            firstPlayer.getHand().add(deck.remove(0));
-            secondPlayer.getHand().add(deck.remove(0));
+            firstPlayer.addToHand(deck.remove(0));
+            secondPlayer.addToHand(deck.remove(0));
         }
     }
 
@@ -246,15 +245,16 @@ public class Game implements Runnable {
         Collections.shuffle(deck);
 
         while (player.getHand().size() < 6 && !deck.isEmpty()) {
-            player.getHand().add(deck.remove(0));
+            player.addToHand(deck.remove(0));
         }
 
         if (player.getHand().size() < 6 && deck.isEmpty() && trump != null) {
-            player.getHand().add(trump);
+            player.addToHand(trump);
             trump = null;
         }
     }
 
+    // isGameFinished
     public boolean checkWin() {
         if (!deck.isEmpty() && trump != null) {
             return false;

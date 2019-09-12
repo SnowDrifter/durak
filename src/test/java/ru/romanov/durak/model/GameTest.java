@@ -15,7 +15,7 @@ public class GameTest {
     @Before
     public void testInit() {
         game = new Game();
-        game.setFirstPlayer(new HumanPlayer("admin");
+        game.setFirstPlayer(new HumanPlayer("admin"));
         game.initGame();
     }
 

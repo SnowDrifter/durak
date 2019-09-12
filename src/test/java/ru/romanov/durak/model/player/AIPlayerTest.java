@@ -4,15 +4,13 @@ package ru.romanov.durak.model.player;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import ru.romanov.durak.model.Card;
 import ru.romanov.durak.game.Game;
+import ru.romanov.durak.model.Card;
 import ru.romanov.durak.model.Suit;
 import ru.romanov.durak.model.Table;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
@@ -34,15 +32,15 @@ public class AIPlayerTest {
 
         player = new AIPlayer();
 
-        Set<Card> playerHand = new HashSet<>();
+        List<Card> playerHand = new ArrayList<>();
         playerHand.add(new Card("h6", Suit.HEARTS, 6, false));
         playerHand.add(new Card("s2", Suit.SPADES, 2, true));
 
-        player.setHand(playerHand);
+        player.addToHand(playerHand);
     }
 
     @Test
-    public void testFirstAttack(){
+    public void testFirstAttack() {
         Card card = player.attack(new ArrayList<>());
 
         assertNotNull(card);
@@ -51,7 +49,7 @@ public class AIPlayerTest {
     }
 
     @Test
-    public void testAttackWithCardsOnTable(){
+    public void testAttackWithCardsOnTable() {
         List<Card> oldCards = new ArrayList<>();
         oldCards.add(new Card("d3", Suit.DIAMONDS, 3, false));
         oldCards.add(new Card("d6", Suit.DIAMONDS, 6, false));
@@ -65,7 +63,7 @@ public class AIPlayerTest {
     }
 
     @Test
-    public void testAnotherAttackWithCardsOnTable(){
+    public void testAnotherAttackWithCardsOnTable() {
         List<Card> oldCards = new ArrayList<>();
         oldCards.add(new Card("d2", Suit.DIAMONDS, 2, false));
         oldCards.add(new Card("d5", Suit.DIAMONDS, 5, false));
@@ -79,7 +77,7 @@ public class AIPlayerTest {
     }
 
     @Test
-    public void testFailAttack(){
+    public void testFailAttack() {
         List<Card> oldCards = new ArrayList<>();
         oldCards.add(new Card("d4", Suit.DIAMONDS, 4, false));
         game.getTable().setOldCards(oldCards);
@@ -90,18 +88,16 @@ public class AIPlayerTest {
         assertTrue(player.isFinishMove());
     }
 
-
     @Test
-    public void testDefendVersusSimpleCard(){
-        Card card = player.defend(new Card("h4", Suit.HEARTS, 4, false ));
+    public void testDefendVersusSimpleCard() {
+        Card card = player.defend(new Card("h4", Suit.HEARTS, 4, false));
 
-      assertNotNull(card);
+        assertNotNull(card);
     }
 
-
     @Test
-    public void testDefendVersusTrump(){
-        Card card = player.defend(new Card("s1", Suit.SPADES, 1, true ));
+    public void testDefendVersusTrump() {
+        Card card = player.defend(new Card("s1", Suit.SPADES, 1, true));
 
         assertEquals("s2", card.getName());
         assertEquals(2, card.getPower());
@@ -109,8 +105,8 @@ public class AIPlayerTest {
     }
 
     @Test
-    public void testFailDefend(){
-        Card card = player.defend(new Card("s3", Suit.SPADES, 3, true ));
+    public void testFailDefend() {
+        Card card = player.defend(new Card("s3", Suit.SPADES, 3, true));
 
         assertNull(card);
         assertTrue(player.isTake());
