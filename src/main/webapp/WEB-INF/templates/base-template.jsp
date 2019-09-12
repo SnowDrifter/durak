@@ -6,6 +6,7 @@
 <head>
     <title>${title}</title>
     <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" type="image/x-icon">
     <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
     <script src="<c:url value="/resources/js/jquery-dateformat.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/jQueryUI/jquery-ui.min.js"/>"></script>
