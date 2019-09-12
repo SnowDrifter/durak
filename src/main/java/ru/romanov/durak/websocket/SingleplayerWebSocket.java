@@ -7,11 +7,8 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import ru.romanov.durak.websocket.message.CardMessage;
+import ru.romanov.durak.game.GameService;
 import ru.romanov.durak.websocket.message.Message;
-import ru.romanov.durak.game.Game;
-import ru.romanov.durak.model.player.HumanPlayer;
-import ru.romanov.durak.model.player.Player;
 import ru.romanov.durak.util.JsonHelper;
 
 @Slf4j
@@ -19,31 +16,13 @@ public class SingleplayerWebSocket extends TextWebSocketHandler {
 
     @Autowired
     private WebSocketService webSocketService;
-    private Game game;
+    @Autowired
+    private GameService gameService;
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage textMessage) {
         Message message = JsonHelper.parseJson(textMessage.getPayload(), Message.class);
-
-        switch (message.getType()) {
-            case START_GAME: {
-                startSingleplayerGame(session);
-                break;
-            }
-            case SELECT_CARD: {
-                CardMessage cardMessage = (CardMessage) message;
-                game.getFirstPlayer().selectCard(cardMessage.getCard());
-                break;
-            }
-            case TAKE_CARD: {
-                game.getFirstPlayer().setTake(true);
-                break;
-            }
-            case FINISH_MOVE: {
-                game.getFirstPlayer().setFinishMove(true);
-                break;
-            }
-        }
+        gameService.processSingleplayerMessage(session.getId(), message);
     }
 
     @Override
@@ -55,15 +34,6 @@ public class SingleplayerWebSocket extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         webSocketService.removeSession(session.getId());
-    }
-
-    private void startSingleplayerGame(WebSocketSession session) {
-        game = new Game();
-        Player player = new HumanPlayer(session.getId());
-        game.setFirstPlayer(player);
-        game.setWebSocketService(webSocketService);
-        game.initGame();
-        new Thread(game).start();
     }
 
 }

@@ -2,36 +2,28 @@ package ru.romanov.durak.websocket;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import ru.romanov.durak.game.GameService;
 import ru.romanov.durak.lobby.InviteService;
 import ru.romanov.durak.lobby.LobbyService;
-import ru.romanov.durak.game.Game;
 import ru.romanov.durak.model.GameInvite;
-import ru.romanov.durak.model.player.HumanPlayer;
-import ru.romanov.durak.model.player.Player;
-import ru.romanov.durak.model.user.User;
-import ru.romanov.durak.user.service.UserService;
 import ru.romanov.durak.util.JsonHelper;
 import ru.romanov.durak.websocket.message.*;
-
-import java.util.HashMap;
 
 @Slf4j
 public class MultiplayerWebSocket extends TextWebSocketHandler {
 
     @Autowired
-    private UserService userService;
-    @Autowired
     private LobbyService lobbyService;
     @Autowired
     private InviteService inviteService;
     @Autowired
+    private GameService gameService;
+    @Autowired
     private WebSocketService webSocketService;
-    private static HashMap<String, Game> games = new HashMap<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
@@ -70,14 +62,12 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
             }
             case CHAT_MESSAGE: {
                 ChatMessage chatMessage = (ChatMessage) message;
-                Game game = games.get(chatMessage.getUsername());
-                game.sendChatMessage(chatMessage);
+                webSocketService.sendMessage(chatMessage.getUsername(), message);
                 break;
             }
             default: {
                 String username = session.getPrincipal().getName();
-                Game game = games.get(username);
-                game.requestFromPlayer(username, message);
+                gameService.processMultiplayerMessage(username, message);
             }
         }
     }
@@ -86,26 +76,10 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         String firstUsername = invite.getInitiator();
         String secondUsername = invite.getInvitee();
 
-        Player firstPlayer = new HumanPlayer(firstUsername);
-        Player secondPlayer = new HumanPlayer(secondUsername);
-
         lobbyService.removeByUsername(firstUsername);
         lobbyService.removeByUsername(secondUsername);
 
-        Game game = new Game();
-        game.setFirstPlayer(firstPlayer);
-        game.setSecondPlayer(secondPlayer);
-        game.setEndGameConsumer(this::updateStatistics);
-        game.setWebSocketService(webSocketService);
-        game.initGame();
-
-        webSocketService.sendMessage(firstUsername, new DefaultMessage(MessageType.START_GAME));
-        webSocketService.sendMessage(secondUsername, new DefaultMessage(MessageType.START_GAME));
-
-        games.put(firstUsername, game);
-        games.put(secondUsername, game);
-
-        new Thread(game).start();
+        gameService.createMultiplayerGame(firstUsername, secondUsername);
     }
 
     @Override
@@ -113,39 +87,7 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         String username = session.getPrincipal().getName();
         webSocketService.removeSession(username);
         lobbyService.removeByUsername(username);
-
-        for (Game game : games.values()) {
-            if (username.equals(game.getFirstPlayer().getUsername())) {
-                webSocketService.sendMessage(game.getSecondPlayer().getUsername(), new DefaultMessage(MessageType.ENEMY_DISCONNECTED));
-            } else if (username.equals(game.getSecondPlayer().getUsername())) {
-                webSocketService.sendMessage(game.getFirstPlayer().getUsername(), new DefaultMessage(MessageType.ENEMY_DISCONNECTED));
-            }
-        }
+        gameService.playerDisconnected(username);
     }
 
-    private void updateStatistics(Game game) {
-        updateStatisticsForPlayer(game.getFirstPlayer());
-        updateStatisticsForPlayer(game.getSecondPlayer());
-    }
-
-    private void updateStatisticsForPlayer(Player player) {
-        if (StringUtils.isEmpty(player.getUsername())) {
-            return;
-        }
-
-        User user = userService.findByUsername(player.getUsername());
-
-        int totalGames = user.getTotalGames();
-        user.setTotalGames(++totalGames);
-
-        if (player.isWin()) {
-            int oldWins = user.getWins();
-            user.setWins(++oldWins);
-        } else {
-            int oldLoses = user.getLoses();
-            user.setLoses(++oldLoses);
-        }
-
-        userService.save(user);
-    }
 }
