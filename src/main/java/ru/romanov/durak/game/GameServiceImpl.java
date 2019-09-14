@@ -15,9 +15,7 @@ import ru.romanov.durak.websocket.message.Message;
 import ru.romanov.durak.websocket.message.MessageType;
 
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -97,6 +95,8 @@ public class GameServiceImpl implements GameService {
     }
 
     private void createSingleplayerGame(String username) {
+        stopPreviousGame(username);
+
         Game game = new Game();
         HumanPlayer player = new HumanPlayer(username);
         player.setUsername(username);
@@ -132,6 +132,13 @@ public class GameServiceImpl implements GameService {
         }
 
         userService.save(user);
+    }
+
+    private void stopPreviousGame(String username) {
+        Game game = singleplayerGames.remove(username);
+        if (game != null) {
+            game.forceStop();
+        }
     }
 
 }

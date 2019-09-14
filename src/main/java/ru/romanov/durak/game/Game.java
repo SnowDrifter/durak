@@ -30,12 +30,13 @@ public class Game implements Runnable {
     private Consumer<Game> endGameConsumer = t -> {};
     private WebSocketService webSocketService;
     private GameState state;
+    private boolean alive = true;
 
     @Override
     public void run() {
         log.info("Start game!");
 
-        while (true) {
+        while (alive) {
             if (checkWin()) break;
             move(firstPlayer, secondPlayer);
             loggingCurrentState();
@@ -45,12 +46,20 @@ public class Game implements Runnable {
             loggingCurrentState();
         }
 
+        if (!alive) {
+            log.info("Game is forcibly stopped");
+            return;
+        }
+
         log.info("Game over!");
         sendGameOver();
         endGameConsumer.accept(this);
     }
 
     private void move(Player attackPlayer, Player defendPlayer) {
+        if(!alive) {
+            return;
+        }
         state = GameState.ATTACK;
         attackPlayer.resetStatus();
         defendPlayer.resetStatus();
@@ -63,7 +72,7 @@ public class Game implements Runnable {
         updateTableView();
         loggingCurrentState();
 
-        while (true) {
+        while (alive) {
             switch (state) {
                 case ATTACK: {
                     if (checkWin()) {
@@ -278,6 +287,9 @@ public class Game implements Runnable {
         boolean diamondsIsTrumps = false;
         boolean heartsIsTrumps = false;
         boolean spadesIsTrumps = false;
+    public void forceStop() {
+        alive = false;
+    }
 
         deck = new ArrayList<>();
         trump = selectTrump();
