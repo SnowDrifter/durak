@@ -30,11 +30,12 @@ public class Game implements Runnable {
     private Consumer<Game> endGameConsumer = t -> {};
     private WebSocketService webSocketService;
     private GameState state;
-    private boolean alive = true;
+    private boolean alive;
 
     @Override
     public void run() {
         log.info("Start game!");
+        initGame();
 
         while (alive) {
             if (checkWin()) break;
@@ -175,7 +176,7 @@ public class Game implements Runnable {
         }
     }
 
-    public void initGame() {
+    private void initGame() {
         table = new Table();
         state = GameState.ATTACK;
         initDeck();
@@ -189,6 +190,7 @@ public class Game implements Runnable {
             firstPlayer.addToHand(deck.remove(0));
             secondPlayer.addToHand(deck.remove(0));
         }
+        alive = true;
     }
 
     private void updateTableView() {
@@ -282,72 +284,21 @@ public class Game implements Runnable {
         return false;
     }
 
-    private void initDeck() {
-        boolean clubsIsTrumps = false;
-        boolean diamondsIsTrumps = false;
-        boolean heartsIsTrumps = false;
-        boolean spadesIsTrumps = false;
     public void forceStop() {
         alive = false;
     }
 
+    private void initDeck() {
         deck = new ArrayList<>();
         trump = selectTrump();
 
-        switch (trump.getSuit()) {
-            case CLUBS:
-                clubsIsTrumps = true;
-                break;
-            case DIAMONDS:
-                diamondsIsTrumps = true;
-                break;
-            case HEARTS:
-                heartsIsTrumps = true;
-                break;
-            case SPADES:
-                spadesIsTrumps = true;
-                break;
+        for (Suit suit : Suit.values()) {
+            boolean trumpFlag = suit.equals(trump.getSuit());
+            for (int i = 1; i < 10; i++) {
+                String name = suit.getLetter() + i;
+                deck.add(new Card(name, suit, i, trumpFlag));
+            }
         }
-
-        deck.add(new Card("c1", Suit.CLUBS, 1, clubsIsTrumps));
-        deck.add(new Card("c2", Suit.CLUBS, 2, clubsIsTrumps));
-        deck.add(new Card("c3", Suit.CLUBS, 3, clubsIsTrumps));
-        deck.add(new Card("c4", Suit.CLUBS, 4, clubsIsTrumps));
-        deck.add(new Card("c5", Suit.CLUBS, 5, clubsIsTrumps));
-        deck.add(new Card("c6", Suit.CLUBS, 6, clubsIsTrumps));
-        deck.add(new Card("c7", Suit.CLUBS, 7, clubsIsTrumps));
-        deck.add(new Card("c8", Suit.CLUBS, 8, clubsIsTrumps));
-        deck.add(new Card("c9", Suit.CLUBS, 9, clubsIsTrumps));
-
-        deck.add(new Card("d1", Suit.DIAMONDS, 1, diamondsIsTrumps));
-        deck.add(new Card("d2", Suit.DIAMONDS, 2, diamondsIsTrumps));
-        deck.add(new Card("d3", Suit.DIAMONDS, 3, diamondsIsTrumps));
-        deck.add(new Card("d4", Suit.DIAMONDS, 4, diamondsIsTrumps));
-        deck.add(new Card("d5", Suit.DIAMONDS, 5, diamondsIsTrumps));
-        deck.add(new Card("d6", Suit.DIAMONDS, 6, diamondsIsTrumps));
-        deck.add(new Card("d7", Suit.DIAMONDS, 7, diamondsIsTrumps));
-        deck.add(new Card("d8", Suit.DIAMONDS, 8, diamondsIsTrumps));
-        deck.add(new Card("d9", Suit.DIAMONDS, 9, diamondsIsTrumps));
-
-        deck.add(new Card("h1", Suit.HEARTS, 1, heartsIsTrumps));
-        deck.add(new Card("h2", Suit.HEARTS, 2, heartsIsTrumps));
-        deck.add(new Card("h3", Suit.HEARTS, 3, heartsIsTrumps));
-        deck.add(new Card("h4", Suit.HEARTS, 4, heartsIsTrumps));
-        deck.add(new Card("h5", Suit.HEARTS, 5, heartsIsTrumps));
-        deck.add(new Card("h6", Suit.HEARTS, 6, heartsIsTrumps));
-        deck.add(new Card("h7", Suit.HEARTS, 7, heartsIsTrumps));
-        deck.add(new Card("h8", Suit.HEARTS, 8, heartsIsTrumps));
-        deck.add(new Card("h9", Suit.HEARTS, 9, heartsIsTrumps));
-
-        deck.add(new Card("s1", Suit.SPADES, 1, spadesIsTrumps));
-        deck.add(new Card("s2", Suit.SPADES, 2, spadesIsTrumps));
-        deck.add(new Card("s3", Suit.SPADES, 3, spadesIsTrumps));
-        deck.add(new Card("s4", Suit.SPADES, 4, spadesIsTrumps));
-        deck.add(new Card("s5", Suit.SPADES, 5, spadesIsTrumps));
-        deck.add(new Card("s6", Suit.SPADES, 6, spadesIsTrumps));
-        deck.add(new Card("s7", Suit.SPADES, 7, spadesIsTrumps));
-        deck.add(new Card("s8", Suit.SPADES, 8, spadesIsTrumps));
-        deck.add(new Card("s9", Suit.SPADES, 9, spadesIsTrumps));
 
         deck.remove(trump);
     }
@@ -360,10 +311,6 @@ public class Game implements Runnable {
         String name = suit.name().substring(0, 1).toLowerCase() + power;
 
         return new Card(name, suit, power, true);
-    }
-
-    public void sendChatMessage(ChatMessage message) {
-        webSocketService.sendMessage(message.getUsername(), message);
     }
 
 }

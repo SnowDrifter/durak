@@ -64,23 +64,19 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void createMultiplayerGame(String firstUsername, String secondUsername) {
-        Player firstPlayer = new HumanPlayer(firstUsername);
-        Player secondPlayer = new HumanPlayer(secondUsername);
-
         Game game = new Game();
-        game.setFirstPlayer(firstPlayer);
-        game.setSecondPlayer(secondPlayer);
+        game.setFirstPlayer(new HumanPlayer(firstUsername));
+        game.setSecondPlayer(new HumanPlayer(secondUsername));
         game.setEndGameConsumer(this::updateStatistics);
         game.setWebSocketService(webSocketService);
-        game.initGame();
-
-        webSocketService.sendMessage(firstUsername, new DefaultMessage(MessageType.START_GAME));
-        webSocketService.sendMessage(secondUsername, new DefaultMessage(MessageType.START_GAME));
 
         multiplayerGames.put(firstUsername, game);
         multiplayerGames.put(secondUsername, game);
 
         multiplayerExecutorService.execute(game);
+
+        webSocketService.sendMessage(firstUsername, new DefaultMessage(MessageType.START_GAME));
+        webSocketService.sendMessage(secondUsername, new DefaultMessage(MessageType.START_GAME));
     }
 
     @Override
@@ -98,11 +94,8 @@ public class GameServiceImpl implements GameService {
         stopPreviousGame(username);
 
         Game game = new Game();
-        HumanPlayer player = new HumanPlayer(username);
-        player.setUsername(username);
-        game.setFirstPlayer(player);
+        game.setFirstPlayer(new HumanPlayer(username));
         game.setWebSocketService(webSocketService);
-        game.initGame();
 
         singleplayerGames.put(username, game);
         singleplayerExecutorService.execute(game);

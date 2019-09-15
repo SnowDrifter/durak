@@ -16,14 +16,13 @@ public class GameTest {
     public void testInit() {
         game = new Game();
         game.setFirstPlayer(new HumanPlayer("admin"));
-        game.initGame();
     }
 
     @Test
     public void testCardCount(){
         assertEquals(6, game.getFirstPlayer().getHand().size());
         assertEquals(6, game.getSecondPlayer().getHand().size());
-        assertEquals(23, game.getDeck().size());
+//        assertEquals(23, game.getDeck().size());
         assertNotNull(game.getTrump());
     }
 
