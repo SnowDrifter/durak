@@ -9,13 +9,15 @@ import ru.romanov.durak.model.player.Player;
 import ru.romanov.durak.model.user.User;
 import ru.romanov.durak.user.service.UserService;
 import ru.romanov.durak.websocket.WebSocketService;
-import ru.romanov.durak.websocket.message.CardMessage;
 import ru.romanov.durak.websocket.message.DefaultMessage;
 import ru.romanov.durak.websocket.message.Message;
-import ru.romanov.durak.websocket.message.MessageType;
 
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import static ru.romanov.durak.websocket.message.MessageType.*;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -32,27 +34,11 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void processSingleplayerMessage(String username, Message message) {
-        switch (message.getType()) {
-            case START_GAME: {
-                createSingleplayerGame(username);
-                break;
-            }
-            case SELECT_CARD: {
-                CardMessage cardMessage = (CardMessage) message;
-                Game game = singleplayerGames.get(username);
-                game.getFirstPlayer().selectCard(cardMessage.getCard());
-                break;
-            }
-            case TAKE_CARD: {
-                Game game = singleplayerGames.get(username);
-                game.getFirstPlayer().setTake(true);
-                break;
-            }
-            case FINISH_MOVE: {
-                Game game = singleplayerGames.get(username);
-                game.getFirstPlayer().setFinishMove(true);
-                break;
-            }
+        if (message.getType() == START_GAME) {
+            createSingleplayerGame(username);
+        } else {
+            Game game = singleplayerGames.get(username);
+            game.requestFromPlayer(username, message);
         }
     }
 
@@ -75,8 +61,8 @@ public class GameServiceImpl implements GameService {
 
         multiplayerExecutorService.execute(game);
 
-        webSocketService.sendMessage(firstUsername, new DefaultMessage(MessageType.START_GAME));
-        webSocketService.sendMessage(secondUsername, new DefaultMessage(MessageType.START_GAME));
+        webSocketService.sendMessage(firstUsername, new DefaultMessage(START_GAME));
+        webSocketService.sendMessage(secondUsername, new DefaultMessage(START_GAME));
     }
 
     @Override
@@ -84,9 +70,9 @@ public class GameServiceImpl implements GameService {
         Game game = multiplayerGames.get(username);
 
         if (username.equals(game.getFirstPlayer().getUsername())) {
-            webSocketService.sendMessage(game.getSecondPlayer().getUsername(), new DefaultMessage(MessageType.ENEMY_DISCONNECTED));
+            webSocketService.sendMessage(game.getSecondPlayer().getUsername(), new DefaultMessage(ENEMY_DISCONNECTED));
         } else {
-            webSocketService.sendMessage(game.getFirstPlayer().getUsername(), new DefaultMessage(MessageType.ENEMY_DISCONNECTED));
+            webSocketService.sendMessage(game.getFirstPlayer().getUsername(), new DefaultMessage(ENEMY_DISCONNECTED));
         }
     }
 
