@@ -75,7 +75,7 @@ public class AIPlayer extends Player {
 
     @Override
     public String getUsername() {
-        return null;
+        return "AIPlayer";
     }
 
     @Override

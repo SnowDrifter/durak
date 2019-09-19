@@ -19,10 +19,10 @@ import java.util.function.Consumer;
 
 @Data
 @Slf4j
-public class Game implements Runnable {
+public class Game {
 
-    private Player firstPlayer;
-    private Player secondPlayer;
+    private Player attackPlayer;
+    private Player defendPlayer;
     private List<Card> deck;
     private Card trump;
     private Table table;
@@ -32,120 +32,121 @@ public class Game implements Runnable {
     private GameState state;
     private boolean alive;
 
-    @Override
-    public void run() {
-        log.info("Start game!");
-        initGame();
-
-        while (alive) {
-            if (checkWin()) break;
-            move(firstPlayer, secondPlayer);
-            loggingCurrentState();
-
-            if (checkWin()) break;
-            move(secondPlayer, firstPlayer);
-            loggingCurrentState();
-        }
-
-        if (!alive) {
-            log.info("Game is forcibly stopped");
+    private void attack() {
+        Card currentCard = attackPlayer.attack(table.getOldCards());
+        if (currentCard == null) {
+            if (attackPlayer instanceof AIPlayer) {
+                playerFinish();
+            }
             return;
         }
 
-        log.info("Game over!");
-        sendGameOver();
-        endGameConsumer.accept(this);
+        if (Card.INVALID_CARD.equals(currentCard)) {
+            webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.WRONG_CARD));
+            return;
+        }
+
+        table.setCurrentCard(currentCard);
+        loggingCurrentState();
+        updateTableView();
+        attackPlayer.resetStatus();
+        changeState();
+
+        if (defendPlayer instanceof AIPlayer) {
+            defend();
+        }
+
+        if (checkWin()) {
+            finishGame();
+        }
     }
 
-    private void move(Player attackPlayer, Player defendPlayer) {
-        if(!alive) {
+    private void defend() {
+        if (checkWin()) {
+            finishGame();
             return;
         }
-        state = GameState.ATTACK;
-        attackPlayer.resetStatus();
-        defendPlayer.resetStatus();
 
-        if (!checkWin()) {
-            webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.YOUR_MOVE));
-            webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.ENEMY_MOVE));
+        Card answer = defendPlayer.defend(table.getCurrentCard());
+        if (answer == null) {
+            if (defendPlayer instanceof AIPlayer) {
+                playerTake();
+            }
+            return;
         }
 
+        if (Card.INVALID_CARD.equals(answer)) {
+            webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.WRONG_CARD));
+            return;
+        }
+
+        table.getOldCards().add(table.getCurrentCard());
+        table.getOldCards().add(answer);
+        table.setCurrentCard(null);
         updateTableView();
         loggingCurrentState();
 
-        while (alive) {
-            switch (state) {
-                case ATTACK: {
-                    if (checkWin()) {
-                        return;
-                    }
-
-                    if (attackPlayer.isFinishMove()) {
-                        table.resetTable();
-                        fillHand(attackPlayer);
-                        fillHand(defendPlayer);
-                        return;
-                    }
-
-                    Card currentCard = attackPlayer.attack(table.getOldCards());
-                    if (currentCard == null) {
-                        break;
-                    }
-
-                    if (Card.INVALID_CARD.equals(currentCard)) {
-                        webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.WRONG_CARD));
-                        break;
-                    }
-
-                    table.setCurrentCard(currentCard);
-                    loggingCurrentState();
-                    updateTableView();
-                    attackPlayer.resetStatus();
-                    state = GameState.DEFEND;
-                    break;
-                }
-                case DEFEND: {
-                    if (checkWin()) {
-                        return;
-                    }
-
-                    if (defendPlayer.isTake()) {
-                        defendPlayer.addToHand(table.getAllCardsOnTable());
-                        table.resetTable();
-                        fillHand(attackPlayer);
-
-                        updateTableView();
-                        move(attackPlayer, defendPlayer);
-                        return;
-                    }
-
-                    Card answer = defendPlayer.defend(table.getCurrentCard());
-                    if (answer == null) {
-                        break;
-                    }
-
-                    if (Card.INVALID_CARD.equals(answer)) {
-                        webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.WRONG_CARD));
-                        break;
-                    }
-
-                    table.getOldCards().add(table.getCurrentCard());
-                    table.getOldCards().add(answer);
-                    table.setCurrentCard(null);
-                    updateTableView();
-                    loggingCurrentState();
-
-                    defendPlayer.resetStatus();
-                    state = GameState.ATTACK;
-                    break;
-                }
-            }
-
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException ignored) {
-            }
+        defendPlayer.resetStatus();
+        changeState();
+        if (attackPlayer instanceof AIPlayer) {
+            attack();
         }
+
+        if (checkWin()) {
+            finishGame();
+        }
+    }
+
+    private void playerFinish() {
+        prepareNextRound();
+
+        table.resetTable();
+
+        fillHand(attackPlayer);
+        fillHand(defendPlayer);
+
+        updateTableView();
+
+        webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.YOUR_MOVE));
+        webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.ENEMY_MOVE));
+
+        if (attackPlayer instanceof AIPlayer) {
+            attack();
+        }
+    }
+
+    private void playerTake() {
+        defendPlayer.resetStatus();
+        defendPlayer.addToHand(table.getAllCardsOnTable());
+        table.resetTable();
+        fillHand(attackPlayer);
+        fillHand(defendPlayer);
+        updateTableView();
+
+        changeState();
+
+        webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.YOUR_MOVE));
+        webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.ENEMY_MOVE));
+
+        if (attackPlayer instanceof AIPlayer) {
+            attack();
+        }
+
+    }
+
+    private void changeState() {
+        if (state.equals(GameState.ATTACK)) {
+            state = GameState.DEFEND;
+        } else {
+            state = GameState.ATTACK;
+        }
+    }
+
+    private void prepareNextRound() {
+        Player temp = attackPlayer;
+        attackPlayer = defendPlayer;
+        defendPlayer = temp;
+        state = GameState.ATTACK;
     }
 
     public void requestFromPlayer(String username, Message message) {
@@ -155,49 +156,65 @@ public class Game implements Runnable {
             case SELECT_CARD: {
                 CardMessage cardMessage = (CardMessage) message;
                 player.selectCard(cardMessage.getCard());
+
+                switch (state) {
+                    case ATTACK: {
+                        attack();
+                        break;
+                    }
+                    case DEFEND: {
+                        defend();
+                        break;
+                    }
+                }
                 break;
             }
             case TAKE_CARD: {
-                player.setTake(true);
+                playerTake();
                 break;
             }
             case FINISH_MOVE: {
-                player.setFinishMove(true);
+                playerFinish();
                 break;
             }
         }
     }
 
     private Player findPlayer(String username) {
-        if (firstPlayer.getUsername().equals(username)) {
-            return firstPlayer;
+        if (attackPlayer.getUsername().equals(username)) {
+            return attackPlayer;
         } else {
-            return secondPlayer;
+            return defendPlayer;
         }
     }
 
-    private void initGame() {
+    public void initGame(Player firstPlayer, Player secondPlayer) {
+        attackPlayer = firstPlayer;
+        defendPlayer = secondPlayer;
         table = new Table();
         state = GameState.ATTACK;
         initDeck();
         Collections.shuffle(deck);
 
-        if (secondPlayer == null) {
-            secondPlayer = new AIPlayer();
+        if (defendPlayer == null) {
+            defendPlayer = new AIPlayer();
         }
 
         for (int i = 0; i < 6; i++) {
-            firstPlayer.addToHand(deck.remove(0));
-            secondPlayer.addToHand(deck.remove(0));
+            attackPlayer.addToHand(deck.remove(0));
+            defendPlayer.addToHand(deck.remove(0));
         }
         alive = true;
+        updateTableView();
+        webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.YOUR_MOVE));
+        webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.ENEMY_MOVE));
     }
 
     private void updateTableView() {
-        updateTableViewForPlayer(firstPlayer, secondPlayer);
+        updateTableViewForPlayer(attackPlayer, defendPlayer);
 
-        if (secondPlayer instanceof HumanPlayer) {
-            updateTableViewForPlayer(secondPlayer, firstPlayer);
+        if (defendPlayer instanceof HumanPlayer) {
+            updateTableViewForPlayer(defendPlayer, attackPlayer);
         }
     }
 
@@ -226,23 +243,23 @@ public class Game implements Runnable {
     }
 
     private void sendGameOver() {
-        if (isDraw()) {
-            webSocketService.sendMessage(firstPlayer.getUsername(), new DefaultMessage(MessageType.DRAW));
-            webSocketService.sendMessage(secondPlayer.getUsername(), new DefaultMessage(MessageType.DRAW));
-        } else if (firstPlayer.isWin()) {
-            webSocketService.sendMessage(firstPlayer.getUsername(), new DefaultMessage(MessageType.WIN));
-            webSocketService.sendMessage(secondPlayer.getUsername(), new DefaultMessage(MessageType.LOSE));
-        } else if (secondPlayer.isWin()) {
-            webSocketService.sendMessage(firstPlayer.getUsername(), new DefaultMessage(MessageType.LOSE));
-            webSocketService.sendMessage(secondPlayer.getUsername(), new DefaultMessage(MessageType.WIN));
+        if (draw) {
+            webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.DRAW));
+            webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.DRAW));
+        } else if (attackPlayer.isWin()) {
+            webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.WIN));
+            webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.LOSE));
+        } else if (defendPlayer.isWin()) {
+            webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.LOSE));
+            webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.WIN));
         }
     }
 
     // TODO AOP. Maybe remove it?
     private void loggingCurrentState() {
         log.debug("========================");
-        log.debug("First player hand: " + firstPlayer.getHand());
-        log.debug("Second player hand: " + secondPlayer.getHand());
+        log.debug("First player hand: " + attackPlayer.getHand());
+        log.debug("Second player hand: " + defendPlayer.getHand());
         if (deck != null) {
             log.debug("Current deck: " + deck);
         }
@@ -271,17 +288,22 @@ public class Game implements Runnable {
             return false;
         }
 
-        if (firstPlayer.getHand().isEmpty() && secondPlayer.getHand().isEmpty()) {
+        if (attackPlayer.getHand().isEmpty() && defendPlayer.getHand().isEmpty()) {
             setDraw(true);
             return true;
-        } else if (firstPlayer.getHand().isEmpty()) {
-            firstPlayer.setWin(true);
+        } else if (attackPlayer.getHand().isEmpty()) {
+            attackPlayer.setWin(true);
             return true;
-        } else if (secondPlayer.getHand().isEmpty()) {
-            secondPlayer.setWin(true);
+        } else if (defendPlayer.getHand().isEmpty()) {
+            defendPlayer.setWin(true);
             return true;
         }
         return false;
+    }
+
+    private void finishGame() {
+        sendGameOver();
+        endGameConsumer.accept(this);
     }
 
     public void forceStop() {

@@ -15,13 +15,13 @@ public class GameTest {
     @Before
     public void testInit() {
         game = new Game();
-        game.setFirstPlayer(new HumanPlayer("admin"));
+        game.initGame(new HumanPlayer("admin"), new AIPlayer());
     }
 
     @Test
     public void testCardCount(){
-        assertEquals(6, game.getFirstPlayer().getHand().size());
-        assertEquals(6, game.getSecondPlayer().getHand().size());
+        assertEquals(6, game.getAttackPlayer().getHand().size());
+        assertEquals(6, game.getDefendPlayer().getHand().size());
 //        assertEquals(23, game.getDeck().size());
         assertNotNull(game.getTrump());
     }
@@ -38,7 +38,7 @@ public class GameTest {
 
     @Test
     public void testAIPlayerClass(){
-        assertTrue(game.getSecondPlayer() instanceof AIPlayer);
+        assertTrue(game.getDefendPlayer() instanceof AIPlayer);
     }
 
 }

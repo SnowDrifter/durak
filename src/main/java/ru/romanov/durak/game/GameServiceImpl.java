@@ -4,6 +4,7 @@ import net.jodah.expiringmap.ExpiringMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import ru.romanov.durak.model.player.AIPlayer;
 import ru.romanov.durak.model.player.HumanPlayer;
 import ru.romanov.durak.model.player.Player;
 import ru.romanov.durak.model.user.User;
@@ -13,8 +14,6 @@ import ru.romanov.durak.websocket.message.DefaultMessage;
 import ru.romanov.durak.websocket.message.Message;
 
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import static ru.romanov.durak.websocket.message.MessageType.*;
@@ -29,8 +28,6 @@ public class GameServiceImpl implements GameService {
 
     private final Map<String, Game> singleplayerGames = ExpiringMap.builder().expiration(30, TimeUnit.MINUTES).build();
     private final Map<String, Game> multiplayerGames = ExpiringMap.builder().expiration(30, TimeUnit.MINUTES).build();
-    private final ExecutorService singleplayerExecutorService = Executors.newFixedThreadPool(10);
-    private final ExecutorService multiplayerExecutorService = Executors.newFixedThreadPool(20);
 
     @Override
     public void processSingleplayerMessage(String username, Message message) {
@@ -51,15 +48,12 @@ public class GameServiceImpl implements GameService {
     @Override
     public void createMultiplayerGame(String firstUsername, String secondUsername) {
         Game game = new Game();
-        game.setFirstPlayer(new HumanPlayer(firstUsername));
-        game.setSecondPlayer(new HumanPlayer(secondUsername));
         game.setEndGameConsumer(this::updateStatistics);
         game.setWebSocketService(webSocketService);
+        game.initGame(new HumanPlayer(firstUsername), new HumanPlayer(secondUsername));
 
         multiplayerGames.put(firstUsername, game);
         multiplayerGames.put(secondUsername, game);
-
-        multiplayerExecutorService.execute(game);
 
         webSocketService.sendMessage(firstUsername, new DefaultMessage(START_GAME));
         webSocketService.sendMessage(secondUsername, new DefaultMessage(START_GAME));
@@ -69,10 +63,10 @@ public class GameServiceImpl implements GameService {
     public void playerDisconnected(String username) {
         Game game = multiplayerGames.get(username);
 
-        if (username.equals(game.getFirstPlayer().getUsername())) {
-            webSocketService.sendMessage(game.getSecondPlayer().getUsername(), new DefaultMessage(ENEMY_DISCONNECTED));
+        if (username.equals(game.getAttackPlayer().getUsername())) {
+            webSocketService.sendMessage(game.getDefendPlayer().getUsername(), new DefaultMessage(ENEMY_DISCONNECTED));
         } else {
-            webSocketService.sendMessage(game.getFirstPlayer().getUsername(), new DefaultMessage(ENEMY_DISCONNECTED));
+            webSocketService.sendMessage(game.getAttackPlayer().getUsername(), new DefaultMessage(ENEMY_DISCONNECTED));
         }
     }
 
@@ -80,16 +74,14 @@ public class GameServiceImpl implements GameService {
         stopPreviousGame(username);
 
         Game game = new Game();
-        game.setFirstPlayer(new HumanPlayer(username));
         game.setWebSocketService(webSocketService);
-
+        game.initGame(new HumanPlayer(username), new AIPlayer());
         singleplayerGames.put(username, game);
-        singleplayerExecutorService.execute(game);
     }
 
     private void updateStatistics(Game game) {
-        updateStatisticsForPlayer(game.getFirstPlayer());
-        updateStatisticsForPlayer(game.getSecondPlayer());
+        updateStatisticsForPlayer(game.getAttackPlayer());
+        updateStatisticsForPlayer(game.getDefendPlayer());
     }
 
     private void updateStatisticsForPlayer(Player player) {
