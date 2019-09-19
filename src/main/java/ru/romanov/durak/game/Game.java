@@ -49,7 +49,6 @@ public class Game {
         table.setCurrentCard(currentCard);
         loggingCurrentState();
         updateTableView();
-        attackPlayer.resetStatus();
         changeState();
 
         if (defendPlayer instanceof AIPlayer) {
@@ -86,7 +85,6 @@ public class Game {
         updateTableView();
         loggingCurrentState();
 
-        defendPlayer.resetStatus();
         changeState();
         if (attackPlayer instanceof AIPlayer) {
             attack();
@@ -116,7 +114,6 @@ public class Game {
     }
 
     private void playerTake() {
-        defendPlayer.resetStatus();
         defendPlayer.addToHand(table.getAllCardsOnTable());
         table.resetTable();
         fillHand(attackPlayer);

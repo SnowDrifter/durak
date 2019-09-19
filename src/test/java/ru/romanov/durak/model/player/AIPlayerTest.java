@@ -85,7 +85,6 @@ public class AIPlayerTest {
         Card card = player.attack(oldCards);
 
         assertNull(card);
-        assertTrue(player.isFinishMove());
     }
 
     @Test
@@ -109,7 +108,6 @@ public class AIPlayerTest {
         Card card = player.defend(new Card("s3", Suit.SPADES, 3, true));
 
         assertNull(card);
-        assertTrue(player.isTake());
     }
 
 }

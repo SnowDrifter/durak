@@ -12,9 +12,7 @@ import java.util.Set;
 public abstract class Player {
 
     protected final Set<Card> hand = new HashSet<>();
-    protected boolean take;
-    protected boolean finishMove;
-    protected boolean win;
+    private boolean win;
 
     abstract public Card attack(List<Card> oldCards);
 
@@ -27,8 +25,6 @@ public abstract class Player {
     public void addToHand(Card card) {
         hand.add(card);
     }
-
-    abstract public void resetStatus();
 
     abstract public void selectCard(String cardName);
 

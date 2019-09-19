@@ -41,8 +41,6 @@ public class AIPlayer extends Player {
 
         if (result != null) {
             hand.remove(result);
-        } else {
-            setFinishMove(true);
         }
 
         return result;
@@ -60,17 +58,9 @@ public class AIPlayer extends Player {
 
         if (result != null) {
             hand.remove(result);
-        } else {
-            setTake(true);
         }
 
         return result;
-    }
-
-    @Override
-    public void resetStatus() {
-        setTake(false);
-        setFinishMove(false);
     }
 
     @Override
