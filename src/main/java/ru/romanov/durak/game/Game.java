@@ -96,13 +96,11 @@ public class Game {
     }
 
     private void playerFinish() {
-        prepareNextRound();
-
-        table.resetTable();
-
-        fillHand(attackPlayer);
         fillHand(defendPlayer);
+        fillHand(attackPlayer);
 
+        prepareNextRound();
+        table.resetTable();
         updateTableView();
 
         webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.YOUR_MOVE));
@@ -115,9 +113,8 @@ public class Game {
 
     private void playerTake() {
         defendPlayer.addToHand(table.getAllCardsOnTable());
-        table.resetTable();
         fillHand(attackPlayer);
-        fillHand(defendPlayer);
+        table.resetTable();
         updateTableView();
 
         changeState();
