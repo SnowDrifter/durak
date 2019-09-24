@@ -70,37 +70,11 @@ function addingTrumpAndDeck(trump, sizeOfDeck) {
 }
 
 function addingPlayerCards(playerCardsInHand) {
-    var playerTrumpsInHand = [];
-
-    for (var x = 0; x < playerCardsInHand.length; x++) {
-        var card = playerCardsInHand[x];
-
-        if (card.match(trumpSuit)) {
-            playerTrumpsInHand.push(card);
-            delete playerCardsInHand[x];
-        }
-    }
-
-    playerCardsInHand.forEach(function (card) {
-        if (card.match(trumpSuit)) {
-            playerTrumpsInHand.push(card);
-            delete playerCardsInHand[x];
-        }
-    });
-
-    playerCardsInHand.sort();
-    playerTrumpsInHand.sort();
-
     playerCardsInHand.forEach(function (cardName) {
         if (cardName) {
             $("#" + cardName).appendTo(".player_side");
         }
     });
-
-    playerTrumpsInHand.forEach(function (trumpCardName) {
-        $("#" + trumpCardName).appendTo(".player_side");
-    });
-
 }
 
 function addingEnemyCards(currentEnemyCardsCount) {

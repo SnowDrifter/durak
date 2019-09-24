@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 @Data
 @Slf4j
@@ -215,12 +216,25 @@ public class Game {
     private void updateTableViewForPlayer(Player player, Player enemy) {
         TableMessage message = new TableMessage();
 
-        List<String> playerCards = new ArrayList<>();
-        for (Card card : player.getHand()) {
-            playerCards.add(card.getName());
-        }
+        List<Card> playerTrumps = new ArrayList<>();
+        List<Card> playerCards = new ArrayList<>();
 
-        message.setPlayerCards(playerCards);
+        player.getHand()
+                .stream()
+                .collect(Collectors.groupingBy(Card::getSuit))
+                .forEach((suit, cards) -> {
+                    if (cards.get(0).isTrump()) {
+                        playerTrumps.addAll(cards);
+                    } else {
+                        playerCards.addAll(cards);
+                    }
+                });
+
+        List<String> playerCardNames = new ArrayList<>();
+        playerCards.forEach(c -> playerCardNames.add(c.getName()));
+        playerTrumps.forEach(c -> playerCardNames.add(c.getName()));
+
+        message.setPlayerCards(playerCardNames);
         message.setEnemyCardsCount(enemy.getHand().size());
 
         if (trump != null) {
