@@ -1,4 +1,4 @@
-package ru.romanov.durak.configuration;
+package ru.romanov.durak.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

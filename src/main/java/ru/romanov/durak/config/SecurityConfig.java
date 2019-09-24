@@ -1,4 +1,4 @@
-package ru.romanov.durak.configuration;
+package ru.romanov.durak.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
