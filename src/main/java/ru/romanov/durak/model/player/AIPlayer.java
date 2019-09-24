@@ -1,7 +1,6 @@
 package ru.romanov.durak.model.player;
 
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import ru.romanov.durak.model.Card;
 
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Data
 @EqualsAndHashCode(callSuper = true)
 public class AIPlayer extends Player {
 

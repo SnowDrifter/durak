@@ -18,6 +18,7 @@ public class HumanPlayer extends Player {
     public HumanPlayer(String username) {
         this.username = username;
     }
+
     @Override
     public void selectCard(String cardName) {
         for (Card card : hand) {
