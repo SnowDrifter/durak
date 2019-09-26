@@ -324,7 +324,7 @@ public class Game {
 
         for (Suit suit : Suit.values()) {
             boolean trumpFlag = suit.equals(trump.getSuit());
-            for (int i = 1; i < 10; i++) {
+            for (int i = 0; i < 9; i++) {
                 String name = suit.getLetter() + i;
                 deck.add(new Card(name, suit, i, trumpFlag));
             }
@@ -334,7 +334,7 @@ public class Game {
     }
 
     private Card selectTrump() {
-        int power = (int) (Math.random() * 9) + 1;
+        int power = (int) (Math.random() * 9);
         int suitNumber = (int) (Math.random() * 4);
 
         Suit suit = Suit.values()[suitNumber];
