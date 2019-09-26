@@ -35,14 +35,14 @@ public class GameServiceImpl implements GameService {
             createSingleplayerGame(username);
         } else {
             Game game = singleplayerGames.get(username);
-            game.requestFromPlayer(username, message);
+            game.processPlayerMessage(username, message);
         }
     }
 
     @Override
     public void processMultiplayerMessage(String username, Message message) {
         Game game = multiplayerGames.get(username);
-        game.requestFromPlayer(username, message);
+        game.processPlayerMessage(username, message);
     }
 
     @Override

@@ -144,12 +144,11 @@ public class Game {
         state = GameState.ATTACK;
     }
 
-    public void requestFromPlayer(String username, Message message) {
-        Player player = findPlayer(username);
-
+    public void processPlayerMessage(String username, Message message) {
         switch (message.getType()) {
             case SELECT_CARD: {
                 CardMessage cardMessage = (CardMessage) message;
+                Player player = findPlayer(username);
                 player.selectCard(cardMessage.getCard());
 
                 switch (state) {
@@ -171,6 +170,9 @@ public class Game {
             case FINISH_MOVE: {
                 playerFinish();
                 break;
+            }
+            default: {
+                log.error("Unsupported message type: {}", message.getType());
             }
         }
     }
