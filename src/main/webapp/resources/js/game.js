@@ -50,22 +50,17 @@ function addingTrumpAndDeck(trump, sizeOfDeck) {
         trumpElement.css("opacity", "0.4");
     }
 
+    var deckElement = $(".deck");
     if (sizeOfDeck > 0) {
         sizeOfDeck++;
 
-        if ($(".deck").html() === "") {
-            $(".deck").append("<div class='cards_in_deck'><p class='cards_number'>" + sizeOfDeck + "</p><img src='/resources/images/cards/back.png'/></div>");
+        if (deckElement.html() === "") {
+            deckElement.append("<div class='cards_in_deck'><span class='cards_number'>" + sizeOfDeck + "</span></div>");
         } else {
             $(".cards_number").text(sizeOfDeck);
         }
-
-        if (sizeOfDeck > 9) {
-            $(".cards_number").css("font-size", "2em").css("left", "12px");
-        } else {
-            $(".cards_number").css("font-size", "3em").css("left", "16px");
-        }
     } else {
-        $(".deck").empty();
+        deckElement.empty();
     }
 }
 
