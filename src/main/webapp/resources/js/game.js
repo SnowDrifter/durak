@@ -14,14 +14,14 @@ function showNotification(message, additionalClass) {
 function updateTableView(message) {
     var trump = message.trump || null;
     var playerCardsInHand = message.playerCards ? message.playerCards : [];
-    var currentEnemyCardsCount = message.enemyCardsCount;
+    var enemyCardsCount = message.enemyCardsCount;
     var deckSize = message.deckSize;
     var tableCards = message.tableCards ? message.tableCards : [];
 
     cleanTableAndPlayerCards();
     addingTrumpAndDeck(trump, deckSize);
     addingPlayerCards(playerCardsInHand);
-    addingEnemyCards(currentEnemyCardsCount);
+    addingEnemyCards(enemyCardsCount);
     addingCardsOnTable(tableCards);
 }
 
@@ -72,13 +72,15 @@ function addingPlayerCards(playerCardsInHand) {
     });
 }
 
-function addingEnemyCards(currentEnemyCardsCount) {
-    if (enemyCardsCount !== currentEnemyCardsCount) {
-        $(".enemy_side").empty();
+function addingEnemyCards(enemyCardsCount) {
+    var currentEnemyCardsCount = $(".enemy_side").children().length;
 
-        for (var k = 0; k < currentEnemyCardsCount; k++) {
+    if (enemyCardsCount > currentEnemyCardsCount) {
+        for (var i = currentEnemyCardsCount; i < enemyCardsCount; i++) {
             $("#back").clone().removeAttr("id").appendTo(".enemy_side");
         }
+    } else if (enemyCardsCount < currentEnemyCardsCount) {
+        $(".enemy_side").children().slice(enemyCardsCount, currentEnemyCardsCount).remove();
     }
 }
 
