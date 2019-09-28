@@ -26,13 +26,13 @@ function updateTableView(message) {
 }
 
 function cleanTableAndPlayerCards() {
-    $(".player_side").children().each(function () {
+    $("#player_side").children().each(function () {
         var tempCardId = $(this).attr("id");
 
         $("#" + tempCardId).appendTo("#sump");
     });
 
-    $(".table").children().each(function () {
+    $("#table").children().each(function () {
         var tempTableCardId = $(this).attr("id");
 
         $("#" + tempTableCardId).appendTo("#sump");
@@ -40,7 +40,7 @@ function cleanTableAndPlayerCards() {
 }
 
 function addingTrumpAndDeck(trump, sizeOfDeck) {
-    var trumpElement = $(".trump");
+    var trumpElement = $("#trump");
 
     if (!trumpElement.html() && trump) {
         trumpElement.html("<div class='card'><img src='/resources/images/cards/" + trump + ".png'/></div>");
@@ -50,7 +50,7 @@ function addingTrumpAndDeck(trump, sizeOfDeck) {
         trumpElement.css("opacity", "0.4");
     }
 
-    var deckElement = $(".deck");
+    var deckElement = $("#deck");
     if (sizeOfDeck > 0) {
         sizeOfDeck++;
 
@@ -67,25 +67,25 @@ function addingTrumpAndDeck(trump, sizeOfDeck) {
 function addingPlayerCards(playerCardsInHand) {
     playerCardsInHand.forEach(function (cardName) {
         if (cardName) {
-            $("#" + cardName).appendTo(".player_side");
+            $("#" + cardName).appendTo("#player_side");
         }
     });
 }
 
 function addingEnemyCards(enemyCardsCount) {
-    var currentEnemyCardsCount = $(".enemy_side").children().length;
+    var currentEnemyCardsCount = $("#enemy_side").children().length;
 
     if (enemyCardsCount > currentEnemyCardsCount) {
         for (var i = currentEnemyCardsCount; i < enemyCardsCount; i++) {
-            $("#back").clone().removeAttr("id").appendTo(".enemy_side");
+            $("#back").clone().removeAttr("id").appendTo("#enemy_side");
         }
     } else if (enemyCardsCount < currentEnemyCardsCount) {
-        $(".enemy_side").children().slice(enemyCardsCount, currentEnemyCardsCount).remove();
+        $("#enemy_side").children().slice(enemyCardsCount, currentEnemyCardsCount).remove();
     }
 }
 
 function addingCardsOnTable(tableCards) {
     tableCards.forEach(function (item) {
-        $("#" + item).appendTo(".table");
+        $("#" + item).appendTo("#table");
     });
 }

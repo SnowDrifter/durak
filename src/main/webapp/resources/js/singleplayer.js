@@ -40,20 +40,20 @@ function parseMessage(message) {
             break;
         }
         case "WIN": {
-            $(".player_side").empty();
+            $("#player_side").empty();
             hideButtons();
             showNotification(winText, "win_notification");
             break;
         }
         case "LOSE": {
-            $(".enemy_side").empty();
+            $("#enemy_side").empty();
             hideButtons();
             showNotification(loseText, "lose_notification");
             break;
         }
         case "DRAW": {
-            $(".enemy_side").empty();
-            $(".player_side").empty();
+            $("#enemy_side").empty();
+            $("#player_side").empty();
             hideButtons();
             showNotification(drawText, "draw_notification");
             break;
@@ -78,12 +78,12 @@ $(document).ready(function () {
         websocket.send(JSON.stringify({type: "TAKE_CARD"}));
     });
     $("#finish_button").click(function () {
-        if ($(".table").html() === "") return;
+        if ($("#table").html() === "") return;
         websocket.send(JSON.stringify({type: "FINISH_MOVE"}));
     });
     $("#start_new_game").click(function () {
-        $(".trump").empty().css("opacity", "1");
         websocket.send(JSON.stringify({type: "INIT_GAME"}));
+        $("#trump").empty().css("opacity", "1");
     });
     $("#close_notification_button").click(function () {
         $(this).parent().hide();

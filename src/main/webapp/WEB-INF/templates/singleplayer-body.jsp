@@ -17,20 +17,20 @@
 <div class="singleplayer_container" id="game_container">
     <div id="preloader"><span class="spinner"></span></div>
 
-    <div class="enemy_side"></div>
-    <div class="table"></div>
-    <div class="trump"></div>
-    <div class="deck"></div>
-    <div class="player_side"></div>
+    <div id="enemy_side"></div>
+    <div id="table"></div>
+    <div id="trump"></div>
+    <div id="deck"></div>
+    <div id="player_side"></div>
 
     <div id="notification">
         <div id="notification_text"></div>
         <button id="close_notification_button">OK</button>
     </div>
 
-    <button class="action_button" id="finish_button"><spring:message code="game.button.finish"/></button>
-    <button class="action_button" id="take_button"><spring:message code="game.button.take"/></button>
-    <button class="action_button" id="start_new_game_button"><spring:message code="game.button.newgame"/></button>
+    <button id="finish_button" class="action_button"><spring:message code="game.button.finish"/></button>
+    <button id="take_button" class="action_button"><spring:message code="game.button.take"/></button>
+    <button id="start_new_game_button" class="action_button"><spring:message code="game.button.newgame"/></button>
 </div>
 
 <div id="sump" style="display:none">

@@ -13,12 +13,26 @@
   margin-left: -512px;
 }
 
-.table {
+#table {
   position: absolute;
+  float: left;
   top: 200px;
   margin: 5px;
   width: 600px;
-  float: left;
+  padding-top: 20px;
+  min-height: 200px;
+
+  .card:nth-child(even) {
+    left: -20px;
+    top: 30px;
+    margin-left: -30px;
+  }
+
+  .card:nth-child(odd) {
+    left: 40px;
+    bottom: 20px;
+    margin-left: -40px;
+  }
 }
 
 .cards_in_deck {
@@ -35,7 +49,7 @@
   background: url(/resources/images/cards/back.png);
 }
 
-.trump {
+#trump {
   position: relative;
   float: right;
   transform: rotate(-90deg);
@@ -54,7 +68,7 @@
   font-size: 1.8em;
 }
 
-.player_side {
+#player_side {
   position: absolute;
   top: 500px;
   margin: 5px;
@@ -72,7 +86,7 @@
   }
 }
 
-.enemy_side {
+#enemy_side {
   position: absolute;
   margin: 5px;
   padding-top: 10px;
@@ -89,23 +103,6 @@
   height: 145px;
   width: 100px;
   box-shadow: 5px 5px 10px -3px @card_shadow;
-}
-
-.table {
-  padding-top: 20px;
-  min-height: 200px;
-
-  .card:nth-child(even) {
-    left: -20px;
-    top: 30px;
-    margin-left: -30px;
-  }
-
-  .card:nth-child(odd) {
-    left: 40px;
-    bottom: 20px;
-    margin-left: -40px;
-  }
 }
 
 #notification {

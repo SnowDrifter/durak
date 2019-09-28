@@ -47,8 +47,8 @@ function parseMessage(message) {
             break;
         }
         case "DRAW": {
-            $(".enemy_side").empty();
-            $(".player_side").empty();
+            $("#enemy_side").empty();
+            $("#player_side").empty();
             hideButtons();
             showNotification(drawText, "draw_notification");
             break;
@@ -89,11 +89,11 @@ function parseMessage(message) {
         case "ENEMY_DISCONNECTED": {
             closeNotifications();
             hideButtons();
-            $(".player_side").empty();
-            $(".enemy_side").empty();
-            $(".table").empty();
-            $(".deck").empty();
-            $(".trump").hide();
+            $("#player_side").empty();
+            $("#enemy_side").empty();
+            $("#table").empty();
+            $("#deck").empty();
+            $("#trump").hide();
             showNotification(disconnectedText, "alert_window, disconnect_window");
             break;
         }
@@ -166,7 +166,7 @@ $(document).ready(function () {
         websocket.send(JSON.stringify({type: "TAKE_CARD"}));
     });
     $('#finish_button').click(function () {
-        if ($(".table").html() === "") return;
+        if ($("#table").html() === "") return;
         websocket.send(JSON.stringify({type: "FINISH_MOVE"}));
     });
     $('#close_notification_button').click(function () {
