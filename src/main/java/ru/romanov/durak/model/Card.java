@@ -1,13 +1,16 @@
 package ru.romanov.durak.model;
 
 
+import com.google.common.collect.ComparisonChain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Comparator;
 
 @Data
 @AllArgsConstructor
+@EqualsAndHashCode(of = "name")
 public class Card {
 
     public static final Card INVALID_CARD = new Card("invalid", null, -1, false);
@@ -15,7 +18,11 @@ public class Card {
         if (c1.equals(c2)) {
             return 0;
         }
-        return c1.isStronger(c2) ? 1 : -1;
+
+        return ComparisonChain.start()
+                .compareFalseFirst(c1.trump, c2.trump)
+                .compare(c1.name, c2.name)
+                .result();
     };
 
     private final String name;
