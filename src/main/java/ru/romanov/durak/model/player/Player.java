@@ -3,6 +3,7 @@ package ru.romanov.durak.model.player;
 
 import lombok.Data;
 import ru.romanov.durak.model.Card;
+import ru.romanov.durak.model.CardComparator;
 
 import java.util.List;
 import java.util.Set;
@@ -11,7 +12,7 @@ import java.util.TreeSet;
 @Data
 public abstract class Player {
 
-    protected final Set<Card> hand = new TreeSet<>(Card.CARD_COMPARATOR);
+    protected final Set<Card> hand = new TreeSet<>(new CardComparator());
     private boolean win;
 
     abstract public Card attack(List<Card> oldCards);
