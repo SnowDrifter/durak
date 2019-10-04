@@ -81,9 +81,9 @@ $(document).ready(function () {
         if ($("#table").html() === "") return;
         websocket.send(JSON.stringify({type: "FINISH_MOVE"}));
     });
-    $("#start_new_game").click(function () {
-        websocket.send(JSON.stringify({type: "INIT_GAME"}));
+    $("#start_new_game_button").click(function () {
         $("#trump").empty().css("opacity", "1");
+        websocket.send(JSON.stringify({type: "START_GAME"}));
     });
     $("#close_notification_button").click(function () {
         $(this).parent().hide();
