@@ -66,6 +66,7 @@ $(window).on('load', function () {
         $spinner = $preloader.find('.spinner');
     $spinner.fadeOut();
     $preloader.delay(350).fadeOut('slow');
+    preload();
 });
 
 $(document).ready(function () {
@@ -83,6 +84,7 @@ $(document).ready(function () {
     });
     $("#start_new_game_button").click(function () {
         $("#trump").empty().css("opacity", "1");
+        $("#deck").css("display", "");
         websocket.send(JSON.stringify({type: "START_GAME"}));
     });
     $("#close_notification_button").click(function () {

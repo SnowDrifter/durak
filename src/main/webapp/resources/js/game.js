@@ -1,3 +1,52 @@
+var images = new Map();
+var imageNames = [
+    "c0",
+    "c1",
+    "c2",
+    "c3",
+    "c4",
+    "c5",
+    "c6",
+    "c7",
+    "c8",
+    "d0",
+    "d1",
+    "d2",
+    "d3",
+    "d4",
+    "d5",
+    "d6",
+    "d7",
+    "d8",
+    "h0",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "h7",
+    "h8",
+    "s0",
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6",
+    "s7",
+    "s8",
+    "back"
+];
+
+function preload() {
+    imageNames.forEach(function (imageName) {
+        var image = new Image();
+        image.src = "/resources/images/cards/" + imageName + ".png";
+        images.set(imageName, image);
+    });
+}
+
 function hideButtons() {
     $('.action_button').hide();
 }
@@ -26,66 +75,54 @@ function updateTableView(message) {
 }
 
 function cleanTableAndPlayerCards() {
-    $("#player_side").children().each(function () {
-        var tempCardId = $(this).attr("id");
-
-        $("#" + tempCardId).appendTo("#sump");
-    });
-
-    $("#table").children().each(function () {
-        var tempTableCardId = $(this).attr("id");
-
-        $("#" + tempTableCardId).appendTo("#sump");
-    });
+    $("#player_side").empty();
+    $("#table").empty();
 }
 
-function addingTrumpAndDeck(trump, sizeOfDeck) {
+function addingTrumpAndDeck(trumpName, sizeOfDeck) {
     var trumpElement = $("#trump");
-
-    if (!trumpElement.html() && trump) {
-        trumpElement.html("<div class='card'><img src='/resources/images/cards/" + trump + ".png'/></div>");
+    if (!trumpElement.html()) {
+        trumpElement.append(images.get(trumpName));
     }
 
-    if (!trump && sizeOfDeck === 0) {
+    if (!trumpName && sizeOfDeck === 0) {
         trumpElement.css("opacity", "0.4");
     }
 
     var deckElement = $("#deck");
     if (sizeOfDeck > 0) {
-        sizeOfDeck++;
-
-        if (deckElement.html() === "") {
-            deckElement.append("<div class='cards_in_deck'><span class='cards_number'>" + sizeOfDeck + "</span></div>");
-        } else {
-            $(".cards_number").text(sizeOfDeck);
-        }
+        $('.cards_number').text(sizeOfDeck);
     } else {
-        deckElement.empty();
+        deckElement.css("display", "none");
     }
 }
 
 function addingPlayerCards(playerCardsInHand) {
     playerCardsInHand.forEach(function (cardName) {
         if (cardName) {
-            $("#" + cardName).appendTo("#player_side");
+            $("#player_side").append($('<div/>', {id: cardName, class: 'card actionCard'}));
+            $("#" + cardName).append(images.get(cardName));
         }
     });
 }
 
 function addingEnemyCards(enemyCardsCount) {
-    var currentEnemyCardsCount = $("#enemy_side").children().length;
+    var enemySideElement = $("#enemy_side");
+    var currentEnemyCardsCount = enemySideElement.children().length;
 
     if (enemyCardsCount > currentEnemyCardsCount) {
         for (var i = currentEnemyCardsCount; i < enemyCardsCount; i++) {
-            $("#back").clone().removeAttr("id").appendTo("#enemy_side");
+            enemySideElement.append($('<div/>', {class: 'card'}));
+            enemySideElement.children().last().append(images.get("back").cloneNode(true));
         }
     } else if (enemyCardsCount < currentEnemyCardsCount) {
-        $("#enemy_side").children().slice(enemyCardsCount, currentEnemyCardsCount).remove();
+        enemySideElement.children().slice(enemyCardsCount, currentEnemyCardsCount).remove();
     }
 }
 
 function addingCardsOnTable(tableCards) {
-    tableCards.forEach(function (item) {
-        $("#" + item).appendTo("#table");
+    tableCards.forEach(function (cardName) {
+        $("#table").append($('<div/>', {id: cardName, class: 'card'}));
+        $("#" + cardName).append(images.get(cardName));
     });
 }
