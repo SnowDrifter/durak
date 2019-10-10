@@ -48,11 +48,11 @@ function preload() {
 }
 
 function hideButtons() {
-    $('.action_button').hide();
+    $(".action_button").hide();
 }
 
 function closeNotifications() {
-    $('#notification').hide();
+    $("#notification").hide();
 }
 
 function showNotification(message, additionalClass) {
@@ -91,7 +91,7 @@ function addingTrumpAndDeck(trumpName, sizeOfDeck) {
 
     var deckElement = $("#deck");
     if (sizeOfDeck > 0) {
-        $('.cards_number').text(sizeOfDeck);
+        $(".cards_number").text(sizeOfDeck);
     } else {
         deckElement.css("display", "none");
     }
@@ -100,7 +100,7 @@ function addingTrumpAndDeck(trumpName, sizeOfDeck) {
 function addingPlayerCards(playerCardsInHand) {
     playerCardsInHand.forEach(function (cardName) {
         if (cardName) {
-            $("#player_side").append($('<div/>', {id: cardName, class: 'card actionCard'}));
+            $("#player_side").append($("<div/>", {id: cardName, class: "card actionCard"}));
             $("#" + cardName).append(images.get(cardName));
         }
     });
@@ -112,7 +112,7 @@ function addingEnemyCards(enemyCardsCount) {
 
     if (enemyCardsCount > currentEnemyCardsCount) {
         for (var i = currentEnemyCardsCount; i < enemyCardsCount; i++) {
-            enemySideElement.append($('<div/>', {class: 'card'}));
+            enemySideElement.append($("<div/>", {class: "card"}));
             enemySideElement.children().last().append(images.get("back").cloneNode(true));
         }
     } else if (enemyCardsCount < currentEnemyCardsCount) {
@@ -122,7 +122,7 @@ function addingEnemyCards(enemyCardsCount) {
 
 function addingCardsOnTable(tableCards) {
     tableCards.forEach(function (cardName) {
-        $("#table").append($('<div/>', {id: cardName, class: 'card'}));
+        $("#table").append($("<div/>", {id: cardName, class: "card"}));
         $("#" + cardName).append(images.get(cardName));
     });
 }

@@ -61,11 +61,11 @@ function parseMessage(message) {
     }
 }
 
-$(window).on('load', function () {
-    var $preloader = $('#preloader'),
-        $spinner = $preloader.find('.spinner');
-    $spinner.fadeOut();
-    $preloader.delay(350).fadeOut('slow');
+$(window).on("load", function () {
+    var preloader = $("#preloader");
+    var spinner = preloader.find(".spinner");
+    spinner.fadeOut();
+    preloader.delay(350).fadeOut("slow");
     preload();
 });
 
@@ -79,7 +79,9 @@ $(document).ready(function () {
         websocket.send(JSON.stringify({type: "TAKE_CARD"}));
     });
     $("#finish_button").click(function () {
-        if ($("#table").html() === "") return;
+        if ($("#table").html() === "") {
+            return;
+        }
         websocket.send(JSON.stringify({type: "FINISH_MOVE"}));
     });
     $("#start_new_game_button").click(function () {
