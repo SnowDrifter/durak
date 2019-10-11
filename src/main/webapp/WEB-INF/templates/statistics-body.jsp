@@ -25,15 +25,15 @@
         $("#profile").hide();
 
         $("#list").jqGrid({
-            url: '/statistic/data',
-            datatype: 'json',
-            mtype: 'GET',
-            colNames: ['${username}', '${wins}', '${loses}', '${totalGames}'],
+            url: "/statistic/data",
+            datatype: "json",
+            mtype: "GET",
+            colNames: ["${username}", "${wins}", "${loses}", "${totalGames}"],
             colModel: [
-                 {name: 'username', index: 'username', width: "40%"},
-                 {name: 'wins', index: 'wins', width: "20%"},
-                 {name: 'loses', index: 'loses', width: "20%"},
-                 {name: 'totalGames', index: 'totalGames', width: "20%"}
+                 {name: "username", index: "username", width: "40%"},
+                 {name: "wins", index: "wins", width: "20%"},
+                 {name: "loses", index: "loses", width: "20%"},
+                 {name: "totalGames", index: "totalGames", width: "20%"}
             ],
             prmNames: {
                 sort: "sortBy",
@@ -47,15 +47,15 @@
                 repeatitems: false,
                 id: "id"
             },
-            pager: '#pager',
+            pager: "#pager",
             rowNum: 20,
-            sortname: 'wins',
-            sortorder: 'desc',
+            sortname: "wins",
+            sortorder: "desc",
             viewrecords: true,
             gridview: true,
             width: 650,
             height: 550,
-            caption: '${userList}',
+            caption: "${userList}",
             onSelectRow: function (id) {
                 $.ajax({
                     url: "/profile/" + id,
@@ -86,11 +86,11 @@
 
         function loadPhoto(userId) {
             $.ajax({
-                url: '/profile/' + userId + '/photo',
+                url: "/profile/" + userId + "/photo",
                 success: function(data){
                     var img = document.createElement("IMG");
-                    img.src = 'data:image/jpeg;base64,' + data.photo;
-                    $('#photo').html(img).addClass("photo_borders");
+                    img.src = "data:image/jpeg;base64," + data.photo;
+                    $("#photo").html(img).addClass("photo_borders");
                 }
             });
         }
@@ -151,7 +151,7 @@
 </div>
 
 <div style="display:none">
-    <img class="standard_photo" src='${pageContext.request.contextPath}/resources/images/standard_photo.png'/>
+    <img class="standard_photo" src="${pageContext.request.contextPath}/resources/images/standard_photo.png"/>
 </div>
 
 

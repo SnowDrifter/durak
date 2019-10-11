@@ -7,7 +7,7 @@
     </div>
 
     <div id="rules_content">
-        <img align="left" src='${pageContext.request.contextPath}/resources/images/rules.jpg'/>
+        <img align="left" src="${pageContext.request.contextPath}/resources/images/rules.jpg"/>
         <spring:message code="rules.content"/>
     </div>
 </div>

@@ -9,8 +9,8 @@
 
 <script type="text/javascript">
     $(function () {
-        $('#birthDate').datepicker({
-            dateFormat: 'dd mm yy',
+        $("#birthDate").datepicker({
+            dateFormat: "dd mm yy",
             changeYear: true,
             yearRange: "-100:+0"
         });

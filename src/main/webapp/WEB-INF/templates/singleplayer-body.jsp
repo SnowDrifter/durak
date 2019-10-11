@@ -3,13 +3,13 @@
 <script type="text/javascript" src="<c:url value="/resources/js/singleplayer-final.min.js"/>"><jsp:text/></script>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <script>
-    var playerMoveText = '<spring:message code="game.move.player"/>';
-    var enemyMoveText = '<spring:message code="game.move.enemy"/>';
-    var wrongCardText = '<spring:message code="game.wrong.card"/>';
-    var winText = '<spring:message code="game.result.win"/>';
-    var loseText = '<spring:message code="game.result.lose"/>';
-    var drawText = '<spring:message code="game.result.draw"/>';
-    var sessionCloseText = '<spring:message code="game.sessionClose"/>';
+    var playerMoveText = "<spring:message code="game.move.player"/>";
+    var enemyMoveText = "<spring:message code="game.move.enemy"/>";
+    var wrongCardText = "<spring:message code="game.wrong.card"/>";
+    var winText = "<spring:message code="game.result.win"/>";
+    var loseText = "<spring:message code="game.result.lose"/>";
+    var drawText = "<spring:message code="game.result.draw"/>";
+    var sessionCloseText = "<spring:message code="game.sessionClose"/>";
 
     $(document).ready(initSingleplayerGame());
 </script>
@@ -21,7 +21,7 @@
     <div id="table"></div>
     <div id="trump" class="card"></div>
     <div id="deck">
-        <span class='cards_number'></span>
+        <span class="cards_number"></span>
     </div>
     <div id="player_side"></div>
 
