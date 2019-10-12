@@ -71,7 +71,7 @@ public class GameServiceImpl implements GameService {
     }
 
     private void createSingleplayerGame(String username) {
-        stopPreviousGame(username);
+        singleplayerGames.remove(username);
 
         Game game = new Game();
         game.setWebSocketService(webSocketService);
@@ -103,13 +103,6 @@ public class GameServiceImpl implements GameService {
         }
 
         userService.save(user);
-    }
-
-    private void stopPreviousGame(String username) {
-        Game game = singleplayerGames.remove(username);
-        if (game != null) {
-            game.forceStop();
-        }
     }
 
 }

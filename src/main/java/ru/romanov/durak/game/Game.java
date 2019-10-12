@@ -31,7 +31,6 @@ public class Game {
     private Consumer<Game> endGameConsumer = t -> {};
     private WebSocketService webSocketService;
     private GameState state;
-    private boolean alive;
 
     private void attack() {
         Card currentCard = attackPlayer.attack(table.getOldCards());
@@ -201,7 +200,6 @@ public class Game {
             attackPlayer.addToHand(deck.remove(0));
             defendPlayer.addToHand(deck.remove(0));
         }
-        alive = true;
         updateTableView();
         webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.YOUR_MOVE));
         webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.ENEMY_MOVE));
@@ -314,10 +312,6 @@ public class Game {
     private void finishGame() {
         sendGameOver();
         endGameConsumer.accept(this);
-    }
-
-    public void forceStop() {
-        alive = false;
     }
 
     private void initDeck() {
