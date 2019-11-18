@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -21,6 +22,7 @@ public class PersistentLogins {
     @NotNull
     private String token;
     @NotNull
-    private Date last_used;
+    @Column(name = "last_used")
+    private Date lastUsed;
 
 }
