@@ -221,7 +221,7 @@ function appendChatMessage(username, message, date) {
     var chatHistory = $("#chat_history");
     var additionalClass = chatHistory.children().length % 2 === 0 ? "even_message" : "odd_message";
 
-    chatHistory.append("<div class="chat_message " + additionalClass + "">" + "[" + date + "] <b>" + username + "</b>: " + message + "</div>");
+    chatHistory.append("<div class='chat_message " + additionalClass + "'>[" + date + "] <b>" + username + "</b>: " + message + "</div>");
 
     //Auto-scroll
     chatHistory.animate({scrollTop: chatHistory.prop("scrollHeight")}, 150);
