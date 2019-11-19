@@ -6,29 +6,7 @@
 <c:set var="locale" value="${pageContext.response.locale}" />
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jQueryUI/ui/i18n/datepicker-${locale}.min.js"><jsp:text/></script>
-
-<script type="text/javascript">
-    $(function () {
-        var currentYear = new Date().getFullYear();
-
-        $("#birthDate").datepicker({
-            dateFormat: "dd mm yy",
-            changeYear: true,
-            yearRange: "1900:" + currentYear
-        });
-    });
-
-    function loadPhoto(userId) {
-        $.ajax({
-            url: "/profile/" + userId + "/photo",
-            success: function(data){
-                var img = document.createElement("IMG");
-                img.src = "data:image/jpeg;base64," + data.photo;
-                $("#photo").html(img).addClass("photo_borders");
-            }
-        });
-    }
-</script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/editProfile.js"><jsp:text/></script>
 
 <form:form id="edit" modelAttribute="user" method="POST" enctype="multipart/form-data">
       <div id="edit_header"><spring:message code="edit.title"/></div>
