@@ -44,7 +44,7 @@ public class User implements UserDetails, Persistable<Long> {
     @JsonIgnore
     @NotEmpty(message = "{validation.password.notEmpty}")
     @Size(min = 2, max = 64, message = "{validation.password.size}")
-    @Column(name = "password", length = 64)
+    @Column(length = 64)
     private String password;
 
     @Email(message = "{validation.email}")
