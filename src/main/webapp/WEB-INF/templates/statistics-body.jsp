@@ -75,7 +75,7 @@
                         if (data.hasPhoto) {
                             loadPhoto(data.id)
                         } else {
-                            $("#photo").removeClass("photo_borders").empty().append($(".standard_photo").clone());
+                            $("#photo").removeClass("photo_borders").empty().append($(".default_photo").clone());
                         }
 
                         $("#profile").show();
@@ -151,7 +151,7 @@
 </div>
 
 <div style="display:none">
-    <img class="standard_photo" src="${pageContext.request.contextPath}/resources/images/standard_photo.png"/>
+    <img class="default_photo" src="${pageContext.request.contextPath}/resources/images/default_photo.png"/>
 </div>
 
 
