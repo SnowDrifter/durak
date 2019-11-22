@@ -49,7 +49,7 @@
         <div id="chat_history"></div>
         <div id="chat_form">
             <textarea id="chat_text_field" title="" class="field" rows="3"></textarea>
-            <button id="chat_send_button"><spring:message code="chat.send"/></button>
+            <button id="chat_send_button"><spring:message code="send"/></button>
         </div>
     </div>
 </div>

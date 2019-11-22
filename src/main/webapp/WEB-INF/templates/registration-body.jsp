@@ -97,7 +97,7 @@
 
     </table>
 
-    <button id="registration_submit" type="submit"><spring:message code="registration.submit"/>
+    <button id="registration_submit" type="submit"><spring:message code="submit"/>
 </form:form>
 
 

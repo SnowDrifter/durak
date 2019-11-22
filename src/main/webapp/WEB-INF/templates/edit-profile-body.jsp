@@ -88,5 +88,5 @@
     <form:hidden path="username"/>
     <form:hidden path="password"/>
 
-    <button id="edit_submit" type="submit"><spring:message code="registration.submit"/></button>
+    <button id="edit_submit" type="submit"><spring:message code="submit"/></button>
 </form:form>
