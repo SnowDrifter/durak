@@ -1,4 +1,4 @@
-#login{
+#login {
   margin-left: 30%;
   margin-right: 30%;
   padding-bottom: 10px;
@@ -6,18 +6,31 @@
   border: 2px solid @borders;
   background: @main_background;
   border-radius: 5px;
+
+  td {
+    padding: 20px;
+  }
+
+  table {
+    border-collapse: collapse;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
+  .field {
+    width: 100%;
+  }
 }
-#login_header{
+
+#login_header {
   height: 60px;
   line-height: 60px;
   background: darken(desaturate(@main_background, 18%), 12%);;
   text-align: center;
   font-size: 1.5em;
 }
-#login td{
-  padding: 20px;
-}
-#login_submit{
+
+#login_submit {
   margin: 10px 40% 10px 40%;
   background: #eee;
   border-radius: 5px;
@@ -25,15 +38,8 @@
   height: 35px;
   width: 90px;
 }
-#login .field{
-  width: 100%;
-}
-#login table{
-  border-collapse: collapse;
-  margin-left: 10%;
-  margin-right: 10%;
-}
-#login_errors{
+
+#login_errors {
   height: 40px;
   line-height: 40px;
   font-size: 1.1em;
