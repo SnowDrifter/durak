@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.formLogin().loginPage("/login").failureUrl("/login?error=true").permitAll();
 
-        http.logout().logoutSuccessUrl("/home");
+        http.logout().logoutSuccessUrl("/");
 
         http.authorizeRequests()
                 .antMatchers("/lobby").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
