@@ -34,7 +34,7 @@ public class MainController {
     @Autowired
     private MessageHelper messageHelper;
 
-    @GetMapping({"/home", "/"})
+    @GetMapping({"/"})
     public String home(Model model) {
         model.addAttribute("title", messageHelper.getMessage("home.title"));
         return "home";

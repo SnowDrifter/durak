@@ -4,7 +4,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <header>
     <nav class="navigation">
-        <a class="nav_item" href="${pageContext.request.contextPath}/home"><spring:message code="home"/></a>
+        <a class="nav_item" href="${pageContext.request.contextPath}/"><spring:message code="home"/></a>
         <a class="nav_item" href="${pageContext.request.contextPath}/rules"><spring:message code="rules.title"/></a>
         <a class="nav_item" href="${pageContext.request.contextPath}/statistic"><spring:message code="statistics.title"/></a>
 
