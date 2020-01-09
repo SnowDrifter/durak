@@ -8,8 +8,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jQueryUI/ui/i18n/datepicker-${locale}.min.js"><jsp:text/></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/editProfile.js"><jsp:text/></script>
 
-<form:form id="edit" modelAttribute="user" method="POST" enctype="multipart/form-data">
-      <div id="edit_header"><spring:message code="edit.title"/></div>
+<form:form id="edit" modelAttribute="userDto" method="POST" enctype="multipart/form-data">
+    <div id="edit_header"><spring:message code="edit.title"/></div>
 
     <div class="message">
         <c:if test="${not empty error}">
@@ -19,8 +19,8 @@
 
     <div id="photo">
         <c:choose>
-            <c:when test="${not empty user.photo}">
-                <script>loadPhoto(${user.id})</script>
+            <c:when test="${not empty userDto.photo}">
+                <script>loadPhoto(${userDto.id})</script>
             </c:when>
             <c:otherwise>
                 <img class="default_photo" src="${pageContext.request.contextPath}/resources/images/default_photo.png"/>
@@ -39,7 +39,7 @@
         <tr>
             <td><label><spring:message code="user.lastName"/></label></td>
             <td><form:input class="field" path="lastName" value=""/>
-                <form:errors path="lastName" cssClass="error"  element="div"/>
+                <form:errors path="lastName" cssClass="error" element="div"/>
             </td>
         </tr>
 

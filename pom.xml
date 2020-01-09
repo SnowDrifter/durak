@@ -16,6 +16,7 @@
         <tiles.version>3.0.7</tiles.version>
         <jackson.version>2.9.0</jackson.version>
         <hibernate.version>5.4.2.Final</hibernate.version>
+        <hibernate.validator.version>6.1.0.Final</hibernate.validator.version>
         <yuicompressor.temp.folder>${project.build.directory}/yuicompressor/resources/js</yuicompressor.temp.folder>
         <yuicompressor.result.folder>${project.build.directory}/${project.build.finalName}/resources/js</yuicompressor.result.folder>
     </properties>
@@ -229,14 +230,9 @@
             <version>${hibernate.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate.version}</version>
+            <version>${hibernate.validator.version}</version>
         </dependency>
 
         <!-- TESTING -->

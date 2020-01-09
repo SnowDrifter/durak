@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import ru.romanov.durak.model.user.dto.UserDto;
 import ru.romanov.durak.user.UserGrid;
 import ru.romanov.durak.model.user.User;
 import ru.romanov.durak.user.service.UserService;
@@ -108,29 +109,27 @@ public class MainController {
     }
 
     @PostMapping("/edit")
-    public String edit(@Valid User user, BindingResult bindingResult, Model model,
+    public String edit(@Valid UserDto userDto, BindingResult bindingResult, Model model,
                        @RequestParam MultipartFile file) throws IOException {
-        log.info("Updating contact for " + user.getUsername());
-
         if (file.getSize() > 500000) {
             model.addAttribute("error", messageHelper.getMessage("validation.file.size"));
             model.addAttribute("title", messageHelper.getMessage("edit.title"));
-            model.addAttribute("user", user);
+            model.addAttribute("userDto", userDto);
             return "edit-profile";
         }
 
         if (bindingResult.hasErrors()) {
-            log.info("Result has errors: " + bindingResult.getFieldErrorCount());
+            log.debug("Result has errors: " + bindingResult.getFieldErrorCount());
             model.addAttribute("title", messageHelper.getMessage("edit.title"));
-            model.addAttribute("user", user);
+            model.addAttribute("userDto", userDto);
             return "edit-profile";
         }
 
         if (!file.isEmpty()) {
-            user.setPhoto(file.getBytes());
+            userDto.setPhoto(file.getBytes());
         }
 
-        userService.update(user);
+        userService.update(userDto);
 
         model.asMap().clear();
         model.addAttribute("title", messageHelper.getMessage("edit.done"));
@@ -140,7 +139,7 @@ public class MainController {
 
     @GetMapping("/edit")
     public String showEdit(Model model, Principal principal) {
-        model.addAttribute("user", userService.findByUsername(principal.getName()));
+        model.addAttribute("userDto", userService.findByUsername(principal.getName()));
         model.addAttribute("title", messageHelper.getMessage("edit.title"));
         model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "edit-profile";

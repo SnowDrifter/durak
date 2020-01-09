@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.romanov.durak.model.user.dto.UserDto;
 import ru.romanov.durak.user.UserRepository;
 import ru.romanov.durak.model.user.Role;
 import ru.romanov.durak.model.user.User;
@@ -26,15 +27,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User update(User user) {
-        User updatedUser = updateFields(user);
+    public User update(UserDto userDto) {
+        User updatedUser = updateFields(userDto);
         return userRepository.save(updatedUser);
     }
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
+        return findByUsername(username);
     }
 
     @Override
@@ -55,7 +56,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found: " + username));
     }
 
     @Override
@@ -78,34 +80,34 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    private User updateFields(User user) {
-        User oldUser = userRepository.findByUsername(user.getUsername());
+    private User updateFields(UserDto userDto) {
+        User user = findByUsername(userDto.getUsername());
 
-        if (user.getFirstName() != null) {
-            oldUser.setFirstName(user.getFirstName());
+        if (userDto.getFirstName() != null) {
+            user.setFirstName(userDto.getFirstName());
         }
 
-        if (user.getLastName() != null) {
-            oldUser.setLastName(user.getLastName());
+        if (userDto.getLastName() != null) {
+            user.setLastName(userDto.getLastName());
         }
 
-        if (user.getEmail() != null) {
-            oldUser.setEmail(user.getEmail());
+        if (userDto.getEmail() != null) {
+            user.setEmail(userDto.getEmail());
         }
 
-        if (user.getAbout() != null) {
-            oldUser.setAbout(user.getAbout());
+        if (userDto.getAbout() != null) {
+            user.setAbout(userDto.getAbout());
         }
 
-        if (user.getPhoto() != null) {
-            oldUser.setPhoto(user.getPhoto());
+        if (userDto.getPhoto() != null) {
+            user.setPhoto(userDto.getPhoto());
         }
 
-        if (user.getBirthDate() != null) {
-            oldUser.setBirthDate(user.getBirthDate());
+        if (userDto.getBirthDate() != null) {
+            user.setBirthDate(userDto.getBirthDate());
         }
 
-        return oldUser;
+        return user;
     }
 }
 

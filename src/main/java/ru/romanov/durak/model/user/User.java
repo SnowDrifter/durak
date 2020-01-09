@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.domain.Persistable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,8 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -36,26 +32,16 @@ public class User implements UserDetails, Persistable<Long> {
     private Long id;
 
     @Column(unique = true)
-    @NotEmpty(message = "{validation.username.notEmpty}")
-    @Size(min = 2, max = 25, message = "{validation.username.size}")
-    @Pattern(regexp = "[\\d\\w][\\d\\w\\s]*", message = "{validation.username.regexp}")
     private String username;
 
     @JsonIgnore
-    @NotEmpty(message = "{validation.password.notEmpty}")
-    @Size(min = 2, max = 64, message = "{validation.password.size}")
     @Column(length = 64)
     private String password;
 
-    @Email(message = "{validation.email}")
     private String email;
 
-    @Size(max = 64, message = "{validation.firstname.size}")
-    @Pattern(regexp = "[а-яА-Яa-zA-Z]*", message = "{validation.firstname.regexp}")
     private String firstName;
 
-    @Size(max = 64, message = "{validation.lastname.size}")
-    @Pattern(regexp = "[а-яА-Яa-zA-Z]*", message = "{validation.lastname.regexp}")
     private String lastName;
 
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
