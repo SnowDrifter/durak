@@ -21,7 +21,7 @@ public interface UserService extends UserDetailsService {
 
     byte[] findPhotoById(long id);
 
-    void createAndSaveNewUser(User user);
+    void saveNewUser(UserDto user);
 
     boolean existsByUsername(String username);
 

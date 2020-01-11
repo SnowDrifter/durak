@@ -17,7 +17,7 @@
     });
 </script>
 
-<form:form id="registration" modelAttribute="user" action="registration" method="POST" enctype="multipart/form-data">
+<form:form id="registration" modelAttribute="userDto" action="registration" method="POST" enctype="multipart/form-data">
     <div id="registration_header"><spring:message code="registration.header"/></div>
 
     <div class="message">

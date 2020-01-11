@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.romanov.durak.model.user.UserMapper;
 import ru.romanov.durak.model.user.dto.UserDto;
 import ru.romanov.durak.user.UserRepository;
 import ru.romanov.durak.model.user.Role;
@@ -72,8 +73,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createAndSaveNewUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public void saveNewUser(UserDto userDto) {
+        User user = UserMapper.INSTANCE.userDtoToUser(userDto);
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRoles(Collections.singleton(Role.ROLE_USER));
         user.setCreationDate(new Date());
         user.setEnabled(true);
