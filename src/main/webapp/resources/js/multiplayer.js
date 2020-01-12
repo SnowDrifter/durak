@@ -1,15 +1,12 @@
-var websocket;
-
 function initMultiplayerGame() {
-    websocket = new WebSocket("ws://" + window.location.host + "/ws/multiplayer?username=" + username);
+    const websocket = new WebSocket("ws://" + window.location.host + "/ws/multiplayer?username=" + username);
 
     websocket.onclose = function () {
         cleanTableAndPlayerCards();
         showNotification(sessionCloseText, "alert_window");
     };
     websocket.onmessage = function (evt) {
-        console.log(evt.data); // TODO: temp log
-        var message = JSON.parse(evt.data);
+        const message = JSON.parse(evt.data);
         parseMessage(message);
     };
 }
@@ -100,15 +97,15 @@ function parseMessage(message) {
 }
 
 function addChatMessage(chatMessage) {
-    var date = $.format.date(new Date(), "HH:mm:ss");
-    var username = chatMessage.username;
-    var message = chatMessage.message;
+    const date = $.format.date(new Date(), "HH:mm:ss");
+    const username = chatMessage.username;
+    const message = chatMessage.message;
     appendChatMessage(username, message, date);
 }
 
 function updateLobbyView(lobbyMessage) {
-    var usersInLobby = lobbyMessage.usernames;
-    var users = $("#lobby_users");
+    const usersInLobby = lobbyMessage.usernames;
+    const users = $("#lobby_users");
 
     if (usersInLobby.length !== 0) {
         $("#empty_lobby").hide();
@@ -124,8 +121,8 @@ function addUserToLobby(lobbyMessage) {
 }
 
 function removeUserFromLobby(lobbyMessage) {
-    var username = lobbyMessage.username;
-    var users = $("#lobby_users");
+    const username = lobbyMessage.username;
+    const users = $("#lobby_users");
 
     users.contents().filter(function () {
         return $(this).text() === username;
@@ -137,12 +134,12 @@ function removeUserFromLobby(lobbyMessage) {
 }
 
 function showInvite(message) {
-    var result = confirm("Приглашение от " + message.initiator) ? "ACCEPT_INVITE" : "REJECT_INVITE";
+    const result = confirm("Приглашение от " + message.initiator) ? "ACCEPT_INVITE" : "REJECT_INVITE";
     websocket.send(JSON.stringify({type: result, invitee: username}));
 }
 
 $(window).on("load", function () {
-    var $preloader = $("#preloader"),
+    const $preloader = $("#preloader"),
         $spinner = $preloader.find(".spinner");
     $spinner.fadeOut();
     $preloader.delay(350).fadeOut("slow");
@@ -155,10 +152,10 @@ $(document).ready(function () {
 
     $("body").delegate(".actionCard", "click", function () {
         closeNotifications();
-        var card = $(this).attr("id");
+        const card = $(this).attr("id");
         websocket.send(JSON.stringify({type: "SELECT_CARD", card: card}));
     }).delegate(".lobby_user", "click", function () {
-        var targetUser = $(this).text();
+        const targetUser = $(this).text();
         websocket.send(JSON.stringify({type: "INVITE", initiator: username, invitee: targetUser}));
     });
 
@@ -174,7 +171,7 @@ $(document).ready(function () {
     });
 
     $(document).keypress(function (event) {
-        var code = (event.keyCode ? event.keyCode : event.which);
+        const code = (event.keyCode ? event.keyCode : event.which);
         if (code === 13) { // "Enter"
             $("#close_notification_button").click();
         }
@@ -202,24 +199,24 @@ $(document).ready(function () {
 });
 
 function sendChatMessage(event) {
-    var chatTextField = $("#chat_text_field");
-    var message = chatTextField.val();
+    const chatTextField = $("#chat_text_field");
+    const message = chatTextField.val();
 
     if (message.length === 0) {
         return;
     }
 
-    var date = $.format.date(new Date(), "HH:mm:ss");
+    const date = $.format.date(new Date(), "HH:mm:ss");
     appendChatMessage(username, message, date);
     chatTextField.val("");
 
-    var type = event.data.type;
+    const type = event.data.type;
     websocket.send(JSON.stringify({type: type, username: username, message: message}));
 }
 
 function appendChatMessage(username, message, date) {
-    var chatHistory = $("#chat_history");
-    var additionalClass = chatHistory.children().length % 2 === 0 ? "even_message" : "odd_message";
+    const chatHistory = $("#chat_history");
+    const additionalClass = chatHistory.children().length % 2 === 0 ? "even_message" : "odd_message";
 
     chatHistory.append("<div class='chat_message " + additionalClass + "'>[" + date + "] <b>" + username + "</b>: " + message + "</div>");
 

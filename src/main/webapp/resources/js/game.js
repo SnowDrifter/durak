@@ -12,7 +12,7 @@ function preload() {
 }
 
 function preloadCardImage(imageName) {
-    let image = new Image();
+    const image = new Image();
     image.src = "/resources/images/cards/" + imageName + ".png";
     images.set(imageName, image);
 }
@@ -31,11 +31,11 @@ function showNotification(message, additionalClass) {
 }
 
 function updateTableView(message) {
-    var trump = message.trump || null;
-    var playerCardsInHand = message.playerCards ? message.playerCards : [];
-    var enemyCardsCount = message.enemyCardsCount;
-    var deckSize = message.deckSize;
-    var tableCards = message.tableCards ? message.tableCards : [];
+    const trump = message.trump || null;
+    const playerCardsInHand = message.playerCards ? message.playerCards : [];
+    const enemyCardsCount = message.enemyCardsCount;
+    const deckSize = message.deckSize;
+    const tableCards = message.tableCards ? message.tableCards : [];
 
     cleanTableAndPlayerCards();
     addingTrumpAndDeck(trump, deckSize);
@@ -50,7 +50,7 @@ function cleanTableAndPlayerCards() {
 }
 
 function addingTrumpAndDeck(trumpName, sizeOfDeck) {
-    var trumpElement = $("#trump");
+    const trumpElement = $("#trump");
     if (!trumpElement.html()) {
         trumpElement.append(images.get(trumpName));
     }
@@ -59,7 +59,7 @@ function addingTrumpAndDeck(trumpName, sizeOfDeck) {
         trumpElement.css("opacity", "0.4");
     }
 
-    var deckElement = $("#deck");
+    const deckElement = $("#deck");
     if (sizeOfDeck > 0) {
         $(".cards_number").text(sizeOfDeck);
     } else {
@@ -77,11 +77,11 @@ function addingPlayerCards(playerCardsInHand) {
 }
 
 function addingEnemyCards(enemyCardsCount) {
-    var enemySideElement = $("#enemy_side");
-    var currentEnemyCardsCount = enemySideElement.children().length;
+    const enemySideElement = $("#enemy_side");
+    const currentEnemyCardsCount = enemySideElement.children().length;
 
     if (enemyCardsCount > currentEnemyCardsCount) {
-        for (var i = currentEnemyCardsCount; i < enemyCardsCount; i++) {
+        for (let i = currentEnemyCardsCount; i < enemyCardsCount; i++) {
             enemySideElement.append($("<div/>", {"class": "card"}));
             enemySideElement.children().last().append(images.get("back").cloneNode(true));
         }

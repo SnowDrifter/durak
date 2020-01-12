@@ -1,7 +1,5 @@
-var websocket;
-
 function initSingleplayerGame() {
-    websocket = new WebSocket("ws://" + window.location.host + "/ws/singleplayer");
+    const websocket = new WebSocket("ws://" + window.location.host + "/ws/singleplayer");
 
     websocket.onopen = function () {
         websocket.send(JSON.stringify({type: "START_GAME"}));
@@ -12,7 +10,7 @@ function initSingleplayerGame() {
     };
 
     websocket.onmessage = function (evt) {
-        var message = JSON.parse(evt.data);
+        const message = JSON.parse(evt.data);
         parseMessage(message);
     };
 }
@@ -62,8 +60,8 @@ function parseMessage(message) {
 }
 
 $(window).on("load", function () {
-    var preloader = $("#preloader");
-    var spinner = preloader.find(".spinner");
+    const preloader = $("#preloader");
+    const spinner = preloader.find(".spinner");
     spinner.fadeOut();
     preloader.delay(350).fadeOut("slow");
     preload();
@@ -72,7 +70,7 @@ $(window).on("load", function () {
 $(document).ready(function () {
     $("body").delegate(".actionCard", "click", function () {
         closeNotifications();
-        var card = $(this).attr("id");
+        const card = $(this).attr("id");
         websocket.send(JSON.stringify({type: "SELECT_CARD", card: card}));
     });
     $("#take_button").click(function () {
@@ -94,7 +92,7 @@ $(document).ready(function () {
     });
 
     $(document).keypress(function (event) {
-        var code = (event.keyCode ? event.keyCode : event.which);
+        const code = (event.keyCode ? event.keyCode : event.which);
         if (code === 13) { // "Enter"
             $("#close_notification_button").click();
         }

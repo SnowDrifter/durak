@@ -1,5 +1,5 @@
 $(function createDatepicker() {
-    var currentYear = new Date().getFullYear();
+    const currentYear = new Date().getFullYear();
 
     $("#birthDate").datepicker({
         dateFormat: "dd mm yy",
@@ -12,9 +12,9 @@ function loadPhoto(userId) {
     $.ajax({
         url: "/profile/" + userId + "/photo",
         success: function(data){
-            var img = document.createElement("IMG");
-            img.src = "data:image/jpeg;base64," + data.photo;
-            $("#photo").html(img).addClass("photo_borders");
+            const image = new Image();
+            image.src = "data:image/jpeg;base64," + data.photo;
+            $("#photo").html(image).addClass("photo_borders");
         }
     });
 }
