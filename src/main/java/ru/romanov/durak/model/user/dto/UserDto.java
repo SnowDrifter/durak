@@ -36,9 +36,6 @@ public class UserDto {
     @Pattern(regexp = "[а-яА-Яa-zA-Z]*", message = "{validation.lastname.regexp}")
     private String lastName;
 
-    @JsonIgnore
-    private byte[] photo;
-
     private String about;
     private Integer wins = 0;
     private Integer loses = 0;

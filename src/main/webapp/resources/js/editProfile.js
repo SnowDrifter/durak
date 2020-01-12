@@ -8,10 +8,43 @@ $(function createDatepicker() {
     });
 });
 
+function uploadPhoto(userId) {
+    const formData = new FormData();
+    const photo = $("input[name='photo']")[0].files[0];
+    formData.append("file", photo);
+
+    $.ajax({
+        url: `/profile/${userId}/photo/upload`,
+        type: "post",
+        data: formData,
+        contentType: false,
+        processData: false,
+        complete: function (response) {
+            if (response.status === 200) {
+                displayPhoto(photo)
+            } else {
+                alert("File not uploaded"); // TODO: i18n message
+            }
+        },
+    });
+
+    return false;
+}
+
+const displayPhoto = photo => new Promise(() => {
+    const reader = new FileReader();
+    reader.readAsDataURL(photo);
+    reader.onload = function () {
+        const image = new Image();
+        image.src = reader.result;
+        $("#photo").html(image).addClass("photo_borders");
+    };
+});
+
 function loadPhoto(userId) {
     $.ajax({
         url: "/profile/" + userId + "/photo",
-        success: function(data){
+        success: function (data) {
             const image = new Image();
             image.src = "data:image/jpeg;base64," + data.photo;
             $("#photo").html(image).addClass("photo_borders");

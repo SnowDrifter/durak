@@ -95,24 +95,12 @@ public class MainController {
     }
 
     @PostMapping("/edit")
-    public String edit(@Valid UserDto userDto, BindingResult bindingResult, Model model,
-                       @RequestParam MultipartFile file) throws IOException {
-        if (file.getSize() > 500000) {
-            model.addAttribute("error", messageHelper.getMessage("validation.file.size"));
-            model.addAttribute("title", messageHelper.getMessage("edit.title"));
-            model.addAttribute("userDto", userDto);
-            return EDIT_PROFILE_PAGE;
-        }
-
+    public String edit(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws IOException {
         if (bindingResult.hasErrors()) {
             log.debug("Result has errors: " + bindingResult.getFieldErrorCount());
             model.addAttribute("title", messageHelper.getMessage("edit.title"));
             model.addAttribute("userDto", userDto);
             return EDIT_PROFILE_PAGE;
-        }
-
-        if (!file.isEmpty()) {
-            userDto.setPhoto(file.getBytes());
         }
 
         userService.update(userDto);
@@ -133,7 +121,7 @@ public class MainController {
     @ResponseBody
     @GetMapping("/profile/{id}/photo")
     public ResponseEntity findPhotoById(@PathVariable long id) {
-        byte[] photo = userService.findPhotoById(id);
+        byte[] photo = userService.findPhoto(id);
 
         if (photo != null) {
             String photoBase64 = Base64.getEncoder().encodeToString(photo);
@@ -141,6 +129,13 @@ public class MainController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @ResponseBody
+    @PostMapping("/profile/{id}/photo/upload")
+    public ResponseEntity uploadPhoto(@PathVariable long id, @RequestParam MultipartFile file) throws IOException {
+        userService.savePhoto(id, file.getBytes());
+        return ResponseEntity.ok().build();
     }
 
 }

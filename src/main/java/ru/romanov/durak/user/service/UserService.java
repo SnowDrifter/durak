@@ -19,7 +19,9 @@ public interface UserService extends UserDetailsService {
 
     User findByUsername(String username);
 
-    byte[] findPhotoById(long id);
+    byte[] findPhoto(long userId);
+
+    void savePhoto(long userId, byte[] photo);
 
     void saveNewUser(UserDto user);
 

@@ -63,8 +63,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public byte[] findPhotoById(long id) {
+    public byte[] findPhoto(long id) {
         return userRepository.findPhotoById(id);
+    }
+
+    @Override
+    @Transactional
+    public void savePhoto(long userId, byte[] photo) {
+        userRepository.savePhoto(userId, photo);
     }
 
     @Override
@@ -99,10 +105,6 @@ public class UserServiceImpl implements UserService {
 
         if (userDto.getAbout() != null) {
             user.setAbout(userDto.getAbout());
-        }
-
-        if (userDto.getPhoto() != null) {
-            user.setPhoto(userDto.getPhoto());
         }
 
         if (userDto.getBirthDate() != null) {
