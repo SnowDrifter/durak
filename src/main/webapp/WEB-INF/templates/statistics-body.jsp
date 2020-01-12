@@ -5,9 +5,9 @@
 
 <c:set var="locale" value="${pageContext.response.locale}" />
 
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/js/jqgrid/css/ui.jqgrid.min.css"/>"/>
-<script type="text/javascript" src="<c:url value="/resources/js/jqgrid/js/jquery.jqGrid.min.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/jqgrid/js/i18n/grid.locale-${locale}.min.js"/>"></script>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/js/lib/jqgrid/css/ui.jqgrid.min.css"/>"/>
+<script type="text/javascript" src="<c:url value="/resources/js/lib/jqgrid/js/jquery.jqGrid.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/lib/jqgrid/js/i18n/grid.locale-${locale}.min.js"/>"></script>
 
 <spring:message code="statistics.title" var="userList"/>
 <spring:message code="user.username" var="username"/>
@@ -25,7 +25,7 @@
         $("#profile").hide();
 
         $("#list").jqGrid({
-            url: "/statistic/data",
+            url: "/statistics/data",
             datatype: "json",
             mtype: "GET",
             colNames: ["${username}", "${wins}", "${loses}", "${totalGames}"],

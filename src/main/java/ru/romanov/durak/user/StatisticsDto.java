@@ -1,7 +1,6 @@
 package ru.romanov.durak.user;
 
 
-import com.google.common.collect.Lists;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 import ru.romanov.durak.model.user.User;
@@ -9,17 +8,17 @@ import ru.romanov.durak.model.user.User;
 import java.util.List;
 
 @Data
-public class UserGrid {
+public class StatisticsDto {
 
     private int totalPages;
     private int currentPage;
     private long totalRecords;
     private List<User> usersData;
 
-    public UserGrid(Page<User> userPage) {
+    public StatisticsDto(Page<User> userPage) {
         this.totalPages = userPage.getTotalPages();
         this.currentPage = userPage.getNumber() + 1;
         this.totalRecords = userPage.getTotalElements();
-        this.usersData = Lists.newArrayList(userPage.iterator());
+        this.usersData = userPage.getContent();
     }
 }

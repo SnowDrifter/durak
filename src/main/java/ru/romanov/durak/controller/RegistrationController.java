@@ -13,6 +13,9 @@ import ru.romanov.durak.util.MessageHelper;
 
 import javax.validation.Valid;
 
+import static ru.romanov.durak.util.PageConstants.SUCCESS_PAGE;
+import static ru.romanov.durak.util.PageConstants.REGISTRATION_PAGE;
+
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
@@ -26,7 +29,7 @@ public class RegistrationController {
     public String showRegistration(Model model) {
         model.addAttribute("userDto", new UserDto());
         model.addAttribute("title", messageHelper.getMessage("registration.title"));
-        return "registration";
+        return REGISTRATION_PAGE;
     }
 
     @PostMapping
@@ -35,14 +38,14 @@ public class RegistrationController {
             model.addAttribute("error", messageHelper.getMessage("registration.fail"));
             model.addAttribute("title", messageHelper.getMessage("registration.title"));
             model.addAttribute("userDto", userDto);
-            return "registration";
+            return REGISTRATION_PAGE;
         }
 
         if (userService.existsByUsername(userDto.getUsername())) {
             model.addAttribute("error", messageHelper.getMessage("registration.userExist"));
             model.addAttribute("title", messageHelper.getMessage("registration.title"));
             model.addAttribute("userDto", userDto);
-            return "registration";
+            return REGISTRATION_PAGE;
         }
 
         userService.saveNewUser(userDto);
@@ -50,7 +53,7 @@ public class RegistrationController {
         model.asMap().clear();
         model.addAttribute("title", messageHelper.getMessage("registration.done"));
         model.addAttribute("message", messageHelper.getMessage("registration.done"));
-        return "accept";
+        return SUCCESS_PAGE;
     }
 
 }

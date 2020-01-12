@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ru.romanov.durak.model.user.dto.UserDto;
-import ru.romanov.durak.user.UserGrid;
+import ru.romanov.durak.user.StatisticsDto;
 import ru.romanov.durak.model.user.User;
 import ru.romanov.durak.user.service.UserService;
 import ru.romanov.durak.util.MessageHelper;
@@ -24,6 +24,8 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Base64;
+
+import static ru.romanov.durak.util.PageConstants.*;
 
 @Slf4j
 @Controller
@@ -34,39 +36,39 @@ public class MainController {
     @Autowired
     private MessageHelper messageHelper;
 
-    @GetMapping({"/"})
+    @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("title", messageHelper.getMessage("home.title"));
-        return "home";
+        return HOME_PAGE;
     }
 
     @GetMapping("/singleplayer")
     public String singleplayer(Model model) {
         model.addAttribute("title", messageHelper.getMessage("game.singleplayer.title"));
-        return "singleplayer";
+        return SINGLEPLAYER_PAGE;
     }
 
     @GetMapping("/multiplayer")
-    public String multi(Model model) {
+    public String multiplayer(Model model) {
         model.addAttribute("title", messageHelper.getMessage("game.multiplayer.title"));
-        return "multiplayer";
+        return MULTIPLAYER_PAGE;
     }
 
     @GetMapping("/rules")
     public String rules(Model model) {
         model.addAttribute("title", messageHelper.getMessage("rules.title"));
-        return "rules";
+        return RULES_PAGE;
     }
 
     @GetMapping("/statistic")
     public String statistic(Model model) {
         model.addAttribute("title", messageHelper.getMessage("statistics.title"));
-        return "statistics";
+        return STATISTICS_PAGE;
     }
 
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false) String error) {
-        ModelAndView model = new ModelAndView("login");
+        ModelAndView model = new ModelAndView(LOGIN_PAGE);
         if (error != null) {
             model.addObject("error", messageHelper.getMessage("login.fail"));
         }
@@ -74,30 +76,16 @@ public class MainController {
         return model;
     }
 
-    @GetMapping("/accessDenied")
-    public ModelAndView accessDenied(Principal user) {
-        ModelAndView model = new ModelAndView("access-denied");
-
-        if (user != null) {
-            model.addObject("error", user.getName() + messageHelper.getMessage("accessDenied.withUser"));
-        } else {
-            model.addObject("error", messageHelper.getMessage("accessDenied.anonymous"));
-        }
-
-        model.addObject("title", messageHelper.getMessage("accessDenied.title"));
-        return model;
-    }
-
     @ResponseBody
-    @GetMapping("/statistic/data")
-    public UserGrid listGrid(@RequestParam(defaultValue = "1") Integer page,
-                             @RequestParam(defaultValue = "20") Integer rows,
-                             @RequestParam(defaultValue = "wins") String sortBy,
-                             @RequestParam(defaultValue = "desc") String order) {
+    @GetMapping("/statistics/data")
+    public StatisticsDto statisticsData(@RequestParam(defaultValue = "1") Integer page,
+                                        @RequestParam(defaultValue = "20") Integer rows,
+                                        @RequestParam(defaultValue = "wins") String sortBy,
+                                        @RequestParam(defaultValue = "desc") String order) {
         Sort sort = new Sort(Sort.Direction.valueOf(order.toUpperCase()), sortBy);
         PageRequest pageRequest = new PageRequest(page - 1, rows, sort);
         Page<User> userPage = userService.findAllByPage(pageRequest);
-        return new UserGrid(userPage);
+        return new StatisticsDto(userPage);
     }
 
     @ResponseBody
@@ -113,14 +101,14 @@ public class MainController {
             model.addAttribute("error", messageHelper.getMessage("validation.file.size"));
             model.addAttribute("title", messageHelper.getMessage("edit.title"));
             model.addAttribute("userDto", userDto);
-            return "edit-profile";
+            return EDIT_PROFILE_PAGE;
         }
 
         if (bindingResult.hasErrors()) {
             log.debug("Result has errors: " + bindingResult.getFieldErrorCount());
             model.addAttribute("title", messageHelper.getMessage("edit.title"));
             model.addAttribute("userDto", userDto);
-            return "edit-profile";
+            return EDIT_PROFILE_PAGE;
         }
 
         if (!file.isEmpty()) {
@@ -132,14 +120,14 @@ public class MainController {
         model.asMap().clear();
         model.addAttribute("title", messageHelper.getMessage("edit.done"));
         model.addAttribute("message", messageHelper.getMessage("edit.done"));
-        return "accept";
+        return SUCCESS_PAGE;
     }
 
     @GetMapping("/edit")
     public String showEdit(Model model, Principal principal) {
         model.addAttribute("userDto", userService.findByUsername(principal.getName()));
         model.addAttribute("title", messageHelper.getMessage("edit.title"));
-        return "edit-profile";
+        return EDIT_PROFILE_PAGE;
     }
 
     @ResponseBody
