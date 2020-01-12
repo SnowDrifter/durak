@@ -4,7 +4,6 @@ package ru.romanov.durak.controller;
 import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -62,7 +61,6 @@ public class MainController {
     @GetMapping("/statistic")
     public String statistic(Model model) {
         model.addAttribute("title", messageHelper.getMessage("statistics.title"));
-        model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "statistics";
     }
 
@@ -141,7 +139,6 @@ public class MainController {
     public String showEdit(Model model, Principal principal) {
         model.addAttribute("userDto", userService.findByUsername(principal.getName()));
         model.addAttribute("title", messageHelper.getMessage("edit.title"));
-        model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "edit-profile";
     }
 
