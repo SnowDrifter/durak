@@ -50,7 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
-        http.rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(1209600);
+        http.rememberMe()
+                .tokenRepository(persistentTokenRepository())
+                .tokenValiditySeconds(14 * 24 * 60 * 60); // 14 days
     }
 
     @Bean
@@ -59,9 +61,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
-        tokenRepositoryImpl.setDataSource(dataSource);
-        return tokenRepositoryImpl;
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
     }
 
 }
