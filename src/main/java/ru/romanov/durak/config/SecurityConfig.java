@@ -37,14 +37,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.userDetailsService(userService);
 
-        http.formLogin().loginPage("/login").failureUrl("/login?error=true").permitAll();
+        http.formLogin()
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
+                .permitAll();
 
         http.logout().logoutSuccessUrl("/");
 
         http.authorizeRequests()
-                .antMatchers("/lobby").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-                .antMatchers("/edit").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-                .antMatchers("/multiplayer").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                .antMatchers("/multiplayer", "/edit").access("isAuthenticated()")
                 .antMatchers("/resources/**").permitAll();
 
         http.csrf().disable();

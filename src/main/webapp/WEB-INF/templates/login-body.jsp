@@ -32,5 +32,4 @@
         </table>
 
         <button id="login_submit" type="submit"><spring:message code="login.submit"/></button>
-        <input type="hidden" name="<c:out value="${_csrf.parameterName}"/>" value="<c:out value="${_csrf.token}"/>"/>
 </form>
