@@ -27,8 +27,6 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = {"ru.romanov.durak"})
 public class DatabaseConfig {
 
-    @Value("${db.driver}")
-    private String driverClass;
     @Value("${db.url}")
     private String jdbcUrl;
     @Value("${db.username}")
@@ -44,7 +42,7 @@ public class DatabaseConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driverClass);
+        dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl(jdbcUrl);
         dataSource.setUsername(jdbcUserName);
         dataSource.setPassword(jdbcPassword);
@@ -59,7 +57,7 @@ public class DatabaseConfig {
 
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
-        jpaProperties.put("hibernate.show_sql", false);
+        jpaProperties.put("hibernate.show_sql", "false");
         jpaProperties.put("hibernate.format_sql", "false");
         jpaProperties.put("hibernate.hbm2ddl.auto", "update");
         jpaProperties.put("hibernate.connection.charSet", "UTF-8");
