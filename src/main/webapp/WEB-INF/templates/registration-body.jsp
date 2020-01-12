@@ -5,7 +5,7 @@
 
 <c:set var="locale" value="${pageContext.response.locale}" />
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jQueryUI/ui/i18n/datepicker-${locale}.min.js"><jsp:text/></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jQueryUI/ui/i18n/datepicker-${locale}.min.js"><jsp:text/></script>
 
 <script type="text/javascript">
     $(function () {
