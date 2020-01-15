@@ -16,7 +16,8 @@ import ru.romanov.durak.websocket.message.Message;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static ru.romanov.durak.websocket.message.MessageType.*;
+import static ru.romanov.durak.websocket.message.MessageType.ENEMY_DISCONNECTED;
+import static ru.romanov.durak.websocket.message.MessageType.START_GAME;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -63,10 +64,12 @@ public class GameServiceImpl implements GameService {
     public void playerDisconnected(String username) {
         Game game = multiplayerGames.get(username);
 
-        if (username.equals(game.getAttackPlayer().getUsername())) {
-            webSocketService.sendMessage(game.getDefendPlayer().getUsername(), new DefaultMessage(ENEMY_DISCONNECTED));
-        } else {
-            webSocketService.sendMessage(game.getAttackPlayer().getUsername(), new DefaultMessage(ENEMY_DISCONNECTED));
+        if (game != null) {
+            if (username.equals(game.getAttackPlayer().getUsername())) {
+                webSocketService.sendMessage(game.getDefendPlayer().getUsername(), new DefaultMessage(ENEMY_DISCONNECTED));
+            } else {
+                webSocketService.sendMessage(game.getAttackPlayer().getUsername(), new DefaultMessage(ENEMY_DISCONNECTED));
+            }
         }
     }
 

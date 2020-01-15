@@ -9,32 +9,26 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 
 public class Initializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
-    public void onStartup(ServletContext container) throws ServletException {
+    public void onStartup(ServletContext servletContext) {
+        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+        context.setConfigLocation("ru.romanov.durak.config");
 
-        AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-        ctx.register(WebAppConfig.class);
-        ctx.register(SecurityConfig.class);
-        ctx.register(DatabaseConfig.class);
-        ctx.setServletContext(container);
-
-        ServletRegistration.Dynamic servlet = container.addServlet("dispatcher", new DispatcherServlet(ctx));
-
+        ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(context));
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/");
 
-        FilterRegistration.Dynamic encodingFilter = container.addFilter("encoding-filter", new CharacterEncodingFilter());
+        FilterRegistration.Dynamic encodingFilter = servletContext.addFilter("encoding-filter", new CharacterEncodingFilter());
         encodingFilter.setInitParameter("encoding", "UTF-8");
         encodingFilter.setInitParameter("forceEncoding", "true");
         encodingFilter.addMappingForUrlPatterns(null, true, "/*");
 
-        FilterRegistration.Dynamic resourceUrlEncodingFilter = container.addFilter("resource-url-encoding-filter", new ResourceUrlEncodingFilter());
+        FilterRegistration.Dynamic resourceUrlEncodingFilter = servletContext.addFilter("resource-url-encoding-filter", new ResourceUrlEncodingFilter());
         resourceUrlEncodingFilter.setInitParameter("encoding", "UTF-8");
         resourceUrlEncodingFilter.setInitParameter("forceEncoding", "true");
         resourceUrlEncodingFilter.addMappingForUrlPatterns(null, true, "/*");
@@ -43,13 +37,14 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class<?>[]{
-                WebAppConfig.class, SecurityConfig.class
+                WebAppConfig.class,
+                SecurityConfig.class
         };
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return null;
+        return new Class[0];
     }
 
     @Override
