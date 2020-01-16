@@ -2,7 +2,7 @@ const images = new Map();
 
 function preload() {
     const suits = ["c", "d", "h", "s"];
-    for (var i = 0; i < 9; i++) {
+    for (let i = 0; i < 9; i++) {
         suits.forEach(function (suit) {
             preloadCardImage(suit + i);
         })
@@ -81,7 +81,7 @@ function addingEnemyCards(enemyCardsCount) {
     const currentEnemyCardsCount = enemySideElement.children().length;
 
     if (enemyCardsCount > currentEnemyCardsCount) {
-        for (var i = currentEnemyCardsCount; i < enemyCardsCount; i++) {
+        for (let i = currentEnemyCardsCount; i < enemyCardsCount; i++) {
             enemySideElement.append($("<div/>", {"class": "card"}));
             enemySideElement.children().last().append(images.get("back").cloneNode(true));
         }

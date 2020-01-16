@@ -17,9 +17,6 @@
         <jackson.version>2.9.0</jackson.version>
         <hibernate.version>5.4.2.Final</hibernate.version>
         <hibernate.validator.version>6.1.0.Final</hibernate.validator.version>
-
-        <yuicompressor.temp.folder>${project.build.directory}/yuicompressor/resources/js</yuicompressor.temp.folder>
-        <yuicompressor.result.folder>${project.build.directory}/${project.build.finalName}/resources/js</yuicompressor.result.folder>
     </properties>
 
     <build>
@@ -73,40 +70,45 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>yuicompressor-maven-plugin</artifactId>
-                <version>1.5.1</version>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>minify-maven-plugin</artifactId>
+                <version>1.7.6</version>
                 <executions>
                     <execution>
+                        <id>singleplayer-js-minify</id>
+                        <configuration>
+                            <webappSourceDir>${basedir}/src/main/webapp/resources</webappSourceDir>
+                            <jsSourceFiles>
+                                <jsSourceFile>singleplayer.js</jsSourceFile>
+                                <jsSourceFile>game.js</jsSourceFile>
+                            </jsSourceFiles>
+                            <jsTargetDir>/resources/js</jsTargetDir>
+                            <jsFinalFile>singleplayer-final.min.js</jsFinalFile>
+                            <nosuffix>true</nosuffix>
+                            <jsEngine>CLOSURE</jsEngine>
+                        </configuration>
                         <goals>
-                            <goal>compress</goal>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>multiplayer-js-minify</id>
+                        <configuration>
+                            <webappSourceDir>${basedir}/src/main/webapp/resources</webappSourceDir>
+                            <jsSourceFiles>
+                                <jsSourceFile>multiplayer.js</jsSourceFile>
+                                <jsSourceFile>game.js</jsSourceFile>
+                            </jsSourceFiles>
+                            <jsTargetDir>/resources/js</jsTargetDir>
+                            <jsFinalFile>multiplayer-final.min.js</jsFinalFile>
+                            <nosuffix>true</nosuffix>
+                            <jsEngine>CLOSURE</jsEngine>
+                        </configuration>
+                        <goals>
+                            <goal>minify</goal>
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <webappDirectory>${project.build.directory}/yuicompressor</webappDirectory>
-                    <excludes>
-                        <exclude>**/*.min.js</exclude>
-                        <exclude>**/*.css</exclude>
-                    </excludes>
-                    <jswarn>false</jswarn>
-                    <aggregations>
-                        <aggregation>
-                            <output>${yuicompressor.result.folder}/singleplayer-final.min.js</output>
-                            <includes>
-                                <include>${yuicompressor.temp.folder}/singleplayer-min.js</include>
-                                <include>${yuicompressor.temp.folder}/game-min.js</include>
-                            </includes>
-                        </aggregation>
-                        <aggregation>
-                            <output>${yuicompressor.result.folder}/multiplayer-final.min.js</output>
-                            <includes>
-                                <include>${yuicompressor.temp.folder}/multiplayer-min.js</include>
-                                <include>${yuicompressor.temp.folder}/game-min.js</include>
-                            </includes>
-                        </aggregation>
-                    </aggregations>
-                </configuration>
             </plugin>
         </plugins>
     </build>
