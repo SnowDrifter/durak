@@ -1,15 +1,12 @@
 package ru.romanov.durak.config;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -21,37 +18,36 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@RequiredArgsConstructor
 @EnableTransactionManagement
 @ComponentScan("ru.romanov.durak")
-@PropertySource(value = "classpath:database.properties")
 @EnableJpaRepositories(basePackages = {"ru.romanov.durak"})
 public class DatabaseConfig {
 
-    @Value("${db.url}")
-    private String jdbcUrl;
-    @Value("${db.username}")
-    private String jdbcUserName;
-    @Value("${db.password}")
-    private String jdbcPassword;
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
+    private final DatabaseProperties dbProperties;
 
     @Bean
     public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl(jdbcUrl);
-        dataSource.setUsername(jdbcUserName);
-        dataSource.setPassword(jdbcPassword);
-        return dataSource;
+        HikariConfig config = new HikariConfig();
+        config.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
+        config.setMinimumIdle(dbProperties.getMinPoolSize());
+        config.setMaximumPoolSize(dbProperties.getMaxPoolSize());
+        config.setConnectionTimeout(dbProperties.getConnectionTimeout());
+        config.setValidationTimeout(dbProperties.getValidationTimeout());
+        config.setIdleTimeout(60000);
+
+        Properties properties = new Properties();
+        properties.setProperty("serverName", dbProperties.getServer());
+        properties.setProperty("databaseName", dbProperties.getDatabase());
+        properties.setProperty("user", dbProperties.getUser());
+        properties.setProperty("password", dbProperties.getPassword());
+        config.setDataSourceProperties(properties);
+
+        return new HikariDataSource(config);
     }
 
     @Bean
-    @Autowired
-    public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
+    public EntityManagerFactory entityManagerFactory() {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
 
@@ -65,15 +61,14 @@ public class DatabaseConfig {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("ru.romanov.durak");
-        factory.setDataSource(dataSource);
+        factory.setDataSource(dataSource());
         factory.setJpaProperties(jpaProperties);
         factory.afterPropertiesSet();
         return factory.getObject();
     }
 
     @Bean
-    @Autowired
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        return new JpaTransactionManager(entityManagerFactory);
+    public PlatformTransactionManager transactionManager() {
+        return new JpaTransactionManager(entityManagerFactory());
     }
 }
