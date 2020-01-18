@@ -136,7 +136,7 @@ function removeUserFromLobby(lobbyMessage) {
 
 function showInvite(message) {
     const result = confirm("Приглашение от " + message.initiator) ? "ACCEPT_INVITE" : "REJECT_INVITE";
-    top.websocket.send(JSON.stringify({type: result, invitee: username}));
+    sendWebsocketMessage({type: result, invitee: username});
 }
 
 $(window).on("load", function () {
@@ -154,18 +154,18 @@ $(document).ready(function () {
     $("body").delegate(".actionCard", "click", function () {
         closeNotifications();
         const card = $(this).attr("id");
-        top.websocket.send(JSON.stringify({type: "SELECT_CARD", card: card}));
+        sendWebsocketMessage({type: "SELECT_CARD", card: card});
     }).delegate(".lobby_user", "click", function () {
         const targetUser = $(this).text();
-        top.websocket.send(JSON.stringify({type: "INVITE", initiator: username, invitee: targetUser}));
+        sendWebsocketMessage({type: "INVITE", initiator: username, invitee: targetUser});
     });
 
     $("#take_button").click(function () {
-        top.websocket.send(JSON.stringify({type: "TAKE_CARD"}));
+        sendWebsocketMessage({type: "TAKE_CARD"});
     });
     $("#finish_button").click(function () {
         if ($("#table").html() === "") return;
-        top.websocket.send(JSON.stringify({type: "FINISH_MOVE"}));
+        sendWebsocketMessage({type: "FINISH_MOVE"});
     });
     $("#close_notification_button").click(function () {
         $(this).parent().hide();
@@ -212,7 +212,11 @@ function sendChatMessage(event) {
     chatTextField.val("");
 
     const type = event.data.type;
-    top.websocket.send(JSON.stringify({type: type, username: username, message: message}));
+    sendWebsocketMessage({type: type, username: username, message: message});
+}
+
+function sendWebsocketMessage(message) {
+    top.websocket.send(JSON.stringify(message));
 }
 
 function appendChatMessage(username, message, date) {

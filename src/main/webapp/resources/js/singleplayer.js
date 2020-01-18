@@ -3,7 +3,7 @@ function initSingleplayerGame() {
     top.websocket = websocket;
 
     websocket.onopen = function () {
-        websocket.send(JSON.stringify({type: "START_GAME"}));
+        sendWebsocketMessage({type: "START_GAME"});
     };
     websocket.onclose = function () {
         cleanTableAndPlayerCards();
@@ -72,21 +72,21 @@ $(document).ready(function () {
     $("body").delegate(".actionCard", "click", function () {
         closeNotifications();
         const card = $(this).attr("id");
-        top.websocket.send(JSON.stringify({type: "SELECT_CARD", card: card}));
+        sendWebsocketMessage({type: "SELECT_CARD", card: card});
     });
     $("#take_button").click(function () {
-        top.websocket.send(JSON.stringify({type: "TAKE_CARD"}));
+        sendWebsocketMessage({type: "TAKE_CARD"});
     });
     $("#finish_button").click(function () {
         if ($("#table").html() === "") {
             return;
         }
-        top.websocket.send(JSON.stringify({type: "FINISH_MOVE"}));
+        sendWebsocketMessage({type: "FINISH_MOVE"});
     });
     $("#start_new_game_button").click(function () {
         $("#trump").empty().css("opacity", "1");
         $("#deck").css("display", "");
-        top.websocket.send(JSON.stringify({type: "START_GAME"}));
+        sendWebsocketMessage({type: "START_GAME"});
     });
     $("#close_notification_button").click(function () {
         $(this).parent().hide();
@@ -99,3 +99,7 @@ $(document).ready(function () {
         }
     });
 });
+
+function sendWebsocketMessage(message) {
+    top.websocket.send(JSON.stringify(message));
+}
