@@ -2,8 +2,6 @@ package ru.romanov.durak.user.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,12 +40,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existsByUsername(String username) {
         return userRepository.existsUserByUsername(username);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Page<User> findAllByPage(Pageable pageable) {
-        return userRepository.findAll(pageable);
     }
 
     @Override

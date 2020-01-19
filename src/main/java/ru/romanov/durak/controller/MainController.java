@@ -4,9 +4,6 @@ package ru.romanov.durak.controller;
 import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import ru.romanov.durak.model.user.UserMapper;
 import ru.romanov.durak.model.user.dto.UserDto;
+import ru.romanov.durak.statistics.StatisticsService;
 import ru.romanov.durak.user.StatisticsDto;
-import ru.romanov.durak.model.user.User;
 import ru.romanov.durak.user.service.UserService;
 import ru.romanov.durak.util.MessageHelper;
 
@@ -33,6 +31,8 @@ public class MainController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private StatisticsService statisticsService;
     @Autowired
     private MessageHelper messageHelper;
 
@@ -82,10 +82,7 @@ public class MainController {
                                         @RequestParam(defaultValue = "20") Integer rows,
                                         @RequestParam(defaultValue = "wins") String sortBy,
                                         @RequestParam(defaultValue = "desc") String order) {
-        Sort sort = new Sort(Sort.Direction.valueOf(order.toUpperCase()), sortBy);
-        PageRequest pageRequest = new PageRequest(page - 1, rows, sort);
-        Page<User> userPage = userService.findAllByPage(pageRequest);
-        return new StatisticsDto(userPage);
+        return statisticsService.getStatistics(page, rows, sortBy, order);
     }
 
     @ResponseBody
