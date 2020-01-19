@@ -56,9 +56,12 @@ public class User implements UserDetails, Persistable<Long> {
     private byte[] photo;
 
     private String about;
-    private Integer wins = 0;
-    private Integer loses = 0;
-    private Integer totalGames = 0;
+    @Column(columnDefinition = "int4 default 0")
+    private int wins;
+    @Column(columnDefinition = "int4 default 0")
+    private int loses;
+    @Column(columnDefinition = "int4 default 0")
+    private int totalGames;
     @DateTimeFormat(pattern = "dd MM yyyy")
     private Date birthDate;
     @DateTimeFormat(pattern = "dd MM yyyy")

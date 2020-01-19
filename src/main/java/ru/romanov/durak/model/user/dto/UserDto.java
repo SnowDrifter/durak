@@ -37,9 +37,9 @@ public class UserDto {
     private String lastName;
 
     private String about;
-    private Integer wins = 0;
-    private Integer loses = 0;
-    private Integer totalGames = 0;
+    private Integer wins;
+    private Integer loses;
+    private Integer totalGames;
     @DateTimeFormat(pattern = "dd MM yyyy")
     private Date birthDate;
     @DateTimeFormat(pattern = "dd MM yyyy")
