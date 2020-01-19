@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.data.domain.Persistable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -58,10 +57,11 @@ public class User implements UserDetails, Persistable<Long> {
     private int loses;
     @Column(columnDefinition = "int4 default 0")
     private int totalGames;
-    @DateTimeFormat(pattern = "dd MM yyyy")
+
     private Date birthDate;
-    @DateTimeFormat(pattern = "dd MM yyyy")
+
     private Date creationDate;
+
     private boolean enabled;
 
     @Override
@@ -88,7 +88,7 @@ public class User implements UserDetails, Persistable<Long> {
     @Override
     @Transient
     public boolean isAccountNonLocked() {
-        return true;
+        return enabled;
     }
 
     @Override

@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Data
@@ -17,7 +14,7 @@ public class UserDto {
     private Long id;
 
     @JsonView(UserView.Statistics.class)
-    @NotBlank(message = "{validation.username.notEmpty}")
+    @NotEmpty(message = "{validation.username.notEmpty}")
     @Size(min = 2, max = 25, message = "{validation.username.size}")
     @Pattern(regexp = "[\\d\\w][\\d\\w\\s]*", message = "{validation.username.regexp}")
     private String username;
@@ -53,11 +50,11 @@ public class UserDto {
     private Integer totalGames;
 
     @JsonView(UserView.Full.class)
-    @DateTimeFormat(pattern = "dd MM yyyy")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private Date birthDate;
 
     @JsonView(UserView.Full.class)
-    @DateTimeFormat(pattern = "dd MM yyyy")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private Date creationDate;
 
     @JsonView(UserView.Full.class)

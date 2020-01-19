@@ -18,7 +18,7 @@ public class UserTest {
     private User user1;
     private User user2;
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MM yyyy");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
     @Before
     public void testInit() {
