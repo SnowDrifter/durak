@@ -1,8 +1,6 @@
 package ru.romanov.durak.model.user;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -34,7 +32,6 @@ public class User implements UserDetails, Persistable<Long> {
     @Column(unique = true)
     private String username;
 
-    @JsonIgnore
     @Column(length = 64)
     private String password;
 
@@ -51,7 +48,6 @@ public class User implements UserDetails, Persistable<Long> {
     private Set<Role> roles = new HashSet<>();
 
     @Lob
-    @JsonIgnore
     @Basic(fetch = FetchType.LAZY)
     private byte[] photo;
 
@@ -76,7 +72,6 @@ public class User implements UserDetails, Persistable<Long> {
 
     @Override
     @Transient
-    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
                 .map(Role::name)
@@ -86,28 +81,20 @@ public class User implements UserDetails, Persistable<Long> {
 
     @Override
     @Transient
-    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
     @Transient
-    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
-    }
-
-    @JsonProperty
-    public boolean hasPhoto() {
-        return photo != null;
     }
 
 }

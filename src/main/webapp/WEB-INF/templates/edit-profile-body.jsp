@@ -19,7 +19,7 @@
 
     <div id="photo">
         <c:choose>
-            <c:when test="${not empty userDto.photo}">
+            <c:when test="${userDto.hasPhoto}">
                 <script>loadPhoto(${userDto.id})</script>
             </c:when>
             <c:otherwise>
@@ -68,12 +68,6 @@
         <tr>
             <td><label><spring:message code="user.photo"/></label></td>
             <td><input name="photo" type="file" onchange="uploadPhoto(${userDto.id})"/></td>
-        </tr>
-        <tr class="errors">
-            <td colspan="2">
-                <form:errors path="photo" cssClass="error" element="div"/>
-                <jsp:text/>
-            </td>
         </tr>
 
         <tr>

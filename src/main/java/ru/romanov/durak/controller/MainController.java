@@ -1,6 +1,7 @@
 package ru.romanov.durak.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ru.romanov.durak.model.user.UserMapper;
 import ru.romanov.durak.model.user.dto.UserDto;
+import ru.romanov.durak.model.user.dto.UserView;
 import ru.romanov.durak.statistics.StatisticsService;
-import ru.romanov.durak.user.StatisticsDto;
+import ru.romanov.durak.statistics.StatisticsDto;
 import ru.romanov.durak.user.service.UserService;
 import ru.romanov.durak.util.MessageHelper;
 
@@ -78,6 +80,7 @@ public class MainController {
 
     @ResponseBody
     @GetMapping("/statistics/data")
+    @JsonView(UserView.Statistics.class)
     public StatisticsDto statisticsData(@RequestParam(defaultValue = "1") Integer page,
                                         @RequestParam(defaultValue = "20") Integer rows,
                                         @RequestParam(defaultValue = "wins") String sortBy,
@@ -87,12 +90,13 @@ public class MainController {
 
     @ResponseBody
     @GetMapping("/profile/{id}")
-    public User profile(@PathVariable long id) {
-        return userService.findById(id);
+    public UserDto profile(@PathVariable long id) {
+        return UserMapper.INSTANCE.userToUserDto(userService.findById(id));
     }
 
     @PostMapping("/edit")
-    public String edit(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws IOException {
+    @JsonView(UserView.Full.class)
+    public String edit(@Valid UserDto userDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             log.debug("Result has errors: " + bindingResult.getFieldErrorCount());
             model.addAttribute("title", messageHelper.getMessage("edit.title"));
@@ -109,8 +113,10 @@ public class MainController {
     }
 
     @GetMapping("/edit")
+    @JsonView(UserView.Full.class)
     public String showEdit(Model model, Principal principal) {
-        model.addAttribute("userDto", userService.findByUsername(principal.getName()));
+        UserDto userDto = UserMapper.INSTANCE.userToUserDto(userService.findByUsername(principal.getName()));
+        model.addAttribute("userDto", userDto);
         model.addAttribute("title", messageHelper.getMessage("edit.title"));
         return EDIT_PROFILE_PAGE;
     }
