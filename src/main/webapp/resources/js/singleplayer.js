@@ -1,6 +1,7 @@
+let websocket;
+
 function initSingleplayerGame() {
-    const websocket = new WebSocket("ws://" + window.location.host + "/ws/singleplayer");
-    top.websocket = websocket;
+    websocket = new WebSocket("ws://" + window.location.host + "/ws/singleplayer");
 
     websocket.onopen = function () {
         sendWebsocketMessage({type: "START_GAME"});
@@ -60,6 +61,10 @@ function parseMessage(message) {
     }
 }
 
+function sendWebsocketMessage(message) {
+    websocket.send(JSON.stringify(message));
+}
+
 $(window).on("load", function () {
     const preloader = $("#preloader");
     const spinner = preloader.find(".spinner");
@@ -99,7 +104,3 @@ $(document).ready(function () {
         }
     });
 });
-
-function sendWebsocketMessage(message) {
-    top.websocket.send(JSON.stringify(message));
-}

@@ -1,0 +1,31 @@
+#invite_dialog_content {
+  padding-top: 30px;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold;
+
+  #invite_button_group {
+    padding-top: 20px;
+
+    .invite_button {
+      background: darken(@main_background, 10%);
+      padding: .4em 1em;
+      cursor: pointer;
+      border: 1px solid @borders;
+      border-radius: 3px;
+      font-size: 1em;
+    }
+  }
+}
+
+.invite_dialog_shadow {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.ui-dialog-titlebar-close {
+  visibility: hidden;
+}
+
+.ui-dialog-titlebar {
+  display: none
+}

@@ -23,6 +23,21 @@
     <div id="empty_lobby"><spring:message code="lobby.empty"/></div>
 </div>
 
+<div id="invite_dialog">
+    <div id="invite_dialog_content">
+        <spring:message code="invite.message"/> '<span id="invitation_initiator_username"></span>'
+
+        <div id="invite_button_group">
+            <button id="invite_accept_button" type="button" class="invite_button">
+               <spring:message code="invite.accept"/>
+            </button>
+            <button id="invite_reject_button" type="button" class="invite_button">
+               <spring:message code="invite.reject"/>
+            </button>
+        </div>
+    </div>
+</div>
+
 <div id="game_container">
     <div id="preloader"><span class="spinner"></span></div>
 

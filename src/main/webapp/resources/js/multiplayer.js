@@ -1,6 +1,7 @@
+let websocket;
+
 function initMultiplayerGame() {
-    const websocket = new WebSocket("ws://" + window.location.host + "/ws/multiplayer?username=" + username);
-    top.websocket = websocket;
+    websocket = new WebSocket("ws://" + window.location.host + "/ws/multiplayer?username=" + username);
 
     websocket.onclose = function () {
         cleanTableAndPlayerCards();
@@ -10,6 +11,8 @@ function initMultiplayerGame() {
         const message = JSON.parse(evt.data);
         parseMessage(message);
     };
+
+    $('#invite_dialog').dialog("open");
 }
 
 function parseMessage(message) {
@@ -97,6 +100,10 @@ function parseMessage(message) {
     }
 }
 
+function sendWebsocketMessage(message) {
+    websocket.send(JSON.stringify(message));
+}
+
 function addChatMessage(chatMessage) {
     const date = $.format.date(new Date(), "HH:mm:ss");
     const username = chatMessage.username;
@@ -135,8 +142,18 @@ function removeUserFromLobby(lobbyMessage) {
 }
 
 function showInvite(message) {
-    const result = confirm("Приглашение от " + message.initiator) ? "ACCEPT_INVITE" : "REJECT_INVITE";
-    sendWebsocketMessage({type: result, invitee: username});
+    $("#invitation_initiator_username").text( message.initiator);
+    $('#invite_dialog').dialog("open");
+}
+
+function acceptInvite() {
+    $('#invite_dialog').dialog("close");
+    sendWebsocketMessage({type: "ACCEPT_INVITE", invitee: username});
+}
+
+function rejectInvite() {
+    $('#invite_dialog').dialog("close");
+    sendWebsocketMessage({type: "REJECT_INVITE", invitee: username});
 }
 
 $(window).on("load", function () {
@@ -197,6 +214,17 @@ $(document).ready(function () {
             $("#chat_switch").css({transition: "all .5s", transform: "rotate(180deg)"});
         }
     });
+
+    $('#invite_dialog').dialog({
+        autoOpen: false,
+        resizable: false,
+        height: "auto",
+        width: 400,
+        dialogClass: 'invite_dialog_shadow'
+    });
+
+    $('#invite_accept_button').click(() => acceptInvite());
+    $('#invite_reject_button').click(() => rejectInvite());
 });
 
 function sendChatMessage(event) {
@@ -213,10 +241,6 @@ function sendChatMessage(event) {
 
     const type = event.data.type;
     sendWebsocketMessage({type: type, username: username, message: message});
-}
-
-function sendWebsocketMessage(message) {
-    top.websocket.send(JSON.stringify(message));
 }
 
 function appendChatMessage(username, message, date) {
