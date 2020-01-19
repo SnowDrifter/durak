@@ -28,7 +28,7 @@ public class GameTest {
 
     @Test
     public void testCheckWin(){
-        assertFalse(game.checkWin());
+        assertFalse(game.isGameFinished());
     }
 
     @Test

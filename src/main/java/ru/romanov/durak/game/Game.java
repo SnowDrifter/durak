@@ -47,7 +47,6 @@ public class Game {
         }
 
         table.setCurrentCard(currentCard);
-        loggingCurrentState();
         updateTableView();
         changeState();
 
@@ -55,13 +54,13 @@ public class Game {
             defend();
         }
 
-        if (checkWin()) {
+        if (isGameFinished()) {
             finishGame();
         }
     }
 
     private void defend() {
-        if (checkWin()) {
+        if (isGameFinished()) {
             finishGame();
             return;
         }
@@ -83,14 +82,13 @@ public class Game {
         table.getOldCards().add(answer);
         table.setCurrentCard(null);
         updateTableView();
-        loggingCurrentState();
 
         changeState();
         if (attackPlayer instanceof AIPlayer) {
             attack();
         }
 
-        if (checkWin()) {
+        if (isGameFinished()) {
             finishGame();
         }
     }
@@ -263,20 +261,6 @@ public class Game {
         }
     }
 
-    // TODO AOP. Maybe remove it?
-    private void loggingCurrentState() {
-        log.debug("========================");
-        log.debug("First player hand: " + attackPlayer.getHand());
-        log.debug("Second player hand: " + defendPlayer.getHand());
-        if (deck != null) {
-            log.debug("Current deck: " + deck);
-        }
-        if (trump != null) {
-            log.debug("Trump: " + trump.getName());
-        }
-        log.debug("------------------------");
-    }
-
     private void fillHand(Player player) {
         Collections.shuffle(deck);
 
@@ -290,8 +274,7 @@ public class Game {
         }
     }
 
-    // isGameFinished
-    public boolean checkWin() {
+    public boolean isGameFinished() {
         if (!deck.isEmpty() && trump != null) {
             return false;
         }

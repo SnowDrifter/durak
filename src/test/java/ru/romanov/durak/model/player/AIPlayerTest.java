@@ -23,7 +23,7 @@ public class AIPlayerTest {
     @Before
     public void setup() {
         game = Mockito.mock(Game.class);
-        when(game.checkWin()).thenReturn(false);
+        when(game.isGameFinished()).thenReturn(false);
 
         Table table = new Table();
         when(game.getTable()).thenReturn(table);
