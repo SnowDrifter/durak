@@ -5,10 +5,11 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class UserDto {
+public class UserDto implements Serializable {
 
     @JsonView(UserView.Full.class)
     private Long id;

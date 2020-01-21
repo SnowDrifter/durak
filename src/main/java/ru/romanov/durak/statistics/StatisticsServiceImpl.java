@@ -1,6 +1,7 @@
 package ru.romanov.durak.statistics;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -17,6 +18,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "statistics", key = "'statistics:' + #page + '-' + #rows + ':' + #sortBy + '-' + #order")
     public StatisticsDto getStatistics(int page, int rows, String sortBy, String order) {
         Sort sort = new Sort(Sort.Direction.valueOf(order.toUpperCase()), sortBy);
         PageRequest pageRequest = new PageRequest(page - 1, rows, sort);

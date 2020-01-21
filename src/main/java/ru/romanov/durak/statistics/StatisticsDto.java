@@ -9,12 +9,13 @@ import ru.romanov.durak.model.user.UserMapper;
 import ru.romanov.durak.model.user.dto.UserDto;
 import ru.romanov.durak.model.user.dto.UserView;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
 @JsonView(UserView.Statistics.class)
-public class StatisticsDto {
+public class StatisticsDto implements Serializable {
 
     private int totalPages;
     private int currentPage;
