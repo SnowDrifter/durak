@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseProperties {
 
-    @Value("#{systemProperties['db.server']}")
+    @Value("#{systemProperties['db.server'] ?: 'localhost'}")
     private String server;
-    @Value("#{systemProperties['db.database']}")
+    @Value("#{systemProperties['db.database'] ?: 'durak'}")
     private String database;
-    @Value("#{systemProperties['db.user']}")
+    @Value("#{systemProperties['db.user'] ?: 'postgres'}")
     private String user;
-    @Value("#{systemProperties['db.password']}")
+    @Value("#{systemProperties['db.password'] ?: '1234'}")
     private String password;
 
     @Value("#{systemProperties['db.minPoolSize'] ?: 3}")
