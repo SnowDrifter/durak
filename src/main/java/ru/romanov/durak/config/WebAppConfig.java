@@ -90,7 +90,8 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements WebSocketCo
     public CookieLocaleResolver localeResolver() {
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setDefaultLocale(new Locale("ru"));
-        cookieLocaleResolver.setCookieMaxAge(100000);
+        cookieLocaleResolver.setCookieMaxAge(Integer.MAX_VALUE);
+        cookieLocaleResolver.setCookieName("locale");
         return cookieLocaleResolver;
     }
 
