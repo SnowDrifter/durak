@@ -9,17 +9,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class RedisProperties {
 
-    @Value("#{systemProperties['redis.host'] ?: 'localhost'}")
+    @Value("#{environment['REDIS_HOST'] ?: 'localhost'}")
     private String host;
-    @Value("#{systemProperties['redis.port'] ?: 6379}")
+    @Value("#{environment['REDIS_PORT'] ?: 6379}")
     private int port;
 
-    @Value("#{systemProperties['redis.password'] ?: null}")
+    @Value("#{environment['REDIS_PASSWORD'] ?: null}")
     private String password;
 
-    @Value("#{systemProperties['redis.maxIdle'] ?: 3}")
+    @Value("#{environment['REDIS_MAX_IDLE'] ?: 3}")
     private int maxIdle;
-    @Value("#{systemProperties['redis.maxTotal'] ?: 10}")
+    @Value("#{environment['REDIS_MAX_TOTAL'] ?: 10}")
     private int maxTotal;
 
 }

@@ -8,22 +8,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseProperties {
 
-    @Value("#{systemProperties['db.server'] ?: 'localhost'}")
+    @Value("#{environment['DB_SERVER'] ?: 'localhost'}")
     private String server;
-    @Value("#{systemProperties['db.database'] ?: 'durak'}")
+    @Value("#{environment['DB_DATABASE'] ?: 'durak'}")
     private String database;
-    @Value("#{systemProperties['db.user'] ?: 'postgres'}")
+    @Value("#{environment['DB_USER'] ?: 'postgres'}")
     private String user;
-    @Value("#{systemProperties['db.password'] ?: '1234'}")
+    @Value("#{environment['DB_PASSWORD'] ?: '1234'}")
     private String password;
 
-    @Value("#{systemProperties['db.minPoolSize'] ?: 3}")
+    @Value("#{environment['DB_MIN_POOL_SIZE'] ?: 3}")
     private int minPoolSize;
-    @Value("#{systemProperties['db.maxPoolSize'] ?: 10}")
+    @Value("#{environment['DB_MAX_POOL_SIZE'] ?: 10}")
     private int maxPoolSize;
-    @Value("#{systemProperties['db.connectionTimeout'] ?: 2000}")
+    @Value("#{environment['DB_CONNECTION_TIMEOUT'] ?: 2000}")
     private int connectionTimeout;
-    @Value("#{systemProperties['db.validationTimeout'] ?: 2000}")
+    @Value("#{environment['DB_VALIDATION_TIMEOUT'] ?: 2000}")
     private int validationTimeout;
 
 }
