@@ -100,7 +100,7 @@ public class AIPlayerTest {
 
         assertEquals("s2", card.getName());
         assertEquals(2, card.getPower());
-        assertEquals(true, card.isTrump());
+        assertTrue(card.isTrump());
     }
 
     @Test

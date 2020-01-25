@@ -23,11 +23,10 @@ public class CardTest {
 
     @Test
     public void testEquals() {
-        assertTrue(c1.equals(anotherC1));
-        assertTrue(anotherC1.equals(c1));
+        assertEquals(c1, anotherC1);
+        assertEquals(anotherC1, c1);
 
-        assertFalse(c1.equals(h3));
-        assertFalse(c1.equals(null));
+        assertNotEquals(c1, h3);
     }
 
     @Test
@@ -41,6 +40,5 @@ public class CardTest {
         set.add(h3);
         assertEquals(2, set.size());
     }
-
 
 }
