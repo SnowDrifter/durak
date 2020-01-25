@@ -1,0 +1,112 @@
+databaseChangeLog:
+    - changeSet:
+        id: hibernate_sequence
+        author: romanov
+        changes:
+        - createSequence:
+            sequenceName: hibernate_sequence
+            cacheSize: 1
+            dataType: int8
+            incrementBy: 1
+            minValue: 1
+            maxValue: 9223372036854775807
+
+    - changeSet:
+        id: user_table
+        author: romanov
+        changes:
+            - createTable:
+                tableName: user
+                columns:
+                    - column:
+                        name: id
+                        type: int8
+                        defaultValueSequenceNext: hibernate_sequence
+                        constraints:
+                            primaryKey: true
+                            nullable: false
+                    - column:
+                        name: firstname
+                        type: varchar(255)
+                    - column:
+                        name: lastname
+                        type: varchar(255)
+                    - column:
+                        name: username
+                        type: varchar(255)
+                    - column:
+                        name: password
+                        type: varchar(64)
+                    - column:
+                        name: email
+                        type: varchar(255)
+                    - column:
+                        name: about
+                        type: text
+                    - column:
+                        name: birthdate
+                        type: timestamp(6)
+                    - column:
+                        name: creationdate
+                        type: timestamp(6)
+                    - column:
+                        name: enabled
+                        type: bool
+                    - column:
+                        name: totalgames
+                        type: int4
+                    - column:
+                        name: wins
+                        type: int4
+                    - column:
+                        name: loses
+                        type: int4
+                    - column:
+                        name: photo
+                        type: oid
+
+    - changeSet:
+        id: user_username_uk
+        author: romanov
+        changes:
+        - addUniqueConstraint:
+            constraintName: user_username_uk
+            tableName: user
+            columnNames: username
+
+    - changeSet:
+        id: persistent_logins_table
+        author: romanov
+        changes:
+            - createTable:
+                tableName: persistent_logins
+                columns:
+                    - column:
+                        name: series
+                        type: varchar(255)
+                        constraints:
+                            primaryKey: true
+                            nullable: false
+                    - column:
+                        name: token
+                        type: varchar(255)
+                    - column:
+                        name: username
+                        type: varchar(255)
+                    - column:
+                        name: last_used
+                        type: timestamp(6)
+
+    - changeSet:
+        id: user_roles_table
+        author: romanov
+        changes:
+            - createTable:
+                tableName: user_roles
+                columns:
+                    - column:
+                        name: user_id
+                        type: int8
+                    - column:
+                        name: role
+                        type: varchar(255)

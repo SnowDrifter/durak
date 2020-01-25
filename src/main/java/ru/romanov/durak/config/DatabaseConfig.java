@@ -2,10 +2,12 @@ package ru.romanov.durak.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import liquibase.integration.spring.SpringLiquibase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -47,6 +49,7 @@ public class DatabaseConfig {
     }
 
     @Bean
+    @DependsOn("liquibase")
     public EntityManagerFactory entityManagerFactory() {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
@@ -55,7 +58,7 @@ public class DatabaseConfig {
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
         jpaProperties.put("hibernate.show_sql", "false");
         jpaProperties.put("hibernate.format_sql", "false");
-        jpaProperties.put("hibernate.hbm2ddl.auto", "update");
+        jpaProperties.put("hibernate.hbm2ddl.auto", "validate");
         jpaProperties.put("hibernate.connection.charSet", "UTF-8");
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
@@ -70,5 +73,13 @@ public class DatabaseConfig {
     @Bean
     public PlatformTransactionManager transactionManager() {
         return new JpaTransactionManager(entityManagerFactory());
+    }
+
+    @Bean
+    public SpringLiquibase liquibase() {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog("classpath:db/changelog-master.yaml");
+        liquibase.setDataSource(dataSource());
+        return liquibase;
     }
 }
