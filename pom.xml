@@ -18,6 +18,10 @@
         <hibernate.version>5.4.2.Final</hibernate.version>
         <hibernate.validator.version>6.1.0.Final</hibernate.validator.version>
         <liquibase.version>3.8.5</liquibase.version>
+
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
+        <sonar.login>admin</sonar.login>
+        <sonar.password>admin</sonar.password>
     </properties>
 
     <build>
@@ -110,6 +114,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.7.0.1746</version>
             </plugin>
         </plugins>
     </build>
