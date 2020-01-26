@@ -23,7 +23,7 @@
                 <script>loadPhoto(${userDto.id})</script>
             </c:when>
             <c:otherwise>
-                <img class="default_photo" src="${pageContext.request.contextPath}/resources/images/default_photo.png"/>
+                <img class="default_photo" src="${pageContext.request.contextPath}/resources/images/default_photo.png" alt="default_photo"/>
             </c:otherwise>
         </c:choose>
     </div>

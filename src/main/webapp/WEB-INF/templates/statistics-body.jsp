@@ -151,7 +151,7 @@
 </div>
 
 <div style="display:none">
-    <img class="default_photo" src="${pageContext.request.contextPath}/resources/images/default_photo.png"/>
+    <img class="default_photo" src="${pageContext.request.contextPath}/resources/images/default_photo.png" alt="default"/>
 </div>
 
 

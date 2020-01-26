@@ -59,7 +59,7 @@
 </div>
 
 <div id="chat">
-    <div id="chat_header"><spring:message code="lobby.chat.header"/>  <img src="${pageContext.request.contextPath}/resources/images/arrow.png" id="chat_switch"/></div>
+    <div id="chat_header"><spring:message code="lobby.chat.header"/>  <img src="${pageContext.request.contextPath}/resources/images/arrow.png" id="chat_switch" alt="chat_switch"/></div>
     <div id="chat_content">
         <div id="chat_history"></div>
         <div id="chat_form">

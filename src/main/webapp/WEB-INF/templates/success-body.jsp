@@ -7,6 +7,6 @@
     </c:if>
 
     <br/>
-    <img src="${pageContext.request.contextPath}/resources/images/success.png"/>
+    <img src="${pageContext.request.contextPath}/resources/images/success.png" alt="success"/>
 </div>
 
