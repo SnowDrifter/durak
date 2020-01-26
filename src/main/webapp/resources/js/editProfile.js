@@ -9,6 +9,8 @@ $(function createDatepicker() {
 });
 
 function uploadPhoto(userId) {
+    $("#upload_photo_error").css("display", "none");
+
     const formData = new FormData();
     const photo = $("input[name='photo']")[0].files[0];
     formData.append("file", photo);
@@ -23,7 +25,7 @@ function uploadPhoto(userId) {
             if (response.status === 200) {
                 displayPhoto(photo)
             } else {
-                alert("File not uploaded"); // TODO: i18n message
+                $("#upload_photo_error").css("display", "inline");
             }
         },
     });

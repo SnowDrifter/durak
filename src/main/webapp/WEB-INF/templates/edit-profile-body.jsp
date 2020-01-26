@@ -69,6 +69,10 @@
             <td><label><spring:message code="user.photo"/></label></td>
             <td><input name="photo" type="file" onchange="uploadPhoto(${userDto.id})"/></td>
         </tr>
+        <tr>
+            <td></td>
+            <td><span id="upload_photo_error" class="error" style="display: none"><spring:message code="photo.upload.fail"/></span></td>
+        </tr>
 
         <tr>
             <td><label> <spring:message code="user.birthDate"/></label></td>
