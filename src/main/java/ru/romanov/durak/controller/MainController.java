@@ -40,41 +40,42 @@ public class MainController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("title", messageHelper.getMessage("home.title"));
+        model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("home.title"));
         return HOME_PAGE;
     }
 
     @GetMapping("/singleplayer")
     public String singleplayer(Model model) {
-        model.addAttribute("title", messageHelper.getMessage("game.singleplayer.title"));
+        model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("game.singleplayer.title"));
         return SINGLEPLAYER_PAGE;
     }
 
     @GetMapping("/multiplayer")
     public String multiplayer(Model model) {
-        model.addAttribute("title", messageHelper.getMessage("game.multiplayer.title"));
+        model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("game.multiplayer.title"));
         return MULTIPLAYER_PAGE;
     }
 
     @GetMapping("/rules")
     public String rules(Model model) {
-        model.addAttribute("title", messageHelper.getMessage("rules.title"));
+        model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("rules.title"));
         return RULES_PAGE;
     }
 
     @GetMapping("/statistic")
     public String statistic(Model model) {
-        model.addAttribute("title", messageHelper.getMessage("statistics.title"));
+        model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("statistics.title"));
         return STATISTICS_PAGE;
     }
 
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false) String error) {
         ModelAndView model = new ModelAndView(LOGIN_PAGE);
+        model.addObject(TITLE_ATTRIBUTE, messageHelper.getMessage("login.title"));
+        
         if (error != null) {
-            model.addObject("error", messageHelper.getMessage("login.fail"));
+            model.addObject(ERROR_ATTRIBUTE, messageHelper.getMessage("login.fail"));
         }
-        model.addObject("title", messageHelper.getMessage("login.title"));
         return model;
     }
 
@@ -98,17 +99,17 @@ public class MainController {
     @JsonView(UserView.Full.class)
     public String edit(@Valid UserDto userDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            log.debug("Result has errors: " + bindingResult.getFieldErrorCount());
-            model.addAttribute("title", messageHelper.getMessage("edit.title"));
-            model.addAttribute("userDto", userDto);
+            log.debug("Edit result has errors. Count: {}", bindingResult.getErrorCount());
+            model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("edit.title"));
+            model.addAttribute(USER_ATTRIBUTE, userDto);
             return EDIT_PROFILE_PAGE;
         }
 
         userService.update(userDto);
 
         model.asMap().clear();
-        model.addAttribute("title", messageHelper.getMessage("edit.done"));
-        model.addAttribute("message", messageHelper.getMessage("edit.done"));
+        model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("edit.done"));
+        model.addAttribute(MESSAGE_ATTRIBUTE, messageHelper.getMessage("edit.done"));
         return SUCCESS_PAGE;
     }
 
@@ -116,8 +117,8 @@ public class MainController {
     @JsonView(UserView.Full.class)
     public String showEdit(Model model, Principal principal) {
         UserDto userDto = UserMapper.INSTANCE.userToUserDto(userService.findByUsername(principal.getName()));
-        model.addAttribute("userDto", userDto);
-        model.addAttribute("title", messageHelper.getMessage("edit.title"));
+        model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("edit.title"));
+        model.addAttribute(USER_ATTRIBUTE, userDto);
         return EDIT_PROFILE_PAGE;
     }
 

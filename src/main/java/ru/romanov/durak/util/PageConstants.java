@@ -14,4 +14,9 @@ public class PageConstants {
 
     public static final String SUCCESS_PAGE = "success";
 
+    public static final String TITLE_ATTRIBUTE = "title";
+    public static final String USER_ATTRIBUTE = "userDto";
+    public static final String MESSAGE_ATTRIBUTE = "message";
+    public static final String ERROR_ATTRIBUTE = "error";
+
 }

@@ -13,8 +13,7 @@ import ru.romanov.durak.util.MessageHelper;
 
 import javax.validation.Valid;
 
-import static ru.romanov.durak.util.PageConstants.SUCCESS_PAGE;
-import static ru.romanov.durak.util.PageConstants.REGISTRATION_PAGE;
+import static ru.romanov.durak.util.PageConstants.*;
 
 @Controller
 @RequestMapping("/registration")
@@ -27,32 +26,32 @@ public class RegistrationController {
 
     @GetMapping
     public String showRegistration(Model model) {
-        model.addAttribute("userDto", new UserDto());
-        model.addAttribute("title", messageHelper.getMessage("registration.title"));
+        model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("registration.title"));
+        model.addAttribute(USER_ATTRIBUTE, new UserDto());
         return REGISTRATION_PAGE;
     }
 
     @PostMapping
     public String processRegistration(@Valid UserDto userDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("error", messageHelper.getMessage("registration.fail"));
-            model.addAttribute("title", messageHelper.getMessage("registration.title"));
-            model.addAttribute("userDto", userDto);
+            model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("registration.title"));
+            model.addAttribute(USER_ATTRIBUTE, userDto);
+            model.addAttribute(ERROR_ATTRIBUTE, messageHelper.getMessage("registration.fail"));
             return REGISTRATION_PAGE;
         }
 
         if (userService.existsByUsername(userDto.getUsername())) {
-            model.addAttribute("error", messageHelper.getMessage("registration.userExist"));
-            model.addAttribute("title", messageHelper.getMessage("registration.title"));
-            model.addAttribute("userDto", userDto);
+            model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("registration.title"));
+            model.addAttribute(USER_ATTRIBUTE, userDto);
+            model.addAttribute(ERROR_ATTRIBUTE, messageHelper.getMessage("registration.userExist"));
             return REGISTRATION_PAGE;
         }
 
         userService.saveNewUser(userDto);
 
         model.asMap().clear();
-        model.addAttribute("title", messageHelper.getMessage("registration.done"));
-        model.addAttribute("message", messageHelper.getMessage("registration.done"));
+        model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("registration.done"));
+        model.addAttribute(MESSAGE_ATTRIBUTE, messageHelper.getMessage("registration.done"));
         return SUCCESS_PAGE;
     }
 
