@@ -124,36 +124,7 @@
     </build>
 
     <dependencies>
-        <!-- SERVLETS AND VIEWS -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>javax.servlet.jsp-api</artifactId>
-            <version>2.3.3</version>
-        </dependency>
-
-        <!-- LOGGING -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j18-impl</artifactId>
-            <version>2.13.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.13.0</version>
-        </dependency>
-
-        <!-- SPRING FRAMEWORK -->
+        <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -195,7 +166,24 @@
             <version>${spring.version}</version>
         </dependency>
 
-        <!-- SPRING SECURITY -->
+        <!-- Servlet and JSP -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.3.3</version>
+        </dependency>
+
+        <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
@@ -217,7 +205,19 @@
             <version>${spring.security.version}</version>
         </dependency>
 
-        <!-- SPRING DATA -->
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j18-impl</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+
+        <!-- Spring Data-->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
@@ -234,7 +234,7 @@
             <version>1.8.23.RELEASE</version>
         </dependency>
 
-        <!-- TILES -->
+        <!-- Tiles -->
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-core</artifactId>
@@ -246,7 +246,7 @@
             <version>${tiles.version}</version>
         </dependency>
 
-        <!-- DATABASE -->
+        <!-- Database -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -263,7 +263,7 @@
             <version>${liquibase.version}</version>
         </dependency>
 
-        <!-- HIBERNATE -->
+        <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -275,7 +275,14 @@
             <version>${hibernate.validator.version}</version>
         </dependency>
 
-        <!-- TESTING -->
+        <!-- Redis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.3</version>
+        </dependency>
+
+        <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -286,11 +293,13 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.10.19</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -299,26 +308,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- AOP -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>1.8.13</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>1.8.13</version>
-        </dependency>
-
-        <!-- Redis -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.9.3</version>
-        </dependency>
-
-        <!-- OTHER -->
+        <!-- Other -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -353,11 +343,6 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time-jsptags</artifactId>
             <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time-hibernate</artifactId>
-            <version>1.4</version>
         </dependency>
         <dependency>
             <groupId>net.jodah</groupId>
