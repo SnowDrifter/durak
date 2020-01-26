@@ -15,13 +15,10 @@ public abstract class Player {
     protected final Set<Card> hand = new TreeSet<>(new CardComparator());
     private boolean win;
 
-    abstract public Card attack(List<Card> oldCards);
-
-    abstract public Card defend(Card enemyCard);
-
-    abstract public void selectCard(String cardName);
-
-    abstract public String getUsername();
+    public abstract Card attack(List<Card> oldCards);
+    public abstract Card defend(Card enemyCard);
+    public abstract void selectCard(String cardName);
+    public abstract String getUsername();
 
     public void addToHand(List<Card> cards) {
         hand.addAll(cards);
