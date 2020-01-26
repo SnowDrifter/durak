@@ -12,7 +12,7 @@
             </c:if>
         </div>
 
-        <table width="80%">
+        <table>
             <tr>
                 <td><spring:message code="login.username"/></td>
                 <td><input class="field" title="" type="text" name="username"></td>
