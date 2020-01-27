@@ -3,22 +3,22 @@
 <%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<c:set var="locale" value="${pageContext.response.locale}" />
+<c:set var="locale" value="${pageContext.response.locale}"/>
 
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/js/lib/jqgrid/css/ui.jqgrid.min.css"/>"/>
 <script type="text/javascript" src="<c:url value="/resources/js/lib/jqgrid/js/jquery.jqGrid.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/lib/jqgrid/js/i18n/grid.locale-${locale}.min.js"/>"></script>
 
-<spring:message code="statistics.title" var="userList"/>
-<spring:message code="user.username" var="username"/>
-<spring:message code="user.firstName" var="firstname"/>
-<spring:message code="user.lastName" var="lastname"/>
-<spring:message code="user.birthDate" var="birthDate"/>
-<spring:message code="user.wins" var="wins"/>
-<spring:message code="user.loses" var="loses"/>
-<spring:message code="user.totalGames" var="totalGames"/>
-<spring:message code="user.creatingDate" var="creatingDate"/>
-<spring:message code="user.about" var="about"/>
+<spring:message var="userList" code="statistics.title"/>
+<spring:message var="username" code="user.username"/>
+<spring:message var="firstname" code="user.firstName"/>
+<spring:message var="lastname" code="user.lastName"/>
+<spring:message var="birthDate" code="user.birthDate"/>
+<spring:message var="wins" code="user.wins"/>
+<spring:message var="loses" code="user.loses"/>
+<spring:message var="totalGames" code="user.totalGames"/>
+<spring:message var="creatingDate" code="user.creatingDate"/>
+<spring:message var="about" code="user.about"/>
 
 <script type="text/javascript">
     $(function () {
@@ -28,12 +28,13 @@
             url: "/statistics/data",
             datatype: "json",
             mtype: "GET",
-            colNames: ["${username}", "${wins}", "${loses}", "${totalGames}"],
+            colNames: ["#", "${username}", "${wins}", "${loses}", "${totalGames}"],
             colModel: [
-                 {name: "username", index: "username", width: "40%"},
-                 {name: "wins", index: "wins", width: "20%"},
-                 {name: "loses", index: "loses", width: "20%"},
-                 {name: "totalGames", index: "totalGames", width: "20%"}
+                {name: "id", index: "id", width: "5%", sortable: false},
+                {name: "username", index: "username", width: "35%"},
+                {name: "wins", index: "wins", width: "20%"},
+                {name: "loses", index: "loses", width: "20%"},
+                {name: "totalGames", index: "totalGames", width: "20%"}
             ],
             prmNames: {
                 sort: "sortBy",
@@ -53,24 +54,26 @@
             sortorder: "desc",
             viewrecords: true,
             gridview: true,
+            hidegrid: false,
             width: 650,
             height: 550,
             caption: "${userList}",
             onSelectRow: function (id) {
+                const row = $("#list").getRowData(id);
+
                 $.ajax({
-                    url: "/profile/" + id,
+                    url: "/profile/" + row.id,
                     type: "GET",
                     dataType: "json",
                     success: function (data) {
-                        $("#usernameValue").text(data.username);
-                        $("#winsValue").text(data.wins);
-                        $("#losesValue").text(data.loses);
-                        $("#totalGamesValue").text(data.totalGames);
-                        $("#firstNameValue").text(data.firstName ? data.firstName : "-");
-                        $("#lastNameValue").text(data.lastName ? data.lastName : "-");
-                        $("#birthDateValue").text(data.birthDate ? new Date(data.birthDate).toLocaleDateString() : "-");
+                        $("#username_value").text(data.username);
+                        $("#first_name_value").text(data.firstName ? data.firstName : "-");
+                        $("#last_name_value").text(data.lastName ? data.lastName : "-");
+                        $("#wins_value").text(data.wins);
+                        $("#loses_value").text(data.loses);
+                        $("#total_games_value").text(data.totalGames);
                         $("#about").text(data.about ? data.about : "-");
-                        $("#creatingDateValue").text(new Date(data.creationDate).toLocaleDateString());
+                        $("#creating_date_value").text(new Date(data.creationDate).toLocaleDateString());
 
                         if (data.hasPhoto) {
                             loadPhoto(data.id)
@@ -87,10 +90,11 @@
         function loadPhoto(userId) {
             $.ajax({
                 url: "/profile/" + userId + "/photo",
-                success: function(data){
-                    var img = document.createElement("IMG");
+                success: function (data) {
+                    const img = document.createElement("IMG");
                     img.src = "data:image/jpeg;base64," + data.photo;
-                    $("#photo").html(img).addClass("photo_borders");
+                    img.className = "photo_borders";
+                    $("#photo").html(img);
                 }
             });
         }
@@ -109,39 +113,35 @@
 <div id="profile" style="display: none">
     <div id="profile_header">
         <spring:message code="statistics.profile"/>
-        <span id="usernameValue"></span>
+        <span id="username_value"></span>
     </div>
 
     <div id="photo"></div>
 
     <table id="profile_data">
         <tr>
-            <td>${wins}:</td>
-            <td id="winsValue"></td>
-        </tr>
-        <tr>
-            <td>${loses}:</td>
-            <td id="losesValue"></td>
-        </tr>
-        <tr>
-            <td>${totalGames}:</td>
-            <td id="totalGamesValue"></td>
-        </tr>
-        <tr>
             <td>${firstname}:</td>
-            <td id="firstNameValue"></td>
+            <td id="first_name_value"></td>
         </tr>
         <tr>
             <td>${lastname}:</td>
-            <td id="lastNameValue"></td>
+            <td id="last_name_value"></td>
         </tr>
         <tr>
-            <td>${birthDate}:</td>
-            <td id="birthDateValue"></td>
+            <td>${wins}:</td>
+            <td id="wins_value"></td>
+        </tr>
+        <tr>
+            <td>${loses}:</td>
+            <td id="loses_value"></td>
+        </tr>
+        <tr>
+            <td>${totalGames}:</td>
+            <td id="total_games_value"></td>
         </tr>
         <tr>
             <td>${creatingDate}:</td>
-            <td id="creatingDateValue"></td>
+            <td id="creating_date_value"></td>
         </tr>
         <tr>
             <td>${about}:</td>
@@ -151,7 +151,8 @@
 </div>
 
 <div style="display:none">
-    <img class="default_photo" src="${pageContext.request.contextPath}/resources/images/default_photo.png" alt="default"/>
+    <img class="default_photo" alt="default_photo"
+         src="${pageContext.request.contextPath}/resources/images/default_photo.png" />
 </div>
 
 

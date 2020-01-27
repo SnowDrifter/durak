@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 public class UserDto implements Serializable {
 
-    @JsonView(UserView.Full.class)
+    @JsonView(UserView.Statistics.class)
     private Long id;
 
     @JsonView(UserView.Statistics.class)
