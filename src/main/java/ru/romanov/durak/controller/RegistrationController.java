@@ -1,5 +1,6 @@
 package ru.romanov.durak.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +12,12 @@ import ru.romanov.durak.model.user.dto.UserDto;
 import ru.romanov.durak.user.service.UserService;
 import ru.romanov.durak.util.MessageHelper;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import static ru.romanov.durak.util.PageConstants.*;
 
+@Slf4j
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
@@ -32,7 +35,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String processRegistration(@Valid UserDto userDto, BindingResult result, Model model) {
+    public String processRegistration(HttpServletRequest request, @Valid UserDto userDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("registration.title"));
             model.addAttribute(USER_ATTRIBUTE, userDto);
@@ -52,6 +55,13 @@ public class RegistrationController {
         model.asMap().clear();
         model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("registration.done"));
         model.addAttribute(MESSAGE_ATTRIBUTE, messageHelper.getMessage("registration.done"));
+
+        try {
+            request.login(userDto.getUsername(), userDto.getPassword());
+        } catch (Exception e) {
+            log.error("Auto-login error. {}: {}", e.getClass().getSimpleName(), e.getMessage());
+        }
+
         return SUCCESS_PAGE;
     }
 
