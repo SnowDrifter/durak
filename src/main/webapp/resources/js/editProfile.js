@@ -16,7 +16,7 @@ function uploadPhoto(userId) {
     formData.append("file", photo);
 
     $.ajax({
-        url: `/profile/${userId}/photo/upload`,
+        url: `/user/${userId}/photo/upload`,
         type: "post",
         data: formData,
         contentType: false,
@@ -39,17 +39,19 @@ const displayPhoto = photo => new Promise(() => {
     reader.onload = function () {
         const image = new Image();
         image.src = reader.result;
-        $("#photo").html(image).addClass("photo_borders");
+        image.className = "photo_borders";
+        $("#photo").html(image);
     };
 });
 
 function loadPhoto(userId) {
     $.ajax({
-        url: "/profile/" + userId + "/photo",
+        url: `/user/${userId}/photo`,
         success: function (data) {
             const image = new Image();
             image.src = "data:image/jpeg;base64," + data.photo;
-            $("#photo").html(image).addClass("photo_borders");
+            image.className = "photo_borders";
+            $("#photo").html(image);
         }
     });
 }

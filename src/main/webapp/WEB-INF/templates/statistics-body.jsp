@@ -62,7 +62,7 @@
                 const row = $("#list").getRowData(id);
 
                 $.ajax({
-                    url: "/profile/" + row.id,
+                    url: "/user/" + row.id,
                     type: "GET",
                     dataType: "json",
                     success: function (data) {
@@ -89,12 +89,12 @@
 
         function loadPhoto(userId) {
             $.ajax({
-                url: "/profile/" + userId + "/photo",
+                url: "/user/" + userId + "/photo",
                 success: function (data) {
-                    const img = document.createElement("IMG");
-                    img.src = "data:image/jpeg;base64," + data.photo;
-                    img.className = "photo_borders";
-                    $("#photo").html(img);
+                    const image = new Image();
+                    image.src = "data:image/jpeg;base64," + data.photo;
+                    image.className = "photo_borders";
+                    $("#photo").html(image);
                 }
             });
         }
