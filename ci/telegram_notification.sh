@@ -17,7 +17,6 @@ send_msg "*${TRAVIS_REPO_SLUG}*
 
 Status: ${build_status}
 Branch: ${TRAVIS_BRANCH}
-Message:
-${TRAVIS_COMMIT_MESSAGE}
+Message: ${TRAVIS_COMMIT_MESSAGE}
 
 [Job Log](${TRAVIS_JOB_WEB_URL})"
