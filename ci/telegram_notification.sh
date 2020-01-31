@@ -13,7 +13,7 @@ send_msg () {
         -d text="$1" -d parse_mode=Markdown
 }
 
-send_msg="*${TRAVIS_REPO_SLUG}*
+send_msg "*${TRAVIS_REPO_SLUG}*
 
 Status: ${build_status}
 Branch: ${TRAVIS_BRANCH}
