@@ -1,11 +1,11 @@
 let websocket;
 
 function initMultiplayerGame() {
-    websocket = new WebSocket("ws://" + window.location.host + "/ws/multiplayer?username=" + username);
+    websocket = new WebSocket("ws://" + window.location.host + "/ws/multiplayer?username=" + sessionStorage.getItem("username"));
 
     websocket.onclose = function () {
         cleanTableAndPlayerCards();
-        showNotification(sessionCloseText, "alert_window");
+        showNotification(getMessageText("SESSION_CLOSE"), "alert_window");
     };
     websocket.onmessage = function (evt) {
         const message = JSON.parse(evt.data);
@@ -22,36 +22,36 @@ function parseMessage(message) {
             break;
         }
         case "WRONG_CARD": {
-            showNotification(wrongCardText, "alert_notification");
+            showNotification(getMessageText(message.type), "alert_notification");
             break;
         }
         case "YOUR_MOVE": {
-            showNotification(playerMoveText);
+            showNotification(getMessageText(message.type));
             $("#take_button").hide();
             $("#finish_button").show();
             break;
         }
         case "ENEMY_MOVE": {
-            showNotification(enemyMoveText);
+            showNotification(getMessageText(message.type));
             $("#take_button").show();
             $("#finish_button").hide();
             break;
         }
         case "WIN": {
             hideButtons();
-            showNotification(winText, "win_notification");
+            showNotification(getMessageText(message.type), "win_notification");
             break;
         }
         case "LOSE": {
             hideButtons();
-            showNotification(loseText, "lose_notification");
+            showNotification(getMessageText(message.type), "lose_notification");
             break;
         }
         case "DRAW": {
             $("#enemy_side").empty();
             $("#player_side").empty();
             hideButtons();
-            showNotification(drawText, "draw_notification");
+            showNotification(getMessageText(message.type), "draw_notification");
             break;
         }
         case "INVITE": {
@@ -94,7 +94,7 @@ function parseMessage(message) {
             $("#table").empty();
             $("#deck").empty();
             $("#trump").hide();
-            showNotification(disconnectedText, "alert_window, disconnect_window");
+            showNotification(getMessageText(message.type), "alert_window, disconnect_window");
             break;
         }
     }
@@ -148,12 +148,12 @@ function showInvite(message) {
 
 function acceptInvite() {
     $('#invite_dialog').dialog("close");
-    sendWebsocketMessage({type: "ACCEPT_INVITE", invitee: username});
+    sendWebsocketMessage({type: "ACCEPT_INVITE", invitee: sessionStorage.getItem("username")});
 }
 
 function rejectInvite() {
     $('#invite_dialog').dialog("close");
-    sendWebsocketMessage({type: "REJECT_INVITE", invitee: username});
+    sendWebsocketMessage({type: "REJECT_INVITE", invitee: sessionStorage.getItem("username")});
 }
 
 $(window).on("load", function () {
@@ -174,7 +174,7 @@ $(document).ready(function () {
         sendWebsocketMessage({type: "SELECT_CARD", card: card});
     }).delegate(".lobby_user", "click", function () {
         const targetUser = $(this).text();
-        sendWebsocketMessage({type: "INVITE", initiator: username, invitee: targetUser});
+        sendWebsocketMessage({type: "INVITE", initiator: sessionStorage.getItem("username"), invitee: targetUser});
     });
 
     $("#take_button").click(function () {
@@ -236,6 +236,7 @@ function sendChatMessage(event) {
     }
 
     const date = $.format.date(new Date(), "HH:mm:ss");
+    const username = sessionStorage.getItem("username");
     appendChatMessage(username, message, date);
     chatTextField.val("");
 

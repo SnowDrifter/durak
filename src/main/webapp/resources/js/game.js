@@ -25,8 +25,8 @@ function closeNotifications() {
     $("#notification").hide();
 }
 
-function showNotification(message, additionalClass) {
-    $("#notification_text").text(message);
+function showNotification(messageText, additionalClass) {
+    $("#notification_text").text(messageText);
     $("#notification").removeClass().addClass(additionalClass).show();
 }
 

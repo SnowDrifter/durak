@@ -1,19 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script type="text/javascript" src="<c:url value="/resources/js/multiplayer-final.min.js"/>"><jsp:text/></script>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<tiles:insertTemplate template="/WEB-INF/templates/game-messages.jsp"/>
+
+<script type="text/javascript" src="<c:url value="/resources/js/multiplayer-final.min.js"/>"></script>
+
 <script>
-    var username = "${pageContext.request.userPrincipal.name}";
-
-    var playerMoveText = "<spring:message code="game.move.player"/>";
-    var enemyMoveText = "<spring:message code="game.move.enemy"/>";
-    var wrongCardText = "<spring:message code="game.wrong.card"/>";
-    var winText = "<spring:message code="game.result.win"/>";
-    var loseText = "<spring:message code="game.result.lose"/>";
-    var drawText = "<spring:message code="game.result.draw"/>";
-    var disconnectedText = "<spring:message code="game.disconnected"/>";
-    var sessionCloseText = "<spring:message code="game.sessionClose"/>";
-
+    sessionStorage.setItem("username", "${pageContext.request.userPrincipal.name}");
     $(document).ready(initMultiplayerGame());
 </script>
 
