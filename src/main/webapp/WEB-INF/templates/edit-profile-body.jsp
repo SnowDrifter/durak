@@ -5,8 +5,8 @@
 
 <c:set var="locale" value="${pageContext.response.locale}" />
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jQueryUI/ui/i18n/datepicker-${locale}.min.js"><jsp:text/></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/editProfile.js"><jsp:text/></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jQueryUI/ui/i18n/datepicker-${locale}.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/editProfile.js"></script>
 
 <form:form id="edit" modelAttribute="userDto" method="POST" enctype="multipart/form-data">
     <div id="edit_header"><spring:message code="edit.title"/></div>
@@ -50,7 +50,6 @@
         <tr class="errors">
             <td colspan="2">
                 <form:errors path="email" cssClass="error" element="div"/>
-                <jsp:text/>
             </td>
         </tr>
 
@@ -61,7 +60,6 @@
         <tr class="errors">
             <td colspan="2">
                 <form:errors path="about" cssClass="error" element="div"/>
-                <jsp:text/>
             </td>
         </tr>
 
