@@ -23,7 +23,12 @@ public class GameTest {
 
     @Test
     public void testCardCount(){
-        assertEquals(6, game.getAttackPlayer().getHand().size());
+        if (game.getAttackPlayer() instanceof AIPlayer) {
+            assertEquals(5, game.getAttackPlayer().getHand().size());
+        } else {
+            assertEquals(6, game.getAttackPlayer().getHand().size());
+        }
+
         assertEquals(6, game.getDefendPlayer().getHand().size());
         assertEquals(23, game.getDeck().size());
         assertNotNull(game.getTrump());
@@ -37,11 +42,6 @@ public class GameTest {
     @Test
     public void testTrump(){
         assertTrue(game.getTrump().isTrump());
-    }
-
-    @Test
-    public void testAIPlayerClass(){
-        assertTrue(game.getDefendPlayer() instanceof AIPlayer);
     }
 
 }
