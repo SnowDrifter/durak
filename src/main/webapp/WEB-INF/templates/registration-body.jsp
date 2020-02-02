@@ -84,7 +84,7 @@
         </tr>
 
         <tr>
-            <td><label> <spring:message code="user.birthDate"/></label></td>
+            <td><label><spring:message code="user.birthDate"/></label></td>
             <td>
                 <form:input class="field birth_date" id="birthDate" path="birthDate" value=""/>
                 <form:errors path="birthDate" element="div"/>
