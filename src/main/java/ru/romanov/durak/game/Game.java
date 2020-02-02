@@ -183,16 +183,18 @@ public class Game {
     }
 
     public void initGame(Player firstPlayer, Player secondPlayer) {
-        attackPlayer = firstPlayer;
-        defendPlayer = secondPlayer;
+        if (Math.random() < 0.5) {
+            attackPlayer = firstPlayer;
+            defendPlayer = secondPlayer;
+        } else {
+            attackPlayer = secondPlayer;
+            defendPlayer = firstPlayer;
+        }
+
         table = new Table();
         state = GameState.ATTACK;
         initDeck();
         Collections.shuffle(deck);
-
-        if (defendPlayer == null) {
-            defendPlayer = new AIPlayer();
-        }
 
         for (int i = 0; i < 6; i++) {
             attackPlayer.addToHand(deck.remove(0));
@@ -201,6 +203,10 @@ public class Game {
         updateTableView();
         webSocketService.sendMessage(attackPlayer.getUsername(), new DefaultMessage(MessageType.YOUR_MOVE));
         webSocketService.sendMessage(defendPlayer.getUsername(), new DefaultMessage(MessageType.ENEMY_MOVE));
+
+        if (attackPlayer instanceof AIPlayer) {
+            attack();
+        }
     }
 
     private void updateTableView() {
