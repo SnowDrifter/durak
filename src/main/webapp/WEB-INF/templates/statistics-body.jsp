@@ -1,6 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <c:set var="locale" value="${pageContext.response.locale}"/>
