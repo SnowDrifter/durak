@@ -14,7 +14,7 @@
         <spring.version>4.3.23.RELEASE</spring.version>
         <spring.security.version>4.2.12.RELEASE</spring.security.version>
         <tiles.version>3.0.7</tiles.version>
-        <jackson.version>2.9.0</jackson.version>
+        <jackson.version>2.10.2</jackson.version>
         <hibernate.version>5.4.2.Final</hibernate.version>
         <hibernate.validator.version>6.1.0.Final</hibernate.validator.version>
         <liquibase.version>3.5.5</liquibase.version>
