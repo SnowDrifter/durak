@@ -12,6 +12,7 @@ spring:
       validation-timeout: ${DB_VALIDATION_TIMEOUT:2000}
 
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: validate
       naming:
