@@ -5,8 +5,8 @@
 
 <c:set var="locale" value="${pageContext.response.locale}" />
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jQueryUI/ui/i18n/datepicker-${locale}.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/editProfile.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/lib/jQueryUI/ui/i18n/datepicker-${locale}.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/editProfile.js"></script>
 
 <form:form id="edit" modelAttribute="userDto" method="POST" enctype="multipart/form-data">
     <div id="edit_header"><spring:message code="edit.title"/></div>
@@ -23,7 +23,7 @@
                 <script>loadPhoto(${userDto.id})</script>
             </c:when>
             <c:otherwise>
-                <img class="default_photo" src="${pageContext.request.contextPath}/resources/images/default_photo.png" alt="default_photo"/>
+                <img class="default_photo" src="${pageContext.request.contextPath}/static/images/default_photo.png" alt="default_photo"/>
             </c:otherwise>
         </c:choose>
     </div>

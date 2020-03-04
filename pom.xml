@@ -7,7 +7,7 @@
     <groupId>ru.romanov</groupId>
     <artifactId>durak</artifactId>
     <version>1.1.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -60,19 +60,12 @@
                 </configuration>
             </plugin>
             <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.lesscss</groupId>
                 <artifactId>lesscss-maven-plugin</artifactId>
                 <version>1.7.0.1.1</version>
                 <configuration>
-                    <sourceDirectory>${project.basedir}/src/main/webapp/resources/css</sourceDirectory>
-                    <outputDirectory>${project.build.directory}/${project.build.finalName}/resources/css</outputDirectory>
+                    <sourceDirectory>${project.basedir}/src/main/resources/static/css</sourceDirectory>
+                    <outputDirectory>${project.build.directory}/classes/static/css</outputDirectory>
                     <compress>true</compress>
                     <includes>
                         <include>main.less</include>
@@ -94,12 +87,12 @@
                     <execution>
                         <id>singleplayer-js-minify</id>
                         <configuration>
-                            <webappSourceDir>${basedir}/src/main/webapp/resources</webappSourceDir>
+                            <webappSourceDir>${basedir}/src/main/resources/static</webappSourceDir>
                             <jsSourceFiles>
                                 <jsSourceFile>singleplayer.js</jsSourceFile>
                                 <jsSourceFile>game.js</jsSourceFile>
                             </jsSourceFiles>
-                            <jsTargetDir>/resources/js</jsTargetDir>
+                            <jsTargetDir>../classes/static/js</jsTargetDir>
                             <jsFinalFile>singleplayer-final.min.js</jsFinalFile>
                             <nosuffix>true</nosuffix>
                             <jsEngine>CLOSURE</jsEngine>
@@ -111,12 +104,12 @@
                     <execution>
                         <id>multiplayer-js-minify</id>
                         <configuration>
-                            <webappSourceDir>${basedir}/src/main/webapp/resources</webappSourceDir>
+                            <webappSourceDir>${basedir}/src/main/resources/static</webappSourceDir>
                             <jsSourceFiles>
                                 <jsSourceFile>multiplayer.js</jsSourceFile>
                                 <jsSourceFile>game.js</jsSourceFile>
                             </jsSourceFiles>
-                            <jsTargetDir>/resources/js</jsTargetDir>
+                            <jsTargetDir>../classes/static/js</jsTargetDir>
                             <jsFinalFile>multiplayer-final.min.js</jsFinalFile>
                             <nosuffix>true</nosuffix>
                             <jsEngine>CLOSURE</jsEngine>

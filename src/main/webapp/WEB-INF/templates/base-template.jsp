@@ -6,14 +6,14 @@
 <head>
     <title>${title}</title>
     <meta http-equiv="content-type" content="text/html" charset="UTF-8">
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" type="image/x-icon">
-    <script src="<c:url value="/resources/js/lib/jquery.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/lib/jquery-migrate-3.0.0.min.js"/>"></script>
-    <script src="<c:url value="/resources/js/lib/jquery-dateformat.min.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/resources/js/lib/jQueryUI/jquery-ui.min.js"/>"></script>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/main.css"/>"/>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/js/lib/jQueryUI/jquery-ui.min.css"/>"/>
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/js/lib/jQueryUI/jquery-ui.theme.min.css"/>"/>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/images/favicon.ico" type="image/x-icon">
+    <script src="<c:url value="/static/js/lib/jquery.min.js"/>"></script>
+    <script src="<c:url value="/static/js/lib/jquery-migrate-3.0.0.min.js"/>"></script>
+    <script src="<c:url value="/static/js/lib/jquery-dateformat.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/static/js/lib/jQueryUI/jquery-ui.min.js"/>"></script>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/static/css/main.css"/>"/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/static/js/lib/jQueryUI/jquery-ui.min.css"/>"/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/static/js/lib/jQueryUI/jquery-ui.theme.min.css"/>"/>
 </head>
 
 <body>

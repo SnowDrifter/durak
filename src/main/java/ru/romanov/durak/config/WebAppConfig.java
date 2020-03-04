@@ -36,8 +36,8 @@ public class WebAppConfig implements WebMvcConfigurer, WebSocketConfigurer {
         VersionResourceResolver versionResourceResolver = new VersionResourceResolver()
                 .addVersionStrategy(new ContentVersionStrategy(), "/**");
 
-        registry.addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/")
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/")
                 .setCacheControl(CacheControl.maxAge(30, TimeUnit.DAYS))
                 .resourceChain(true)
                 .addResolver(versionResourceResolver);

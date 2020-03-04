@@ -5,7 +5,7 @@
 
 <tiles:insertTemplate template="/WEB-INF/templates/game-messages.jsp"/>
 
-<script type="text/javascript" src="<c:url value="/resources/js/multiplayer-final.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/js/multiplayer-final.min.js"/>"></script>
 
 <script>
     sessionStorage.setItem("username", "${pageContext.request.userPrincipal.name}");
@@ -54,7 +54,7 @@
 </div>
 
 <div id="chat">
-    <div id="chat_header"><spring:message code="lobby.chat.header"/>  <img src="${pageContext.request.contextPath}/resources/images/arrow.png" id="chat_switch" alt="chat_switch"/></div>
+    <div id="chat_header"><spring:message code="lobby.chat.header"/>  <img src="${pageContext.request.contextPath}/static/images/arrow.png" id="chat_switch" alt="chat_switch"/></div>
     <div id="chat_content">
         <div id="chat_history"></div>
         <div id="chat_form">

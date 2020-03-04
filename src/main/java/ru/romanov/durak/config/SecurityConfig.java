@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/multiplayer", "/edit").access("isAuthenticated()")
-                .antMatchers("/resources/**").permitAll();
+                .antMatchers("/static/**").permitAll();
 
         http.csrf().disable();
 

@@ -4,9 +4,9 @@
 
 <c:set var="locale" value="${pageContext.response.locale}"/>
 
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/js/lib/jqgrid/css/ui.jqgrid.min.css"/>"/>
-<script type="text/javascript" src="<c:url value="/resources/js/lib/jqgrid/js/jquery.jqGrid.min.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/lib/jqgrid/js/i18n/grid.locale-${locale}.min.js"/>"></script>
+<link rel="stylesheet" type="text/css" href="<c:url value="/static/js/lib/jqgrid/css/ui.jqgrid.min.css"/>"/>
+<script type="text/javascript" src="<c:url value="/static/js/lib/jqgrid/js/jquery.jqGrid.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/js/lib/jqgrid/js/i18n/grid.locale-${locale}.min.js"/>"></script>
 
 <spring:message var="userList" code="statistics.title"/>
 <spring:message var="username" code="user.username"/>
@@ -151,7 +151,7 @@
 
 <div style="display:none">
     <img class="default_photo" alt="default_photo"
-         src="${pageContext.request.contextPath}/resources/images/default_photo.png" />
+         src="${pageContext.request.contextPath}/static/images/default_photo.png" />
 </div>
 
 
