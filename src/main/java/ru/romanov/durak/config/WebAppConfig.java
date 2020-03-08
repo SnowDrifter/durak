@@ -93,7 +93,7 @@ public class WebAppConfig implements WebMvcConfigurer, WebSocketConfigurer {
     @Bean
     public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource resource = new ReloadableResourceBundleMessageSource();
-        resource.setBasenames("/WEB-INF/locales/messages", "/WEB-INF/locales/application");
+        resource.setBasenames("classpath:i18n/messages", "classpath:i18n/application");
         resource.setCacheSeconds(5 * 60);
         resource.setDefaultEncoding("UTF-8");
         return resource;
