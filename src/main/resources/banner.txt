@@ -1,0 +1,8 @@
+ __  ___  _______  __  ___
+|  |/  / |   ____||  |/  /
+|  '  /  |  |__   |  '  /
+|    <   |   __|  |    <
+|  .  \  |  |____ |  .  \
+|__|\__\ |_______||__|\__\
+
+${AnsiColor.GREEN}Spring Boot version:${AnsiColor.DEFAULT} ${spring-boot.version}
