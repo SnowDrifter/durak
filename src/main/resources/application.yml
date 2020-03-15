@@ -1,4 +1,17 @@
 spring:
+  mvc:
+    static-path-pattern: /static/**
+
+  resources:
+    cache:
+      cachecontrol:
+        max-age: 30d
+    chain:
+      cache: true
+      strategy:
+        content:
+          enabled: true
+
   datasource:
     url: jdbc:postgresql://${DB_SERVER:localhost}:5432/${DB_DATABASE:durak}
     username: ${DB_USER:postgres}
