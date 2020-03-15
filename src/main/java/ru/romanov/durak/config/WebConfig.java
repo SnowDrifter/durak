@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.resource.ResourceUrlEncodingFilter;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
@@ -72,5 +73,10 @@ public class WebConfig implements WebMvcConfigurer {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
         registry.addInterceptor(localeChangeInterceptor);
+    }
+
+    @Bean
+    public ResourceUrlEncodingFilter resourceUrlEncodingFilter() {
+        return new ResourceUrlEncodingFilter();
     }
 }
