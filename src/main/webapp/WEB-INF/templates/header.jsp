@@ -24,8 +24,8 @@
             </security:authorize>
 
             <div class="language_section">
-                <a href="?lang=ru"><img src="${pageContext.request.contextPath}/static/images/flags/ru.png" alt="ru"/></a>
-                <a href="?lang=en"><img src="${pageContext.request.contextPath}/static/images/flags/en.png" alt="en"/></a>
+                <a href="?lang=ru"><img src="<c:url value="/static/images/flags/ru.png"/>" alt="ru"/></a>
+                <a href="?lang=en"><img src="<c:url value="/static/images/flags/en.png"/>" alt="en"/></a>
             </div>
         </div>
     </nav>
