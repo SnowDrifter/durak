@@ -5,8 +5,8 @@
 
 <c:set var="locale" value="${pageContext.response.locale}" />
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/lib/jQueryUI/ui/i18n/datepicker-${locale}.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/editProfile.js"></script>
+<script type="text/javascript" src="<c:url value="/static/js/lib/jQueryUI/ui/i18n/datepicker-${locale}.min.js/"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/js/editProfile.js"/>"></script>
 
 <form:form id="edit" modelAttribute="userDto" method="POST" enctype="multipart/form-data">
     <div id="edit_header"><spring:message code="edit.title"/></div>

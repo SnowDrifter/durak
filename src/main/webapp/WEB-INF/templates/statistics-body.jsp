@@ -150,8 +150,7 @@
 </div>
 
 <div style="display:none">
-    <img class="default_photo" alt="default_photo"
-         src="${pageContext.request.contextPath}/static/images/default_photo.png" />
+    <img class="default_photo" alt="default_photo" src="<c:url value="/static/images/default_photo.png"/>"/>
 </div>
 
 
