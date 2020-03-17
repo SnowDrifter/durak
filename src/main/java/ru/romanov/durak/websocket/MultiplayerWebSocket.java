@@ -1,6 +1,5 @@
 package ru.romanov.durak.websocket;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -13,7 +12,6 @@ import ru.romanov.durak.model.GameInvite;
 import ru.romanov.durak.util.JsonHelper;
 import ru.romanov.durak.websocket.message.*;
 
-@Slf4j
 public class MultiplayerWebSocket extends TextWebSocketHandler {
 
     @Autowired
@@ -31,7 +29,6 @@ public class MultiplayerWebSocket extends TextWebSocketHandler {
         webSocketService.addSession(username, session);
         lobbyService.addUser(username);
         lobbyService.sendLobbyState(username);
-        log.info("Open session for multiplayer");
     }
 
     @Override
