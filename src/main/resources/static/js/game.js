@@ -13,7 +13,7 @@ function preload() {
 
 function preloadCardImage(imageName) {
     const image = new Image();
-    image.src = "/resources/images/cards/" + imageName + ".png";
+    image.src = "/static/images/cards/" + imageName + ".png";
     images.set(imageName, image);
 }
 

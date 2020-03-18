@@ -5,7 +5,7 @@
 
 <tiles:insertTemplate template="/WEB-INF/templates/game-messages.jsp"/>
 
-<script type="text/javascript" src="<c:url value="/resources/js/singleplayer-final.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/js/singleplayer-final.min.js"/>"></script>
 
 <script>
     $(document).ready(initSingleplayerGame());
