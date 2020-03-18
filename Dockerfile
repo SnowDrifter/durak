@@ -1,5 +1,7 @@
-FROM jetty:9-jre8
+FROM bellsoft/liberica-openjdk-alpine:11
 
-COPY target/durak-1.1.0.war /var/lib/jetty/webapps/root.war
+COPY target/*.war root.war
 
 EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","/root.war"]

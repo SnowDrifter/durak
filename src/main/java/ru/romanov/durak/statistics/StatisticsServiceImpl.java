@@ -20,8 +20,8 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "statistics", key = "'statistics:' + #page + '-' + #rows + ':' + #sortBy + '-' + #order")
     public StatisticsDto getStatistics(int page, int rows, String sortBy, String order) {
-        Sort sort = new Sort(Sort.Direction.valueOf(order.toUpperCase()), sortBy);
-        PageRequest pageRequest = new PageRequest(page - 1, rows, sort);
+        Sort sort = Sort.by(Sort.Direction.valueOf(order.toUpperCase()), sortBy);
+        PageRequest pageRequest = PageRequest.of(page - 1, rows, sort);
         Page<User> users = userRepository.findAll(pageRequest);
         return new StatisticsDto(users);
     }

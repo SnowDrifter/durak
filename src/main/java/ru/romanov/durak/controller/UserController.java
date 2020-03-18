@@ -58,7 +58,7 @@ public class UserController {
     @JsonView(UserView.Full.class)
     public String editProfile(@Valid UserDto userDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            log.debug("Edit result has errors. Count: {}", bindingResult.getErrorCount());
+            log.debug("Edit result has {} errors", bindingResult.getErrorCount());
             model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("edit.title"));
             model.addAttribute(USER_ATTRIBUTE, userDto);
             return EDIT_PROFILE_PAGE;
