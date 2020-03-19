@@ -29,14 +29,6 @@ spring:
       connection-timeout: ${DB_CONNECTION_TIMEOUT:2000}
       validation-timeout: ${DB_VALIDATION_TIMEOUT:2000}
 
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: validate
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-
   liquibase:
     change-log: classpath:db/changelog-master.yaml
 
