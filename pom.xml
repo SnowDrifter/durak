@@ -201,11 +201,6 @@
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq</artifactId>
-            <version>3.13.1</version>
-        </dependency>
 
         <!-- Testing -->
         <dependency>
