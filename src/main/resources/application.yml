@@ -29,9 +29,6 @@ spring:
       connection-timeout: ${DB_CONNECTION_TIMEOUT:2000}
       validation-timeout: ${DB_VALIDATION_TIMEOUT:2000}
 
-  liquibase:
-    change-log: classpath:db/changelog-master.yaml
-
   redis:
     host: ${REDIS_HOST:localhost}
     jedis:
