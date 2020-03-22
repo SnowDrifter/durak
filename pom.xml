@@ -146,7 +146,7 @@
                 <executions>
                     <execution>
                         <id>default</id>
-                        <phase>generate-sources</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
