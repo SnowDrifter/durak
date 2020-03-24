@@ -12,7 +12,3 @@ Configutation:
       level: info
       AppenderRef:
         - ref: Console_Appender
-
-    Logger:
-      - name: liquibase.executor
-        level: warn
