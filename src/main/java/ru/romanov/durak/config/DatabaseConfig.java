@@ -1,6 +1,7 @@
 package ru.romanov.durak.config;
 
 import lombok.RequiredArgsConstructor;
+import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
@@ -30,6 +31,7 @@ public class DatabaseConfig {
     public DefaultDSLContext context() {
         DefaultConfiguration configuration = new DefaultConfiguration();
         configuration.set(connectionProvider());
+        configuration.set(SQLDialect.POSTGRES);
         configuration.set(new DefaultExecuteListenerProvider(exceptionTranslator()));
         return new DefaultDSLContext(configuration);
     }
