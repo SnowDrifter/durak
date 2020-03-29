@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
+import ru.romanov.durak.model.jooq.tables.records.UserRecord;
 import ru.romanov.durak.model.user.User;
 
 import java.util.Optional;
@@ -66,7 +67,20 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User save(User user) {
-        // TODO: implement
-        return null;
+        return user.getId() != null ? update(user) : insert(user);
+    }
+
+    private User insert(User user) {
+        UserRecord record = context.newRecord(USER, user);
+        return context.insertInto(USER)
+                .set(record)
+                .returning(USER.ID)
+                .fetchOne()
+                .into(User.class);
+    }
+
+    private User update(User user) {
+        context.newRecord(USER, user).update();
+        return user;
     }
 }
