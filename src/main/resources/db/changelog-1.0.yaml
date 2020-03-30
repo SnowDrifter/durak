@@ -26,10 +26,10 @@ databaseChangeLog:
                             primaryKey: true
                             nullable: false
                     - column:
-                        name: firstname
+                        name: first_name
                         type: varchar(255)
                     - column:
-                        name: lastname
+                        name: last_name
                         type: varchar(255)
                     - column:
                         name: username
@@ -44,16 +44,16 @@ databaseChangeLog:
                         name: about
                         type: text
                     - column:
-                        name: birthdate
+                        name: birth_date
                         type: timestamp(6)
                     - column:
-                        name: creationdate
+                        name: creation_date
                         type: timestamp(6)
                     - column:
                         name: enabled
                         type: bool
                     - column:
-                        name: totalgames
+                        name: total_games
                         type: int4
                     - column:
                         name: wins
