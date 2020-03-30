@@ -168,8 +168,8 @@
                     </jdbc>
                     <generator>
                         <database>
-                            <includes>.*</includes>
                             <inputSchema>public</inputSchema>
+                            <excludes>databasechangelog.*</excludes>
                             <includeIndexes>false</includeIndexes>
                         </database>
                         <generate>
