@@ -171,6 +171,14 @@
                             <inputSchema>public</inputSchema>
                             <excludes>databasechangelog.*</excludes>
                             <includeIndexes>false</includeIndexes>
+                            <forcedTypes>
+                                <forcedType>
+                                    <userType>java.util.Set&lt;ru.romanov.durak.model.user.Role&gt;</userType>
+                                    <converter>ru.romanov.durak.model.user.RoleConverter</converter>
+                                    <includeExpression>.*\.roles</includeExpression>
+                                    <includeTypes>.*</includeTypes>
+                                </forcedType>
+                            </forcedTypes>
                         </database>
                         <generate>
                             <generatedAnnotation>false</generatedAnnotation>
