@@ -26,10 +26,9 @@ public class UserRepositoryImpl implements UserRepository {
         User user = context.select()
                 .from(USER)
                 .where(USER.ID.eq(id))
-                .fetchOne()
-                .into(User.class);
+                .fetchOneInto(User.class);
 
-        return Optional.of(user);
+        return Optional.ofNullable(user);
     }
 
     @Override
@@ -37,10 +36,9 @@ public class UserRepositoryImpl implements UserRepository {
         User user = context.select()
                 .from(USER)
                 .where(USER.USERNAME.eq(username))
-                .fetchOne()
-                .into(User.class);
+                .fetchOneInto(User.class);
 
-        return Optional.of(user);
+        return Optional.ofNullable(user);
     }
 
     @Override
