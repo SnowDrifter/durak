@@ -53,12 +53,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public byte[] findPhotoById(long id) {
-        // TODO: implement
-        return new byte[0];
-    }
-
-    @Override
     public Page<User> findAll(int offset, int limit, String sortBy, String order) {
         OrderField<?> orderField;
         if ("asc".equals(order.toLowerCase())) {
@@ -77,11 +71,6 @@ public class UserRepositoryImpl implements UserRepository {
         long totalCount = findTotalCount();
         PageRequest pageRequest = PageRequest.of(offset, limit);
         return new PageImpl<>(users, pageRequest, totalCount);
-    }
-
-    @Override
-    public void savePhoto(long id, byte[] photo) {
-        // TODO: implement
     }
 
     @Override

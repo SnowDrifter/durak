@@ -13,13 +13,8 @@ public interface UserRepository {
 
     boolean existsUserByUsername(String username);
 
-    byte[] findPhotoById(long id);
-
     Page<User> findAll(int page, int rows, String sortBy, String order);
 
-    void savePhoto(long id, byte[] photo);
-
     User save(User user);
-
 
 }

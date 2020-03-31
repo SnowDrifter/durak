@@ -1,12 +1,13 @@
 package ru.romanov.durak.user.service;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.romanov.durak.media.ImageService;
 import ru.romanov.durak.model.user.UserMapper;
 import ru.romanov.durak.model.user.dto.UserDto;
 import ru.romanov.durak.user.UserRepository;
@@ -17,12 +18,12 @@ import java.util.Collections;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final ImageService imageService;
 
     @Override
     @Transactional
@@ -57,13 +58,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public byte[] findPhoto(long id) {
-        return userRepository.findPhotoById(id);
+        return imageService.findPhoto(id);
     }
 
     @Override
     @Transactional
     public void savePhoto(long userId, byte[] photo) {
-        userRepository.savePhoto(userId, photo);
+        imageService.savePhoto(userId, photo);
     }
 
     @Override
