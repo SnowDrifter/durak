@@ -2,11 +2,15 @@ package ru.romanov.durak.user;
 
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
+import org.jooq.OrderField;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import ru.romanov.durak.model.jooq.tables.records.UserRecord;
 import ru.romanov.durak.model.user.User;
 
+import java.util.List;
 import java.util.Optional;
 
 import static ru.romanov.durak.model.jooq.tables.User.USER;
@@ -55,9 +59,24 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Page<User> findAll(int page, int rows, String sortBy, String order) {
-        // TODO: implement
-        return null;
+    public Page<User> findAll(int offset, int limit, String sortBy, String order) {
+        OrderField<?> orderField;
+        if ("asc".equals(order.toLowerCase())) {
+            orderField = USER.field(sortBy).asc().nullsFirst();
+        } else {
+            orderField = USER.field(sortBy).desc().nullsLast();
+        }
+
+        List<User> users = context.select()
+                .from(USER)
+                .orderBy(orderField)
+                .limit(limit)
+                .offset(offset * limit)
+                .fetchInto(User.class);
+
+        long totalCount = findTotalCount();
+        PageRequest pageRequest = PageRequest.of(offset, limit);
+        return new PageImpl<>(users, pageRequest, totalCount);
     }
 
     @Override
@@ -82,5 +101,11 @@ public class UserRepositoryImpl implements UserRepository {
     private User update(User user) {
         context.newRecord(USER, user).update();
         return user;
+    }
+
+    private long findTotalCount() {
+        return context.selectCount()
+                .from(USER)
+                .fetchOneInto(Long.class);
     }
 }

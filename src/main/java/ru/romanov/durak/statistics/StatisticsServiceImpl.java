@@ -18,7 +18,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = "statistics", key = "'statistics:' + #page + '-' + #rows + ':' + #sortBy + '-' + #order")
     public StatisticsDto getStatistics(int page, int rows, String sortBy, String order) {
-        Page<User> users = userRepository.findAll(page, rows, sortBy, order);
+        Page<User> users = userRepository.findAll(page - 1, rows, sortBy, order);
         return new StatisticsDto(users);
     }
 }
