@@ -11,7 +11,7 @@ env: DB_SERVER=localhost DB_DATABASE=durak DB_USER=postgres DB_PASSWORD=
 services:
   - postgresql
 
-before_script:
+before_install:
   - psql -c 'create database durak;' -U postgres
 
 script: mvn clean test
