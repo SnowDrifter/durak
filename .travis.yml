@@ -2,10 +2,11 @@ language: java
 jdk: openjdk8
 
 env:
-  - DB_SERVER=localhost
-  - DB_DATABASE=durak
-  - DB_USER=postgres
-  - DB_PASSWORD=
+  global:
+    - DB_SERVER=localhost
+    - DB_DATABASE=durak
+    - DB_USER=postgres
+    - DB_PASSWORD=
 
 services:
   - postgresql
