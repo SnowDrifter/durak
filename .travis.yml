@@ -3,6 +3,7 @@ jdk: openjdk8
 
 cache:
   directories:
+    - .autoconf
     - $HOME/.m2
 
 env: DB_SERVER=localhost DB_DATABASE=durak DB_USER=postgres DB_PASSWORD=
