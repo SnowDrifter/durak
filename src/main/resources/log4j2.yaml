@@ -12,3 +12,7 @@ Configutation:
       level: info
       AppenderRef:
         - ref: Console_Appender
+
+    Logger:
+      - name: org.jooq.Constants
+        level: warn
