@@ -11,6 +11,9 @@ env: DB_SERVER=localhost DB_DATABASE=durak DB_USER=postgres DB_PASSWORD=
 services:
   - postgresql
 
+addons:
+  postgresql: "10"
+
 before_install:
   - psql -c 'create database durak;' -U postgres
 
