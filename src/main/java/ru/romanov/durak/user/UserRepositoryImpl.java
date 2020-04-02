@@ -53,7 +53,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Page<User> findAll(int offset, int limit, String sortBy, String order) {
         OrderField<?> orderField;
-        if ("asc".equals(order.toLowerCase())) {
+        if ("asc".equalsIgnoreCase(order)) {
             orderField = USER.field(sortBy).asc().nullsFirst();
         } else {
             orderField = USER.field(sortBy).desc().nullsLast();

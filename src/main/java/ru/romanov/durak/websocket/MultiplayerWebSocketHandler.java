@@ -1,6 +1,7 @@
 package ru.romanov.durak.websocket;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -12,16 +13,14 @@ import ru.romanov.durak.model.GameInvite;
 import ru.romanov.durak.util.JsonHelper;
 import ru.romanov.durak.websocket.message.*;
 
-public class MultiplayerWebSocket extends TextWebSocketHandler {
+@Component
+@RequiredArgsConstructor
+public class MultiplayerWebSocketHandler extends TextWebSocketHandler {
 
-    @Autowired
-    private LobbyService lobbyService;
-    @Autowired
-    private InviteService inviteService;
-    @Autowired
-    private GameService gameService;
-    @Autowired
-    private WebSocketService webSocketService;
+    private final LobbyService lobbyService;
+    private final InviteService inviteService;
+    private final GameService gameService;
+    private final WebSocketService webSocketService;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {

@@ -1,7 +1,7 @@
 package ru.romanov.durak.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +10,10 @@ import ru.romanov.durak.util.MessageHelper;
 import static ru.romanov.durak.util.PageConstants.*;
 
 @Controller
+@RequiredArgsConstructor
 public class PageController {
 
-    @Autowired
-    private MessageHelper messageHelper;
+    private final MessageHelper messageHelper;
 
     @GetMapping("/")
     public String home(Model model) {

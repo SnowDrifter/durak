@@ -1,8 +1,8 @@
 package ru.romanov.durak.lobby;
 
+import lombok.RequiredArgsConstructor;
 import net.jodah.expiringmap.ExpirationListener;
 import net.jodah.expiringmap.ExpiringMap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.romanov.durak.model.GameInvite;
 import ru.romanov.durak.websocket.WebSocketService;
@@ -15,10 +15,10 @@ import static ru.romanov.durak.websocket.message.MessageType.INVITE;
 import static ru.romanov.durak.websocket.message.MessageType.REJECT_INVITE;
 
 @Service
+@RequiredArgsConstructor
 public class InviteServiceImpl implements InviteService {
 
-    @Autowired
-    private WebSocketService webSocketService;
+    private final WebSocketService webSocketService;
 
     private final Map<String, GameInvite> invites = ExpiringMap.builder()
             .expiration(30, TimeUnit.SECONDS)
