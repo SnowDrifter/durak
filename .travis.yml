@@ -1,6 +1,22 @@
 language: java
 jdk: openjdk8
 
+cache:
+  directories:
+    - .autoconf
+    - $HOME/.m2
+
+env: DB_SERVER=localhost DB_DATABASE=durak DB_USER=postgres DB_PASSWORD=
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "10"
+
+before_install:
+  - psql -c 'create database durak;' -U postgres
+
 script: mvn clean test
 
 after_script: ./ci/telegram_notification.sh

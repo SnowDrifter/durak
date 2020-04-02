@@ -1,31 +1,25 @@
 package ru.romanov.durak.config;
 
-import org.springframework.context.annotation.Bean;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
-import ru.romanov.durak.websocket.MultiplayerWebSocket;
-import ru.romanov.durak.websocket.SingleplayerWebSocket;
+import ru.romanov.durak.websocket.MultiplayerWebSocketHandler;
+import ru.romanov.durak.websocket.SingleplayerWebSocketHandler;
 
 @Configuration
 @EnableWebSocket
+@RequiredArgsConstructor
 public class WebsocketConfig implements WebSocketConfigurer {
+
+    private final SingleplayerWebSocketHandler singleplayerWebSocketHandler;
+    private final MultiplayerWebSocketHandler multiplayerWebSocketHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(singleplayerWebSocket(), "/ws/singleplayer");
-        registry.addHandler(multiplayerWebSocket(), "/ws/multiplayer");
-    }
-
-    @Bean
-    public SingleplayerWebSocket singleplayerWebSocket() {
-        return new SingleplayerWebSocket();
-    }
-
-    @Bean
-    public MultiplayerWebSocket multiplayerWebSocket() {
-        return new MultiplayerWebSocket();
+        registry.addHandler(singleplayerWebSocketHandler, "/ws/singleplayer");
+        registry.addHandler(multiplayerWebSocketHandler, "/ws/multiplayer");
     }
 
 }

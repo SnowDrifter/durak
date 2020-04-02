@@ -33,7 +33,7 @@
                 {name: "username", index: "username", width: "35%"},
                 {name: "wins", index: "wins", width: "20%"},
                 {name: "loses", index: "loses", width: "20%"},
-                {name: "totalGames", index: "totalGames", width: "20%"}
+                {name: "totalGames", index: "total_games", width: "20%"}
             ],
             prmNames: {
                 sort: "sortBy",

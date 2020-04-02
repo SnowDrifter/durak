@@ -1,8 +1,8 @@
 package ru.romanov.durak.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,12 +21,11 @@ import static ru.romanov.durak.util.PageConstants.*;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private MessageHelper messageHelper;
+    private final UserService userService;
+    private final MessageHelper messageHelper;
 
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false) String error) {

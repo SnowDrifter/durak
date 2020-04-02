@@ -1,7 +1,8 @@
 package ru.romanov.durak.websocket;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -10,12 +11,12 @@ import ru.romanov.durak.game.GameService;
 import ru.romanov.durak.websocket.message.Message;
 import ru.romanov.durak.util.JsonHelper;
 
-public class SingleplayerWebSocket extends TextWebSocketHandler {
+@Component
+@RequiredArgsConstructor
+public class SingleplayerWebSocketHandler extends TextWebSocketHandler {
 
-    @Autowired
-    private WebSocketService webSocketService;
-    @Autowired
-    private GameService gameService;
+    private final WebSocketService webSocketService;
+    private final GameService gameService;
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage textMessage) {

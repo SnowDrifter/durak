@@ -1,22 +1,26 @@
 package ru.romanov.durak.util;
 
-public interface PageConstants {
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-    String HOME_PAGE = "home";
-    String SINGLEPLAYER_PAGE = "singleplayer";
-    String MULTIPLAYER_PAGE = "multiplayer";
-    String RULES_PAGE = "rules";
-    String STATISTICS_PAGE = "statistics";
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class PageConstants {
 
-    String REGISTRATION_PAGE = "registration";
-    String LOGIN_PAGE = "login";
-    String EDIT_PROFILE_PAGE = "edit-profile";
+    public static final String HOME_PAGE = "home";
+    public static final String SINGLEPLAYER_PAGE = "singleplayer";
+    public static final String MULTIPLAYER_PAGE = "multiplayer";
+    public static final String RULES_PAGE = "rules";
+    public static final String STATISTICS_PAGE = "statistics";
 
-    String SUCCESS_PAGE = "success";
+    public static final String REGISTRATION_PAGE = "registration";
+    public static final String LOGIN_PAGE = "login";
+    public static final String EDIT_PROFILE_PAGE = "edit-profile";
 
-    String TITLE_ATTRIBUTE = "title";
-    String USER_ATTRIBUTE = "userDto";
-    String MESSAGE_ATTRIBUTE = "message";
-    String ERROR_ATTRIBUTE = "error";
+    public static final String SUCCESS_PAGE = "success";
+
+    public static final String TITLE_ATTRIBUTE = "title";
+    public static final String USER_ATTRIBUTE = "userDto";
+    public static final String MESSAGE_ATTRIBUTE = "message";
+    public static final String ERROR_ATTRIBUTE = "error";
 
 }

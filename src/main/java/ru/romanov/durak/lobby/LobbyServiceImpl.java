@@ -1,6 +1,6 @@
 package ru.romanov.durak.lobby;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.romanov.durak.websocket.WebSocketService;
 import ru.romanov.durak.websocket.message.Message;
@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 
 
 @Service
+@RequiredArgsConstructor
 public class LobbyServiceImpl implements LobbyService {
 
-    @Autowired
-    private WebSocketService webSocketService;
+    private final WebSocketService webSocketService;
     private final Set<String> lobbyUsernames = new HashSet<>();
 
     @Override

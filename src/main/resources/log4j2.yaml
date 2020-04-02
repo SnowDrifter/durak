@@ -14,5 +14,5 @@ Configutation:
         - ref: Console_Appender
 
     Logger:
-      - name: liquibase.executor
+      - name: org.jooq.Constants
         level: warn
