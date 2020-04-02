@@ -1,7 +1,7 @@
 package ru.romanov.durak.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +16,11 @@ import static ru.romanov.durak.util.PageConstants.STATISTICS_PAGE;
 import static ru.romanov.durak.util.PageConstants.TITLE_ATTRIBUTE;
 
 @Controller
+@RequiredArgsConstructor
 public class StatisticsController {
 
-    @Autowired
-    private StatisticsService statisticsService;
-    @Autowired
-    private MessageHelper messageHelper;
+    private final StatisticsService statisticsService;
+    private final MessageHelper messageHelper;
 
     @GetMapping("/statistic")
     public String statistic(Model model) {

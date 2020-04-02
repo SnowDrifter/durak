@@ -26,10 +26,10 @@ databaseChangeLog:
                             primaryKey: true
                             nullable: false
                     - column:
-                        name: firstname
+                        name: first_name
                         type: varchar(255)
                     - column:
-                        name: lastname
+                        name: last_name
                         type: varchar(255)
                     - column:
                         name: username
@@ -38,22 +38,25 @@ databaseChangeLog:
                         name: password
                         type: varchar(64)
                     - column:
+                        name: roles
+                        type: varchar(255)
+                    - column:
                         name: email
                         type: varchar(255)
                     - column:
                         name: about
                         type: text
                     - column:
-                        name: birthdate
+                        name: birth_date
                         type: timestamp(6)
                     - column:
-                        name: creationdate
+                        name: creation_date
                         type: timestamp(6)
                     - column:
                         name: enabled
                         type: bool
                     - column:
-                        name: totalgames
+                        name: total_games
                         type: int4
                     - column:
                         name: wins
@@ -96,17 +99,3 @@ databaseChangeLog:
                     - column:
                         name: last_used
                         type: timestamp(6)
-
-    - changeSet:
-        id: user_roles_table
-        author: romanov
-        changes:
-            - createTable:
-                tableName: user_roles
-                columns:
-                    - column:
-                        name: user_id
-                        type: int8
-                    - column:
-                        name: role
-                        type: varchar(255)

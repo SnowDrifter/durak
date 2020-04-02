@@ -1,7 +1,7 @@
 package ru.romanov.durak.game;
 
+import lombok.RequiredArgsConstructor;
 import net.jodah.expiringmap.ExpiringMap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import ru.romanov.durak.model.player.AIPlayer;
@@ -20,12 +20,11 @@ import static ru.romanov.durak.websocket.message.MessageType.ENEMY_DISCONNECTED;
 import static ru.romanov.durak.websocket.message.MessageType.START_GAME;
 
 @Service
+@RequiredArgsConstructor
 public class GameServiceImpl implements GameService {
 
-    @Autowired
-    private WebSocketService webSocketService;
-    @Autowired
-    private UserService userService;
+    private final WebSocketService webSocketService;
+    private final UserService userService;
 
     private final Map<String, Game> singleplayerGames = ExpiringMap.builder().expiration(30, TimeUnit.MINUTES).build();
     private final Map<String, Game> multiplayerGames = ExpiringMap.builder().expiration(30, TimeUnit.MINUTES).build();
