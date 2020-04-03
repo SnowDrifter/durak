@@ -10,6 +10,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      minio:
+        condition: service_healthy
     environment:
       - DB_SERVER=postgres
       - DB_DATABASE=durak
@@ -49,3 +51,18 @@ services:
       interval: 10s
       timeout: 3s
       retries: 5
+
+  minio:
+    image: minio/minio
+    container_name: durak_minio
+    environment:
+      - MINIO_ACCESS_KEY=durak_access_key
+      - MINIO_SECRET_KEY=durak_secret_key
+    ports:
+      - 9000:9000
+    command: server /mnt/minio/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
