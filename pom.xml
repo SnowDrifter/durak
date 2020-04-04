@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <tiles.version>3.0.8</tiles.version>
 
-        <sonar.host.url>http://localhost:9000</sonar.host.url>
+        <sonar.host.url>http://localhost:9001</sonar.host.url>
         <sonar.login>admin</sonar.login>
         <sonar.password>admin</sonar.password>
     </properties>
