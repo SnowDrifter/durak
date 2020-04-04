@@ -18,7 +18,7 @@ function uploadPhoto(userId) {
     formData.append("userId", userId);
 
     $.ajax({
-        url: `/media/user/photo/upload`,
+        url: "/user/photo/upload",
         type: "post",
         data: formData,
         contentType: false,
@@ -47,16 +47,8 @@ const displayPhoto = photo => new Promise(() => {
 });
 
 function loadPhoto(photoId) {
-    $.ajax({
-        url: `/media/photo`,
-        data: {
-            photoId: photoId
-        },
-        success: function (data) {
-            const image = new Image();
-            image.src = "data:image/jpeg;base64," + data.photo;
-            image.className = "photo_borders";
-            $("#photo").html(image);
-        }
-    });
+    const image = new Image();
+    image.src = "/media/photo?photoId=" + photoId;
+    image.className = "photo_borders";
+    $("#photo").html(image);
 }

@@ -5,6 +5,7 @@
 <c:set var="locale" value="${pageContext.response.locale}"/>
 
 <link rel="stylesheet" type="text/css" href="<c:url value="/static/js/lib/jqgrid/css/ui.jqgrid.min.css"/>"/>
+<script type="text/javascript" src="<c:url value="/static/js/editProfile.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/static/js/lib/jqgrid/js/jquery.jqGrid.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/static/js/lib/jqgrid/js/i18n/grid.locale-${locale}.min.js"/>"></script>
 
@@ -85,21 +86,6 @@
                 });
             }
         });
-
-        function loadPhoto(photoId) {
-            $.ajax({
-                url: "/media/photo",
-                data: {
-                    photoId: photoId
-                },
-                success: function (data) {
-                    const image = new Image();
-                    image.src = "data:image/jpeg;base64," + data.photo;
-                    image.className = "photo_borders";
-                    $("#photo").html(image);
-                }
-            });
-        }
     });
 </script>
 

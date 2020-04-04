@@ -65,7 +65,7 @@
 
         <tr>
             <td><label><spring:message code="user.photo"/></label></td>
-            <td><input name="photo" type="file" onchange="uploadPhoto(${userDto.id})"/></td>
+            <td><input name="photo" type="file" accept="image/jpeg" onchange="uploadPhoto(${userDto.id})"/></td>
         </tr>
         <tr>
             <td></td>
