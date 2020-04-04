@@ -1,11 +1,11 @@
 package ru.romanov.durak.controller;
 
 import com.google.common.collect.ImmutableMap;
+import com.jlefebure.spring.boot.minio.MinioException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import ru.romanov.durak.user.service.UserService;
+import ru.romanov.durak.media.ImageService;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -14,12 +14,11 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class PhotoController {
 
-    private final UserService userService;
+    private final ImageService imageService;
 
-    @ResponseBody
-    @GetMapping("/user/{userId}/photo")
-    public ResponseEntity findPhoto(@PathVariable long userId) {
-        byte[] photo = userService.findPhoto(userId);
+    @GetMapping("/media/photo")
+    public ResponseEntity findPhoto(@RequestParam String photoId) throws MinioException, IOException {
+        byte[] photo = imageService.findPhoto(photoId);
 
         if (photo != null) {
             String photoBase64 = Base64.getEncoder().encodeToString(photo);
@@ -27,13 +26,6 @@ public class PhotoController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @ResponseBody
-    @PostMapping("/user/{userId}/photo/upload")
-    public ResponseEntity uploadPhoto(@PathVariable long userId, @RequestParam MultipartFile file) throws IOException {
-        userService.savePhoto(userId, file.getBytes());
-        return ResponseEntity.ok().build();
     }
 
 }

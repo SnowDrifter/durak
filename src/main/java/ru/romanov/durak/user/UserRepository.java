@@ -17,4 +17,6 @@ public interface UserRepository {
 
     User save(User user);
 
+    void updatePhotoId(long userId, String photoId);
+
 }

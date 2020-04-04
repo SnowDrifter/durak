@@ -76,6 +76,14 @@ public class UserRepositoryImpl implements UserRepository {
         return user.getId() != null ? update(user) : insert(user);
     }
 
+    @Override
+    public void updatePhotoId(long userId, String photoId) {
+        context.update(USER)
+                .set(USER.PHOTO_ID, photoId)
+                .where(USER.ID.eq(userId))
+                .execute();
+    }
+
     private User insert(User user) {
         UserRecord record = context.newRecord(USER, user);
         return context.insertInto(USER)

@@ -65,8 +65,8 @@ databaseChangeLog:
                         name: loses
                         type: int4
                     - column:
-                        name: photo
-                        type: oid
+                        name: photo_id
+                        type: varchar(64)
 
     - changeSet:
         id: user_username_uk
