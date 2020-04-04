@@ -74,8 +74,8 @@
                         $("#about").text(data.about ? data.about : "-");
                         $("#creating_date_value").text(new Date(data.creationDate).toLocaleDateString());
 
-                        if (data.hasPhoto) {
-                            loadPhoto(data.id)
+                        if (data.photoId) {
+                            loadPhoto(data.photoId)
                         } else {
                             $("#photo").removeClass("photo_borders").empty().append($(".default_photo").clone());
                         }
@@ -86,9 +86,12 @@
             }
         });
 
-        function loadPhoto(userId) {
+        function loadPhoto(photoId) {
             $.ajax({
-                url: "/user/" + userId + "/photo",
+                url: "/media/photo",
+                data: {
+                    photoId: photoId
+                },
                 success: function (data) {
                     const image = new Image();
                     image.src = "data:image/jpeg;base64," + data.photo;

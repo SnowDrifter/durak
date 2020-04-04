@@ -19,8 +19,8 @@
 
     <div id="photo">
         <c:choose>
-            <c:when test="${userDto.hasPhoto}">
-                <script>loadPhoto(${userDto.id})</script>
+            <c:when test="${not empty userDto.photoId}">
+                <script>loadPhoto('${userDto.photoId}')</script>
             </c:when>
             <c:otherwise>
                 <img class="default_photo" src="<c:url value="/static/images/default_photo.png"/>" alt="default_photo"/>
