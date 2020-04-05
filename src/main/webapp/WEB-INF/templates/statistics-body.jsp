@@ -5,6 +5,7 @@
 <c:set var="locale" value="${pageContext.response.locale}"/>
 
 <link rel="stylesheet" type="text/css" href="<c:url value="/static/js/lib/jqgrid/css/ui.jqgrid.min.css"/>"/>
+<script type="text/javascript" src="<c:url value="/static/js/editProfile.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/static/js/lib/jqgrid/js/jquery.jqGrid.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/static/js/lib/jqgrid/js/i18n/grid.locale-${locale}.min.js"/>"></script>
 
@@ -74,8 +75,8 @@
                         $("#about").text(data.about ? data.about : "-");
                         $("#creating_date_value").text(new Date(data.creationDate).toLocaleDateString());
 
-                        if (data.hasPhoto) {
-                            loadPhoto(data.id)
+                        if (data.photoId) {
+                            loadPhoto(data.photoId)
                         } else {
                             $("#photo").removeClass("photo_borders").empty().append($(".default_photo").clone());
                         }
@@ -85,18 +86,6 @@
                 });
             }
         });
-
-        function loadPhoto(userId) {
-            $.ajax({
-                url: "/user/" + userId + "/photo",
-                success: function (data) {
-                    const image = new Image();
-                    image.src = "data:image/jpeg;base64," + data.photo;
-                    image.className = "photo_borders";
-                    $("#photo").html(image);
-                }
-            });
-        }
     });
 </script>
 

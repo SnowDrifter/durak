@@ -1,9 +1,12 @@
 package ru.romanov.durak.user.service;
 
 
+import com.jlefebure.spring.boot.minio.MinioException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.romanov.durak.model.user.dto.UserDto;
 import ru.romanov.durak.model.user.User;
+
+import java.io.InputStream;
 
 public interface UserService extends UserDetailsService {
 
@@ -15,9 +18,7 @@ public interface UserService extends UserDetailsService {
 
     User findByUsername(String username);
 
-    byte[] findPhoto(long userId);
-
-    void savePhoto(long userId, byte[] photo);
+    void updatePhoto(long id, InputStream stream) throws MinioException;
 
     void saveNewUser(UserDto user);
 

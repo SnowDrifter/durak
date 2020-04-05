@@ -62,6 +62,6 @@ public class UserDto implements Serializable {
     private boolean enabled;
 
     @JsonView(UserView.Full.class)
-    private boolean hasPhoto;
+    private String photoId;
 
 }

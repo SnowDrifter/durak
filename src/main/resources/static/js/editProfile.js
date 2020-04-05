@@ -11,12 +11,14 @@ $(function createDatepicker() {
 function uploadPhoto(userId) {
     $("#upload_photo_error").css("display", "none");
 
-    const formData = new FormData();
     const photo = $("input[name='photo']")[0].files[0];
+
+    const formData = new FormData();
     formData.append("file", photo);
+    formData.append("userId", userId);
 
     $.ajax({
-        url: `/user/${userId}/photo/upload`,
+        url: "/user/photo/upload",
         type: "post",
         data: formData,
         contentType: false,
@@ -44,14 +46,9 @@ const displayPhoto = photo => new Promise(() => {
     };
 });
 
-function loadPhoto(userId) {
-    $.ajax({
-        url: `/user/${userId}/photo`,
-        success: function (data) {
-            const image = new Image();
-            image.src = "data:image/jpeg;base64," + data.photo;
-            image.className = "photo_borders";
-            $("#photo").html(image);
-        }
-    });
+function loadPhoto(photoId) {
+    const image = new Image();
+    image.src = "/media/photo?photoId=" + photoId;
+    image.className = "photo_borders";
+    $("#photo").html(image);
 }

@@ -1,9 +1,14 @@
 package ru.romanov.durak.media;
 
+import com.jlefebure.spring.boot.minio.MinioException;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 public interface ImageService {
 
-    byte[] findPhoto(long id);
+    byte[] findPhoto(String photoId) throws MinioException, IOException;
 
-    void savePhoto(long id, byte[] photo);
+    String savePhoto(InputStream inputStream) throws MinioException;
 
 }

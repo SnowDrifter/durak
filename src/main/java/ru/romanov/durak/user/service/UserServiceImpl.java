@@ -1,6 +1,7 @@
 package ru.romanov.durak.user.service;
 
 
+import com.jlefebure.spring.boot.minio.MinioException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +15,7 @@ import ru.romanov.durak.user.UserRepository;
 import ru.romanov.durak.model.user.Role;
 import ru.romanov.durak.model.user.User;
 
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.Date;
 
@@ -56,15 +58,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public byte[] findPhoto(long id) {
-        return imageService.findPhoto(id);
-    }
-
-    @Override
-    @Transactional
-    public void savePhoto(long userId, byte[] photo) {
-        imageService.savePhoto(userId, photo);
+    public void updatePhoto(long id, InputStream inputStream) throws MinioException {
+        String photoId = imageService.savePhoto(inputStream);
+        userRepository.updatePhotoId(id, photoId);
     }
 
     @Override

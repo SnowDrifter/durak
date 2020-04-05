@@ -1,12 +1,15 @@
 package ru.romanov.durak.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.jlefebure.spring.boot.minio.MinioException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ru.romanov.durak.model.user.UserMapper;
 import ru.romanov.durak.model.user.dto.UserDto;
@@ -15,6 +18,7 @@ import ru.romanov.durak.user.service.UserService;
 import ru.romanov.durak.util.MessageHelper;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 
 import static ru.romanov.durak.util.PageConstants.*;
@@ -69,6 +73,12 @@ public class UserController {
         model.addAttribute(TITLE_ATTRIBUTE, messageHelper.getMessage("edit.done"));
         model.addAttribute(MESSAGE_ATTRIBUTE, messageHelper.getMessage("edit.done"));
         return SUCCESS_PAGE;
+    }
+
+    @PostMapping("/user/photo/upload")
+    public ResponseEntity uploadPhoto(@RequestParam long userId, @RequestParam MultipartFile file) throws MinioException, IOException {
+        userService.updatePhoto(userId, file.getInputStream());
+        return ResponseEntity.ok().build();
     }
 
 }
