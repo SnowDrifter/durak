@@ -1,7 +1,6 @@
 package ru.romanov.durak.model.user;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 import ru.romanov.durak.model.user.dto.UserDto;
@@ -13,7 +12,6 @@ public interface UserMapper {
 
     User userDtoToUser(UserDto userDto);
 
-    @Mapping(target = "hasPhoto",expression  = "java(user.getPhoto() != null)")
     UserDto userToUserDto(User user);
 
 }

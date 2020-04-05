@@ -1,6 +1,5 @@
 package ru.romanov.durak.model.user;
 
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -15,7 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
 @Data
 @ToString(of = "username")
 @EqualsAndHashCode(of = "username")
@@ -28,7 +26,7 @@ public class User implements UserDetails, Persistable<Long> {
     private String firstName;
     private String lastName;
     private Set<Role> roles = new HashSet<>();
-    private byte[] photo;
+    private String photoId;
     private String about;
 
     private int wins;

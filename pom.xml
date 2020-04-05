@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <tiles.version>3.0.8</tiles.version>
 
-        <sonar.host.url>http://localhost:9000</sonar.host.url>
+        <sonar.host.url>http://localhost:9001</sonar.host.url>
         <sonar.login>admin</sonar.login>
         <sonar.password>admin</sonar.password>
     </properties>
@@ -43,8 +43,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>11</source>
+                    <target>11</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
@@ -237,6 +237,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jlefebure</groupId>
+            <artifactId>spring-boot-starter-minio</artifactId>
+            <version>1.4</version>
         </dependency>
 
         <!-- Servlet and JSP -->
