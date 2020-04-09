@@ -1,7 +1,0 @@
-version: '2.3'
-
-services:
-  sonarqube:
-    image: sonarqube
-    ports:
-      - 9001:9000

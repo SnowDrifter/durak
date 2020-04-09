@@ -1,0 +1,14 @@
+version: '2.3'
+
+services:
+  sonarqube:
+    image: sonarqube
+    container_name: durak_sonarqube
+    ports:
+      - 9001:9000
+
+  grafana:
+    image: grafana/grafana
+    container_name: durak_grafana
+    ports:
+      - 3001:3000
