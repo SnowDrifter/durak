@@ -27,7 +27,7 @@ services:
         test: ["CMD-SHELL", "curl -f localhost:8080 || false"]
         interval: 10s
         timeout: 3s
-        retries: 3
+        retries: 5
 
   postgres:
     image: postgres:11-alpine
@@ -67,17 +67,5 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 10s
-      timeout: 5s
+      timeout: 3s
       retries: 5
-
-  prometheus:
-    image: prom/prometheus
-    container_name: durak_prometheus
-    depends_on:
-      application:
-        condition: service_healthy
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./metrics/prometheus.yml:/etc/prometheus/prometheus.yml
-    command: "--config.file=/etc/prometheus/prometheus.yml"
