@@ -3440,8 +3440,8 @@
         {
           "aliasColors": {
             "Error": "red",
-            "{application=\"durak-app\",instance=\"application:8080\",job=\"durak-app\",level=\"error\"}": "red",
-            "{application=\"durak-app\",instance=\"application:8080\",job=\"durak-app\",level=\"warn\"}": "yellow"
+            "{application=\"durak-app\",instance=\"application:8085\",job=\"durak-app\",level=\"error\"}": "red",
+            "{application=\"durak-app\",instance=\"application:8085\",job=\"durak-app\",level=\"warn\"}": "yellow"
           },
           "bars": false,
           "dashLength": 10,
@@ -3581,8 +3581,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "application:8080",
-          "value": "application:8080"
+          "text": "application:8085",
+          "value": "application:8085"
         },
         "datasource": "Prometheus",
         "definition": "label_values(jvm_classes_loaded_classes{application=\"$application\"}, instance)",

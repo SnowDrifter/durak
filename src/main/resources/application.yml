@@ -50,9 +50,11 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health,prometheus
   metrics:
     tags:
       application: durak-app
+  server:
+    port: 8085
 
 server.tomcat.mbeanregistry.enabled: true
