@@ -24,7 +24,7 @@ services:
     ports:
       - 8081:8080
     healthcheck:
-        test: ["CMD-SHELL", "curl -f localhost:8080 || false"]
+        test: ["CMD-SHELL", "curl -f localhost:8085/actuator/health || false"]
         interval: 10s
         timeout: 3s
         retries: 5
