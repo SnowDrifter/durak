@@ -54,3 +54,5 @@ management:
   metrics:
     tags:
       application: durak-app
+
+server.tomcat.mbeanregistry.enabled: true
