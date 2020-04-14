@@ -16,8 +16,7 @@
   "editable": true,
   "gnetId": 10280,
   "graphTooltip": 0,
-  "id": 6,
-  "iteration": 1586712012264,
+  "iteration": 1586815347033,
   "links": [],
   "panels": [
     {
@@ -144,7 +143,7 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 5,
+        "w": 6,
         "x": 6,
         "y": 1
       },
@@ -229,8 +228,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 5,
-        "x": 11,
+        "w": 6,
+        "x": 12,
         "y": 1
       },
       "id": 60,
@@ -313,8 +312,8 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
-        "w": 8,
-        "x": 16,
+        "w": 6,
+        "x": 18,
         "y": 1
       },
       "hiddenSeries": false,
@@ -699,7 +698,7 @@
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 15
+            "y": 23
           },
           "hiddenSeries": false,
           "id": 85,
@@ -806,10 +805,10 @@
             "h": 8,
             "w": 8,
             "x": 8,
-            "y": 15
+            "y": 23
           },
           "hiddenSeries": false,
-          "id": 107,
+          "id": 117,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -833,7 +832,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1586712012264,
+          "repeatIteration": 1586815347031,
           "repeatPanelId": 85,
           "scopedVars": {
             "memory_pool_heap": {
@@ -915,10 +914,10 @@
             "h": 8,
             "w": 8,
             "x": 16,
-            "y": 15
+            "y": 23
           },
           "hiddenSeries": false,
-          "id": 108,
+          "id": 118,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -942,7 +941,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1586712012264,
+          "repeatIteration": 1586815347031,
           "repeatPanelId": 85,
           "scopedVars": {
             "memory_pool_heap": {
@@ -1025,7 +1024,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 23
+            "y": 31
           },
           "hiddenSeries": false,
           "id": 50,
@@ -1117,7 +1116,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 23
+            "y": 31
           },
           "hiddenSeries": false,
           "id": 80,
@@ -1207,7 +1206,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 31
+            "y": 39
           },
           "hiddenSeries": false,
           "id": 82,
@@ -1304,7 +1303,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 31
+            "y": 39
           },
           "hiddenSeries": false,
           "id": 83,
@@ -1401,7 +1400,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 38
+            "y": 46
           },
           "hiddenSeries": false,
           "id": 68,
@@ -1499,7 +1498,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 38
+            "y": 46
           },
           "hiddenSeries": false,
           "id": 78,
@@ -1611,7 +1610,7 @@
             "h": 10,
             "w": 12,
             "x": 0,
-            "y": 16
+            "y": 55
           },
           "hiddenSeries": false,
           "id": 74,
@@ -1704,7 +1703,7 @@
             "h": 10,
             "w": 12,
             "x": 12,
-            "y": 16
+            "y": 55
           },
           "hiddenSeries": false,
           "id": 76,
@@ -1822,7 +1821,7 @@
             "h": 4,
             "w": 4,
             "x": 0,
-            "y": 17
+            "y": 66
           },
           "id": 44,
           "interval": null,
@@ -1893,7 +1892,7 @@
             "h": 8,
             "w": 20,
             "x": 4,
-            "y": 17
+            "y": 66
           },
           "hiddenSeries": false,
           "id": 36,
@@ -2010,7 +2009,7 @@
             "h": 4,
             "w": 4,
             "x": 0,
-            "y": 21
+            "y": 70
           },
           "id": 46,
           "interval": null,
@@ -2081,7 +2080,7 @@
             "h": 6,
             "w": 8,
             "x": 0,
-            "y": 25
+            "y": 74
           },
           "hiddenSeries": false,
           "id": 38,
@@ -2171,7 +2170,7 @@
             "h": 6,
             "w": 8,
             "x": 8,
-            "y": 25
+            "y": 74
           },
           "hiddenSeries": false,
           "id": 42,
@@ -2261,7 +2260,7 @@
             "h": 6,
             "w": 8,
             "x": 16,
-            "y": 25
+            "y": 74
           },
           "hiddenSeries": false,
           "id": 40,
@@ -2366,7 +2365,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 18
+            "y": 67
           },
           "hiddenSeries": false,
           "id": 4,
@@ -2459,7 +2458,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 25
+            "y": 74
           },
           "hiddenSeries": false,
           "id": 2,
@@ -2576,7 +2575,7 @@
             "h": 4,
             "w": 3,
             "x": 0,
-            "y": 19
+            "y": 68
           },
           "id": 28,
           "interval": null,
@@ -2649,7 +2648,7 @@
             "h": 7,
             "w": 6,
             "x": 3,
-            "y": 19
+            "y": 68
           },
           "hiddenSeries": false,
           "id": 24,
@@ -2742,7 +2741,7 @@
             "h": 7,
             "w": 6,
             "x": 9,
-            "y": 19
+            "y": 68
           },
           "hiddenSeries": false,
           "id": 26,
@@ -2840,7 +2839,7 @@
             "h": 7,
             "w": 9,
             "x": 15,
-            "y": 19
+            "y": 68
           },
           "hiddenSeries": false,
           "id": 30,
@@ -2948,7 +2947,7 @@
             "h": 3,
             "w": 3,
             "x": 0,
-            "y": 23
+            "y": 72
           },
           "id": 32,
           "interval": null,
@@ -3039,7 +3038,7 @@
             "h": 8,
             "w": 6,
             "x": 0,
-            "y": 20
+            "y": 28
           },
           "hiddenSeries": false,
           "id": 115,
@@ -3142,7 +3141,7 @@
             "h": 8,
             "w": 6,
             "x": 6,
-            "y": 20
+            "y": 28
           },
           "hiddenSeries": false,
           "id": 114,
@@ -3240,7 +3239,7 @@
             "h": 8,
             "w": 6,
             "x": 12,
-            "y": 20
+            "y": 28
           },
           "hiddenSeries": false,
           "id": 113,
@@ -3340,7 +3339,7 @@
             "h": 8,
             "w": 6,
             "x": 18,
-            "y": 20
+            "y": 28
           },
           "hiddenSeries": false,
           "id": 112,
@@ -3423,7 +3422,7 @@
           }
         }
       ],
-      "title": "Minio",
+      "title": "Minio Statistics",
       "type": "row"
     },
     {
@@ -3453,7 +3452,7 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 21
+            "y": 37
           },
           "hiddenSeries": false,
           "id": 106,
