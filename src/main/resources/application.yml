@@ -45,3 +45,16 @@ spring:
     bucket: durak
     access-key: ${MINIO_ACCESS_KEY}
     secret-key: ${MINIO_SECRET_KEY}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: durak-app
+  server:
+    port: 8085
+
+server.tomcat.mbeanregistry.enabled: true

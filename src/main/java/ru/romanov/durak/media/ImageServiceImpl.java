@@ -32,11 +32,11 @@ public class ImageServiceImpl implements ImageService {
     }
 
     /**
-     * Format: /folder/fileName
-     * Example: /b4e16141/824c45938b9e8682feccc19b
+     * Format: folder/fileName
+     * Example: b4e16141/824c45938b9e8682feccc19b
      */
     private String generatePhotoId() {
-        return "/" + UUID.randomUUID().toString()
+        return UUID.randomUUID().toString()
                 .replaceFirst("-", "/")
                 .replaceAll("-", "");
     }

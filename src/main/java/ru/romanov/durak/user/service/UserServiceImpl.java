@@ -3,6 +3,7 @@ package ru.romanov.durak.user.service;
 
 import com.jlefebure.spring.boot.minio.MinioException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +21,7 @@ import java.util.Collections;
 import java.util.Date;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
