@@ -21,6 +21,8 @@ services:
       - MINIO_URL=http://minio:9000
       - MINIO_ACCESS_KEY=durak_access_key
       - MINIO_SECRET_KEY=durak_secret_key
+      - SENTRY_ENABLED=${SENTRY_ENABLED:-false}
+      - SENTRY_DSN=${SENTRY_DSN:-}
     ports:
       - 8081:8080
     healthcheck:
