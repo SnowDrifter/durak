@@ -24,6 +24,7 @@ public class TilesDefinitionsFactory implements DefinitionsFactory {
         addDefaultLayoutDefinition("statistics", "statistics-body.jsp");
         addDefaultLayoutDefinition("success", "success-body.jsp");
         addDefaultLayoutDefinition("edit-profile", "edit-profile-body.jsp");
+        addDefaultLayoutDefinition("stub", "stub-body.jsp");
     }
 
     @Override
