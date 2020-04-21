@@ -11,6 +11,7 @@ public class PageConstants {
     public static final String MULTIPLAYER_PAGE = "multiplayer";
     public static final String RULES_PAGE = "rules";
     public static final String STATISTICS_PAGE = "statistics";
+    public static final String STUB_PAGE = "stub";
 
     public static final String REGISTRATION_PAGE = "registration";
     public static final String LOGIN_PAGE = "login";
