@@ -64,3 +64,4 @@ sentry:
   dsn: ${SENTRY_DSN}
   stacktrace:
     app-packages:
+  timeout: 5000
