@@ -58,3 +58,10 @@ management:
     port: 8085
 
 server.tomcat.mbeanregistry.enabled: true
+
+sentry:
+  enabled: ${SENTRY_ENABLED:false}
+  dsn: ${SENTRY_DSN}
+  stacktrace:
+    app-packages:
+  timeout: 5000

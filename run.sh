@@ -28,7 +28,7 @@ done
 mvn clean package
 
 if [[ " $@ " =~ " -all " ]]; then
-    docker-compose -f docker-compose.support.yml -f docker-compose.yml up
+    docker-compose -f docker-compose.yml -f docker-compose.support.yml up
 else
     docker-compose up
 fi
